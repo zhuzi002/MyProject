@@ -1,0 +1,1288 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta name="page-view-size" content="1280*720" />
+	<meta charset="UTF-8">
+	<title>首页 | 芒果TV-高清</title>
+	<style type="text/css">
+		/* S= CSS Reset
+        ----------------------------------------------- */
+		body, table, caption, tbody, tfoot, thead, tr, th, td, ul, li, p, h1 { margin:0px; padding:0px; border:0px; }
+		body { font-size: 24px; font-family: Microsoft YaHei,sans-serif; line-height: 100%; }
+		ul, ol { list-style: none; }
+		table { border-collapse:collapse; border-spacing:0; }
+		a { text-decoration: none; }
+		img { border: 0; }
+		/* E= CSS Reset */
+
+		/* S= Global
+        ----------------------------------------------- */
+		body, .wrapper, .pagebg {
+			height: 720px;
+			width: 1280px;
+			overflow: hidden;
+		}
+		body {
+			color: #ffffff;
+			position: relative;
+		}
+		.wrapper, .pagebg {
+			left: 0;
+			position:absolute;
+			top: 0;
+		}
+		.pagebg img {
+			display: block; /* clear some space 对于html5中背景图比原高度多出3PX的问题*/
+		}
+		.item, .link, .txt-wrap, .txt, .btn, .icon, .pic, .pic-shade, .cover, .num {
+			position:absolute;
+		}
+		.txtHidden {
+			white-space:nowrap;
+			overflow:hidden;
+		}
+		.clearfix:after {
+			clear:both;
+			content: '';
+			display:block;
+			height:0;
+		}
+		.clearfix { zoom:1;}
+		/*
+        文字过短需居中时 width < 外部容器单位宽度 时 span class="txtSlideWrap txtNoSlide"
+        文字过长需滚动时 width > 外部容器单位宽度 时 span class="txtSlideWrap"
+        */
+		span.txtSlideWrap,
+		span.txtSlideWrap div,
+		span.txtNoSlide div {
+			padding: 0!important;
+			margin: 0!important;
+		}
+		span.txtSlideWrap {
+			display: block;
+			height: 100%;
+			width: 100%!important;
+			overflow: hidden;
+			position: relative;
+		}
+		span.txtSlideWrap div {
+			position: absolute;
+			top: 0;
+			white-space: nowrap;
+		}
+		span.txtNoSlide div {
+			width: 100%;
+		}
+		.pigbg{
+			position: absolute;
+			left: 0;
+			top: 0;
+		}
+		/* E= Global */
+
+		/* S= head ch ----------------------------------------------- */
+		.logo {
+			left: 69px;
+			position:absolute;
+			top: 30px;
+		}
+		.time {
+			color:#a7a7a9;
+			font-family:Microsoft YaHei;
+			font-size:32px;
+			left: 1018px;
+			position:absolute;
+			top: 57px;
+			text-align:right;
+			width:200px;
+		}
+		/* E= head ch */
+
+		/* S= index ch ----------------------------------------------- */
+		.ch-notice {
+			position:absolute;
+			left: 295px;
+			top: 42px;
+			width:420px;
+			height:26px;
+			overflow:hidden;
+		}
+		.ch-notice .txt {
+			color:#aeaeae;
+			font-size:20px;
+			line-height:26px;
+		}
+		.ch-topBtn {
+			position:absolute;
+			left: 893px;
+			top: 39px;
+		}
+		.ch-topBtn .item {
+			height:42px;
+		}
+		.ch-topBtnA .item {
+			width:134px;
+		}
+		.ch-topBtnB .item {
+			width:98px;
+		}
+		.ch-topBtnC .item {
+			width:176px;
+		}
+		.ch-topBtn .item .icon {
+			left:7px;
+			top:4px;
+			width:32px;
+			height:35px;
+		}
+		.ch-topBtn .item .icon01 {
+			background:url(../images/ch-icon01.png) no-repeat;
+		}
+		.ch-topBtn .item_focus .icon01 {
+			background:url(../images/ch-icon01_focus.png) no-repeat;
+		}
+		.ch-topBtn .item .icon02 {
+			background:url(../images/ch-icon02.png) no-repeat;
+		}
+		.ch-topBtn .item_focus .icon02 {
+			background:url(../images/ch-icon02_focus.png) no-repeat;
+		}
+		.ch-topBtn .item .icon03 {
+			background:url(../images/ch-icon03.png) no-repeat;
+		}
+		.ch-topBtn .item_focus .icon03 {
+			background:url(../images/ch-icon03_focus.png) no-repeat;
+		}
+		.ch-topBtn .item .icon04 {
+			background:url(../images/ch-icon04.png) no-repeat;
+		}
+		.ch-topBtn .item_focus .icon04 {
+			background:url(../images/ch-icon04_focus.png) no-repeat;
+		}
+		.ch-topBtn .item .icon05 {
+			background:url(../images/ch-icon05.png) no-repeat;
+		}
+		.ch-topBtn .item_focus .icon05 {
+			background:url(../images/ch-icon05_focus.png) no-repeat;
+		}
+		.ch-topBtn .item .icon06 {
+			background:url(../images/guangdongv2/w-icon01.png) no-repeat;
+		}
+		.ch-topBtn .item_focus .icon06 {
+			background:url(../images/guangdongv2/w-icon01_focus.png) no-repeat;
+		}
+		.ch-topBtn .item .icon07 {
+			background:url(../images/guangdongv2/w-icon02.png) no-repeat;
+		}
+		.ch-topBtn .item_focus .icon07 {
+			background:url(../images/guangdongv2/w-icon02_focus.png) no-repeat;
+		}
+		.ch-topBtn .item .txt {
+			color:#908e9b;
+			font-size:20px;
+			left:42px;
+			width:90px;
+			height:42px;
+			line-height:42px;
+		}
+		.ch-topBtn .item_focus .txt {
+			color:#ffffff;
+		}
+		.ch-topBtnA .item_focus {
+			background:url(../images/guangdongv2/w-btn04_focus.png) no-repeat;
+		}
+		.ch-topBtnB .item_focus {
+			background:url(../images/guangdongv2/w-btn04-1_focus.png) no-repeat;
+		}
+
+		.ch-indexPoster {
+			position:absolute;
+			left:0;
+			top: 0;
+		}
+		.ch-indexPoster .item {
+			z-index:3;
+		}
+		/*.ch-indexPoster .pic {
+            left:3px;
+            top:3px;
+        }*/
+		.ch-indexPoster .item .txt {
+			font-size:20px;
+			height:30px;
+			line-height:30px;
+			overflow:hidden;
+		}
+		.ch-indexPoster .item_focus {
+			z-index:5;
+		}
+		.ch-indexPoster .item_focus .txt {
+			font-size:24px;
+		}
+		.ch-indexPoster .type-a {
+			position:absolute;
+			left: 24px;
+			top:69px;
+		}
+		.ch-indexPoster .type-a .item {
+			width:310px;
+			height:224px;
+		}
+		.ch-indexPoster .type-a .item .pic {
+			left:45px;
+			top:39px;
+		}
+		.ch-indexPoster .type-a .pic,
+		.ch-indexPoster .type-a .pic img {
+			width:220px;
+			height:144px;
+		}
+		.ch-indexPoster .type-a .txt-wrap {
+			left: 45px;
+			top:123px;
+			background:url(../images/guangdongv2/w-poster01-txt.png) no-repeat;
+			width:220px;
+			height:61px;
+		}
+		.ch-indexPoster .type-a .item .txt {
+			left:12px;
+			top:19px;
+			width:195px;
+		}
+		.ch-indexPoster .type-a .item_focus {
+			background:url(../images/guangdongv2/w-poster01_focus.png) no-repeat;
+		}
+		.ch-indexPoster .type-a .item_focus .pic {
+			left:34px;
+			top:32px;
+		}
+		.ch-indexPoster .type-a .item_focus .pic,
+		.ch-indexPoster .type-a .item_focus .pic img {
+			width:242px;
+			height:158px;
+		}
+		.ch-indexPoster .type-a .item_focus .txt-wrap {
+			left: 34px;
+			top:124px;
+			background:url(../images/guangdongv2/w-poster01-txt_focus.png) no-repeat;
+			width:242px;
+			height:67px;
+		}
+		.ch-indexPoster .type-a .item_focus .txt {
+			top:25px;
+		}
+
+		.ch-indexPoster .type-b {
+			position:absolute;
+			left: 301px;
+			top:108px;
+		}
+		.ch-indexPoster .type-b .item .pic {
+			z-index:3;
+		}
+		.ch-indexPoster .type-b .pic,
+		.ch-indexPoster .type-b .pic img {
+			width:450px;
+			height:296px;
+		}
+		.ch-indexPoster .type-b .txt-wrap {
+			background:url(../images/guangdongv2/w-poster02-txt.png) no-repeat;
+			left:0;
+			top:259px;
+			width:450px;
+			height:37px;
+			z-index:4;
+		}
+		.ch-indexPoster .type-b .item {
+			width:148px;
+			height:36px;
+		}
+		.ch-indexPoster .type-b .item .txt {
+			left:5px;
+			font-size:20px;
+			text-align:center;
+			line-height:36px;
+			width:138px;
+			height:36px;
+			overflow:hidden;
+		}
+		.ch-indexPoster .type-b .item_focus {
+			background:url(../images/guangdongv2/w-poster02-txt_focus.png) no-repeat;
+		}
+
+		.ch-indexPoster .type-c {
+			position:absolute;
+			left: 245px;
+			top:372px;
+		}
+		.ch-indexPoster .type-c .item {
+			width:563px;
+			height:224px;
+		}
+		.ch-indexPoster .type-c .item .pic {
+			left:56px;
+			top:40px;
+		}
+		.ch-indexPoster .type-c .pic,
+		.ch-indexPoster .type-c .pic img {
+			width:450px;
+			height:144px;
+		}
+		.ch-indexPoster .type-c .txt-wrap {
+			left: 56px;
+			top:123px;
+			background:url(../images/guangdongv2/w-poster03-txt.png) no-repeat;
+			width:450px;
+			height:61px;
+		}
+		.ch-indexPoster .type-c .item .txt {
+			top:19px;
+		}
+		.ch-indexPoster .type-c .item .txt01 {
+			left:12px;
+			width:340px;
+		}
+		.ch-indexPoster .type-c .item .txt02 {
+			left:360px;
+			color:#a5a5a5;
+			font-size:18px;
+			text-align:right;
+			width:80px;
+		}
+		.ch-indexPoster .type-c .item_focus {
+			background:url(../images/guangdongv2/w-poster03_focus.png) no-repeat;
+		}
+		.ch-indexPoster .type-c .item_focus .pic {
+			left:34px;
+			top:33px;
+		}
+		.ch-indexPoster .type-c .item_focus .pic,
+		.ch-indexPoster .type-c .item_focus .pic img {
+			width:495px;
+			height:158px;
+		}
+		.ch-indexPoster .type-c .item_focus .txt-wrap {
+			left: 34px;
+			top:124px;
+			background:url(../images/guangdongv2/w-poster03-txt_focus.png) no-repeat;
+			width:495px;
+			height:67px;
+		}
+		.ch-indexPoster .type-c .item_focus .txt01 {
+			top:25px;
+		}
+		.ch-indexPoster .type-c .item_focus .txt02 {
+			left:405px;
+			color:#f5f5f5;
+			font-size:20px;
+			top:25px;
+		}
+
+		.ch-toplist {
+			position:absolute;
+			left: 976px;
+			top: 246px;
+			background:url(../images/guangdongv2/w-bg-toplist.png) no-repeat;
+			width:254px;
+			height:330px;
+		}
+		.ch-toplist .item {
+			left:16px;
+			top:66px;
+			width:220px;
+			height:50px;
+		}
+		.ch-toplist .item .txt {
+			left:45px;
+			top:11px;
+			color:#c8c8d5;
+			font-size:20px;
+			width:165px;
+			height:23px;
+			line-height:23px;
+			overflow:hidden;
+			//text-align: center;
+			white-space: nowrap;
+		}
+		.ch-toplist .item_focus {
+			background:url(../images/guangdongv2/w-bg-toplist_focus.png) no-repeat;
+		}
+		.ch-toplist .item_focus .txt {
+			color:#ffffff;
+		}
+
+		.ch-menu {
+			position:absolute;
+			left: 121px;
+			top: 590px;
+		}
+		.ch-menu .item .icon {
+			left: 20px;
+			width:70px;
+			height:70px;
+		}
+		.ch-menu .item .icon {
+			left: 20px;
+			width:70px;
+			height:70px;
+		}
+		.ch-menu .txt {
+			color:#ffffff;
+			font-size:20px;
+			text-align:center;
+			top:78px;
+			width:110px;
+		}
+		.ch-menu .item_focus .icon {
+			background:url(../images/xinjiang/ch-menu_focus.png) no-repeat;
+		}
+
+		.ch-indexPoster .type-video {
+			position: absolute;
+			left: 267px;
+			top: 74px;
+		}
+		.ch-indexPoster .type-video .item {
+			width: 518px;
+			height: 364px;
+		}
+		.ch-indexPoster .type-video .item .pic {
+			left:34px;
+			top:34px;
+			z-index: 3;
+		}
+		.ch-indexPoster .type-video .pic,
+		.ch-indexPoster .type-video .pic img {
+			width: 450px;
+			height: 296px;
+		}
+		.ch-indexPoster .type-video .txt-wrap {
+			background: url(../images/guangdongv2/w-poster-video-txt.png) no-repeat;
+			left: 34px;
+			top: 293px;
+			width: 450px;
+			height: 37px;
+			z-index: 4;
+		}
+		.ch-indexPoster .type-video .txt-wrap  .txt {
+			left: 10px;
+			font-size: 20px;
+			line-height: 36px;
+			width: 430px;
+			height: 36px;
+			overflow: hidden;
+		}
+		.ch-indexPoster .type-video .item_focus {
+			background: url(../images/guangdongv2/w-poster-video_focus.png) no-repeat;
+		}
+		#nav2_5_txt{
+			color: #e7e5ee;
+			font-size: 22px;
+			left: 50px;
+			top: 300px;
+			width: 440px;
+			height: 26px;
+			line-height: 26px;
+			overflow: hidden;
+		}
+		#nav1_22_move {
+			height:40px;
+			width: 405px;
+			line-height: 40px;
+			top: 36px;
+			font-size: 20px;
+			color: #aeaeae;
+			overflow: hidden;
+			white-space: nowrap;
+		}
+		#nav1_22_move .txt{
+			line-height:40px;
+		}
+		#inner{overflow:hidden;}
+		/* E= index ch */
+	</style>
+</head>
+<body bgcolor="transparent">
+<div id="test1" style="left: 20px; top: 20px; width: 800px; height: 300px; position: absolute; color: #ff0000; word-break:break-all;"></div>
+<!-- S pagebg -->
+<div class="pagebg">
+	<div class="pic"><img id="pagebg" src="" width="1280" height="720" /></div>
+</div>
+<!-- E pagebg -->
+
+<!-- S content -->
+<div class="wrapper">
+	<!-- S head -->
+	<div class="logo"><img src="../images/ch-logo-mango.png" alt="芒果TV" /></div>
+	<div class="ch-notice" id="nav_noticeBox" style="top:36px;height:46px;">
+		<div class="txt" style="left:0px; top:12px;display: block;" id="nav_notice01" title="1"></div>
+		<div class="txt" style="left:0px; top:47px; display: block;" id="nav_notice02" title="2"></div>
+	</div>
+	<!--<div class="ch-topBtn ch-topBtnB" style="left:711px;">-->
+		<!--<div class="item" id="nav1_0">-->
+			<!--<div class="icon icon06"></div>-->
+			<!--<div class="txt">搜索</div>-->
+		<!--</div>-->
+	<!--</div>-->
+	<div class="ch-topBtn ch-topBtnA" style="left:807px;">
+		<!--焦点为
+                class="item item_focus"
+            -->
+		<div class="item" id="nav1_1" title="introduce-hebei.html?na=gs">
+			<div class="icon icon07"></div>
+			<div class="txt" id="nav1_1_txt">产品介绍</div>
+		</div>
+		<div class="item" id="nav1_2" style="left:130px;" title="ch-list.html?na=gs">
+			<div class="icon icon04"></div>
+			<div class="txt" id="nav1_2_txt">免费体验</div>
+		</div>
+		<div class="item" id="nav1_3" style="left:260px;"  title="piece-collect.html?na=gs">
+			<div class="icon icon01"></div>
+			<div class="txt" id="nav1_3_txt">我的片单</div>
+		</div>
+	</div>
+	<!--<div class="time">12:55</div>-->
+	<!-- E head -->
+
+	<!-- S 推荐区 -->
+	<div class="ch-indexPoster">
+		<div class="type-a">
+			<!--焦点为
+                class="item item_focus"
+            -->
+			<!--左一竖 三图-->
+			<div class="item" id="nav2_2">
+				<div class="pic"><img id="nav2_2_img" src="" /></div>
+				<!--<div class="txt-wrap">-->
+					<!--<div class="txt" id="nav2_2_txt"></div>-->
+				<!--</div>-->
+			</div>
+			<div class="item" id="nav2_3" style="top:152px;">
+				<div class="pic"><img id="nav2_3_img" src="" /></div>
+				<!--<div class="txt-wrap">-->
+					<!--<div class="txt" id="nav2_3_txt"></div>-->
+				<!--</div>-->
+			</div>
+			<div class="item" id="nav2_4" style="top:304px;">
+				<div class="pic"><img id="nav2_4_img" src="" /></div>
+				<!--<div class="txt-wrap">-->
+					<!--<div class="txt" id="nav2_4_txt"></div>-->
+				<!--</div>-->
+			</div>
+			<!--左三竖 三图-->
+			<div class="item" id="nav2_7" style="left:693px;">
+				<div class="pic"><img id="nav2_7_img" src="" /></div>
+				<!--<div class="txt-wrap">-->
+					<!--<div class="txt" id="nav2_7_txt"></div>-->
+				<!--</div>-->
+			</div>
+			<div class="item" id="nav2_8" style="top:152px;left:692px;">
+				<div class="pic"><img id="nav2_8_img" src="" /></div>
+				<!--<div class="txt-wrap">-->
+					<!--<div class="txt" id="nav2_8_txt"></div>-->
+				<!--</div>-->
+			</div>
+			<div class="item" id="nav2_9" style="top:304px;left:693px;">
+				<div class="pic"><img id="nav2_9_img" src="" /></div>
+				<!--<div class="txt-wrap">-->
+					<!--<div class="txt" id="nav2_9_txt"></div>-->
+				<!--</div>-->
+			</div>
+			<!--右上 一图-->
+			<div class="item" id="nav2_10" style="left:923px;">
+				<div class="pic"><img id="nav2_10_img" src="" /></div>
+				<!--<div class="txt-wrap">-->
+					<!--<div class="txt" id="nav2_10_txt"></div>-->
+				<!--</div>-->
+			</div>
+		</div>
+
+		<!--中间大图轮播-->
+		<div class="type-video">
+			<!--
+            视频位置： left: 301px; top:108px;
+            视频大小：450X296-->
+			<div class="item" id="nav2_5">
+				<div class="link"></div>
+				<div class="cover"></div>
+				<div class="icon" style="left: 225px; top: 140px; z-index: 4;"><img id="videoIcon" style="display:block;" src="../images/ch-icon-play.png" /></div>
+				<div class="pic">
+					<!--<img id="nav2_5_img" src="" />-->
+					<iframe id="smallvod" name="if_smallscreen"
+							style="position: absolute; top: 0px;left: 0px; display: block;visibility: hidden;"
+							width="465" height="268"  src="" frameborder="no" scrolling="no" >
+					</iframe>
+				</div>
+				<div class="txt" id="nav2_5_txt"></div>
+			</div>
+		</div>
+
+		<div class="type-c">
+			<!--焦点为
+                class="item item_focus"
+            -->
+			<div class="item" id="nav2_6">
+				<div class="pic"><img id="nav2_6_img" src="" /></div>
+				<!--<div class="txt-wrap">-->
+					<!--<div class="txt txt01" id="nav2_6_txt"></div>-->
+					<!--<div class="txt txt02"></div>-->
+				<!--</div>-->
+			</div>
+		</div>
+	</div>
+	<!-- E 推荐区 -->
+
+	<!-- S 专区排行榜 -->
+	<div class="ch-toplist">
+		<!--焦点为
+            class="item item_focus"
+        -->
+		<div class="item" id="nav2_11">
+			<div class="txt" id="nav2_11_txt"></div>
+		</div>
+		<div class="item" id="nav2_12" style="top:114px;">
+			<div class="txt" id="nav2_12_txt"></div>
+		</div>
+		<div class="item" id="nav2_13" style="top:162px;">
+			<div class="txt" id="nav2_13_txt"></div>
+		</div>
+		<div class="item" id="nav2_14" style="top:211px;">
+			<div class="txt" id="nav2_14_txt"></div>
+		</div>
+		<div class="item" id="nav2_15" style="top:259px;">
+			<div class="txt" id="nav2_15_txt"></div>
+		</div>
+	</div>
+	<!-- E 专区排行榜 -->
+
+	<!-- S menu 频道栏目 -->
+	<div class="ch-menu">
+		<!--焦点为
+            class="item item_focus"
+        -->
+		<div class="item" id="nav3_6">
+			<div class="icon"><img src="../images/xinjiang/ch-menu-icon07.png" /></div>
+			<div class="txt" id="nav3_6_txt">同步剧</div>
+		</div>
+		<div class="item" id="nav3_0" style="left:620px;">
+			<div class="icon"><img src="../images/xinjiang/ch-menu-icon03.png" /></div>
+			<div class="txt" id="nav3_0_txt">王牌综艺</div>
+		</div>
+		<div class="item" id="nav3_1" style="left:155px;">
+			<div class="icon"><img src="../images/xinjiang/ch-menu-icon02.png" /></div>
+			<div class="txt" id="nav3_1_txt">电视剧</div>
+		</div>
+		<div class="item" id="nav3_2"  style="left:310px;">
+			<div class="icon"><img src="../images/xinjiang/ch-menu-icon01.png" /></div>
+			<div class="txt" id="nav3_2_txt">电影</div>
+		</div>
+		<div class="item" id="nav3_3" style="left:465px;">
+			<div class="icon"><img src="../images/xinjiang/ch-menu-icon04.png" /></div>
+			<div class="txt" id="nav3_3_txt">少儿</div>
+		</div>
+		<div class="item" id="nav3_4" style="left:775px;">
+			<div class="icon"><img src="../images/xinjiang/ch-menu-icon05.png" /></div>
+			<div class="txt" id="nav3_4_txt">纪录片</div>
+		</div>
+		<div class="item" id="nav3_5" style="left:930px">
+			<div class="icon"><img src="../images/xinjiang/ch-menu-icon06.png" /></div>
+			<div class="txt" id="nav3_5_txt">精彩专题</div>
+		</div>
+
+	</div>
+	<!-- E menu 频道栏目 -->
+
+</div>
+<!-- E content -->
+<script src="../js/xepg.min.js"></script>
+<script src="../js/commons.js"></script>
+<script>
+	var SP = XEpg.SP;
+	var params = XEpg.My.parseUrl();		//解析地址栏参数 接收的变量
+	var currentId = params.currentId || 'nav2_5';//初始化ID
+	var noticeTxt = '';//保存滚动的文字
+	var codeNum = 0;  //从第一个视频开始播放(小视频窗口播放下标)
+	var idList = []; //储存所有播放内容ID
+	var videoNum = 1; //视频个数
+	var mp = null;//mp对象
+	var nowVolume = 50 ;  //当前音量
+	var mgUserToken='';
+	var mgUserID='';
+	var authCode='541D9640B931D9BC99D29F18523CFA39';//临时的鉴权内容编码
+	var menu_ZX = [5326,5327,5328,5329,5330,5331,5332,5460,5468];
+	var menu_HW = [5269,5270,5261,5271,5272,5273,5274,5459,5461];
+	var menu_ID = [];//用来存放不同平台下的栏目ID
+	var cmsCode = '';//平台认证Code码
+	var pukkaPartner = '';  //平台类别
+	var mg_epginfo = '';
+	var stopTimer = null;
+	//音量加
+	XEpg.Nav.key_volUp_event = function () {
+		mp.setMuteFlag(0);  //0为有声， 1为静音
+		nowVolume = mp.getVolume();
+		nowVolume += 5;
+		if (nowVolume >= 100) {
+			nowVolume = 100;
+		}
+		mp.setVolume(nowVolume);
+	};
+	//音量减
+	XEpg.Nav.key_volDown_event = function () {
+		nowVolume = mp.getVolume();
+		nowVolume -= 5;
+		if (nowVolume <= 0) {
+			nowVolume = 0;
+			mp.setMuteFlag(1);
+		}
+		mp.setVolume(nowVolume);
+
+	};
+	//静音
+	XEpg.Nav.key_volOver_event = function () {
+		var muteFlag = mp.getMuteFlag();
+		if (muteFlag == 1) {
+			mp.setMuteFlag(0);
+		} else {
+			mp.setMuteFlag(1);
+		}
+	};
+	window.onload = function () {
+		XEpg.My.init({"currentId":currentId});//初始化焦点
+		XEpg.My.pageLoadShowFocus();  //显示焦点
+		init();   //初始化焦点方法
+		getEpgInfo();  //从地址栏获取信息
+	};
+	//从地址栏获取信息
+	function getEpgInfo(){
+		var from = decodeURIComponent(window.location.href);
+		if(from&&from.indexOf("<partner>")!=-1&&from.indexOf("</partner>")!=-1){
+			var partner = from.split("<partner>");
+			var partner1 = partner[1].split("</partner>");
+			mgPartner = partner1[0];  //获取平台类别
+		}else{
+			mgPartner = params.mgPartner;
+		}
+
+		if(from&&from.indexOf("<oss_user_id>")!=-1&&from.indexOf("</oss_user_id>")!=-1){
+			var userId = from.split("<oss_user_id>");
+			var userId1 = userId[1].split("</oss_user_id>");
+			mgUserID = userId1[0];  //获取用户ID
+		}else{
+			mgUserID = params.mgUserID;
+		}
+
+		if(from&&from.indexOf("<userToken>")!=-1&&from.indexOf("</userToken>")!=-1){
+			var userToken = from.split("<userToken>");
+			var userToken1 = userToken[1].split("</userToken>");
+			mgUserToken = userToken1[0];  //临时身份证明
+			backUrl = encodeURIComponent(params.backUrl);
+		}else{
+			mgUserToken = params.mgUserToken;
+			backUrl = params.backUrl;
+		}
+		mg_epginfo = '&mgPartner=' + mgPartner + '&mgUserID=' + mgUserID + '&mgUserToken=' + mgUserToken + '&backUrl=' + backUrl;
+		if(mgPartner == 'ZTE2X'){  //中兴
+			menu_ID = menu_ZX;
+			spPro = 'portalcode=2017gszx&sptoken=CF4EAB0D8DF1E71CA84762F6BA009BD4&';
+			cmsCode = '84d1298dec4b45c09074c383f652e669';
+		}else{  //华为
+			menu_ID = menu_HW;
+			spPro = 'portalcode=2017gshw&sptoken=96630FB882600EC4A3F0B610535FB2A7&';
+			//cmsCode = '6d2c54a55c504b0f986e9d29b999de2a';
+			cmsCode = 'd5c159db477647a896584a52123f20e7';
+		}
+		//初始化所有栏目的title
+		document.getElementById("nav3_6").title= 'menuID='+ menu_ID[7]+'&catalogName=同步剧';
+		document.getElementById("nav3_0").title= 'menuID='+ menu_ID[0] +'&catalogName=王牌综艺';
+		document.getElementById("nav3_1").title= 'menuID='+ menu_ID[1] +'&catalogName=电视剧';
+		document.getElementById("nav3_2").title= 'menuID='+ menu_ID[2] +'&catalogName=电影';
+		document.getElementById("nav3_3").title= 'menuID='+ menu_ID[3] +'&catalogName=少儿';
+		document.getElementById("nav3_4").title= 'menuID='+ menu_ID[4] +'&catalogName=纪录片';
+		document.getElementById("nav3_5").title = 'menuID='+ menu_ID[8]+'&catalogName=精彩专题';
+		//$('test1').innerHTML = mg_epginfo;
+		XEpg.Util.setCookie('returnUrl', backUrl);
+		getArrowList();
+	}
+	XEpg.Nav.key_back_event = function(){//首页返回鉴权用户是否订购，未订购显示挽留页，否则直接退出该专区
+		authority();
+	};
+	//鉴权
+	function authority(){
+		var url = "../ajax/gsAuth.jsp?userToken=" + mgUserToken + "&userID=" + mgUserID + "&ContentID=" + authCode + "&productID=8001013020";//鉴权不通过时的测试路径
+         	//var url = "../ajax/gsAuth.jsp?userToken=" + mgUserToken + "&userID=gsnc69&ContentID=" + authCode + "&productID=8001013020";
+		XEpg.Util.ajaxGet(url,function(data){
+			var obj = XEpg.Util.parseJSON(data);
+			var item = obj.result[0].result;
+			var authResult = parseInt(item , 10);
+			var authState = authResult.toString(16);
+			if(authState == 0){//鉴权通过
+				var url = decodeURIComponent(params.backUrl);
+			    XEpg.Util.gotoPage(decodeURIComponent(url));
+			}else{//鉴权该用户未订购
+				XEpg.Util.gotoPage('popup-layer.html?'+mg_epginfo);
+			}
+		})
+	}
+	//初始化页面元素焦点移动
+	function init () {
+		//顶部导航焦点移动
+//		XEpg.$("nav1_0").click({"func":gotoSearch}).left({"id":"nav1_3"}).down({"id":"nav2_2"}).right({"id":"nav1_1"}).up({"id":"nav3_6"});
+		XEpg.$("nav1_1").click({"func":getDetailPre}).left({"id":"nav1_3"}).down({"id":"nav2_2"}).right({"id":"nav1_2"}).up({"id":"nav3_6"});
+		XEpg.$("nav1_2").click({"func":getDetailPre}).left({"id":"nav1_1"}).down({"id":"nav2_7"}).right({"id":"nav1_3"}).up({"id":"nav3_4"});
+		XEpg.$("nav1_3").click({"func":getDetailPre}).left({"id":"nav1_2"}).down({"id":"nav2_10"}).right({"id":"nav1_1"}).up({"id":"nav3_0"});
+		//推荐区焦点移动
+		XEpg.$("nav2_2").click({"func":getDetail}).down({"id":"nav2_3"}).right({"id":"nav2_5"}).up({"id":"nav1_1"}).left({"id":"nav2_10"});
+		XEpg.$("nav2_3").click({"func":getDetail}).down({"id":"nav2_4"}).right({"id":"nav2_5"}).up({"id":"nav2_2"}).left({"id":"nav2_11"},{"func":scrollTest});
+		XEpg.$("nav2_4").click({"func":getDetail}).down({"id":"nav3_6"}).right({"id":"nav2_6"}).up({"id":"nav2_3"}).left({"id":"nav2_11"},{"func":scrollTest});
+		XEpg.$("nav2_5").click({"func":getMovieDetail}).down({"id":"nav2_6"}).right({"id":"nav2_7"}).up({"id":"nav1_1"}).left({"id":"nav2_2"});
+		XEpg.$("nav2_6").click({"func":getDetail}).down({"id":"nav3_1"}).right({"id":"nav2_9"}).up({"id":"nav2_5"}).left({"id":"nav2_4"});
+		XEpg.$("nav2_7").click({"func":getDetail}).down({"id":"nav2_8"}).up({"id":"nav1_2"}).left({"id":"nav2_5"}).right({"id":"nav2_10"});
+		XEpg.$("nav2_8").click({"func":getDetail}).down({"id":"nav2_9"}).right({"id":"nav2_11"},{"func":scrollTest}).up({"id":"nav2_7"}).left({"id":"nav2_5"});
+		XEpg.$("nav2_9").click({"func":getDetail}).down({"id":"nav3_4"}).up({"id":"nav2_8"}).left({"id":"nav2_6"}).right({"id":"nav2_11"},{"func":scrollTest});
+		XEpg.$("nav2_10").click({"func":getDetail}).down({"id":"nav2_11"},{"func":scrollTest}).right({"id":"nav2_2"}).up({"id":"nav1_3"}).left({"id":"nav2_7"});
+		XEpg.$("nav2_11").click({"func":getDetail}).down({"id":"nav2_12"},{"func":scrollTest}).right({"id":"nav2_2"}).up({"id":"nav2_10"},{'func':clearTextStyles}).left({"id":"nav2_8"},{'func':clearTextStyles});
+		XEpg.$("nav2_12").click({"func":getDetail}).down({"id":"nav2_13"},{"func":scrollTest}).right({"id":"nav2_6"}).up({"id":"nav2_11"},{"func":scrollTest}).left({"id":"nav2_8"},{'func':clearTextStyles});
+		XEpg.$("nav2_13").click({"func":getDetail}).down({"id":"nav2_14"},{"func":scrollTest}).right({"id":"nav2_6"}).up({"id":"nav2_12"},{"func":scrollTest}).left({"id":"nav2_9"},{'func':clearTextStyles});
+		XEpg.$("nav2_14").click({"func":getDetail}).down({"id":"nav2_15"},{"func":scrollTest}).right({"id":"nav2_6"}).up({"id":"nav2_13"},{"func":scrollTest}).left({"id":"nav2_9"},{'func':clearTextStyles});
+		XEpg.$("nav2_15").click({"func":getDetail}).down({"id":"nav3_5"},{'func':clearTextStyles}).right({"id":"nav2_6"}).up({"id":"nav2_14"},{"func":scrollTest}).left({"id":"nav2_9"},{'func':clearTextStyles});
+		//频道栏目焦点移动
+		XEpg.$("nav3_0").click({"func":gotoTongPage}).up({"id":"nav2_9"}).right({"id":"nav3_4"}).left({"id":"nav3_3"}).down({"id":"nav1_3"});
+		XEpg.$("nav3_1").click({"func":getDetailList}).up({"id":"nav2_6"}).right({"id":"nav3_2"}).left({"id":"nav3_6"}).down({"id":"nav1_1"});
+		XEpg.$("nav3_2").click({"func":getDetailList}).up({"id":"nav2_6"}).right({"id":"nav3_3"}).left({"id":"nav3_1"}).down({"id":"nav1_1"});
+		XEpg.$("nav3_3").click({"func":getDetailList}).up({"id":"nav2_6"}).left({"id":"nav3_2"}).right({"id":"nav3_0"}).down({"id":"nav1_1"});
+		XEpg.$("nav3_4").click({"func":getDetailList}).up({"id":"nav2_9"}).left({"id":"nav3_0"}).right({"id":"nav3_5"}).down({"id":"nav1_2"});
+		XEpg.$("nav3_5").click({"func":gotoTopic}).up({"id":"nav2_9"}).left({"id":"nav3_4"}).right({"id":"nav3_6"}).down({"id":"nav1_3"});
+		XEpg.$("nav3_6").click({"func":gotoSyncPage}).up({"id":"nav2_4"}).left({"id":"nav3_5"},{"func":scrollTest}).right({"id":"nav3_1"}).down({"id":"nav1_1"});
+	}
+	//获取接口
+	function getArrowList () {
+		XEpg.Util.ajaxGet('../ajax/getInterface.jsp?action=getCmsData&code=' + cmsCode,function(obj){
+			var data = XEpg.Util.parseJSON(obj);
+			var item = data.result;
+			document.getElementById('pagebg').src=item[15].picurl;//更换专区首页背景
+			var showParentId = 0;
+			var type = '';
+			for(var i = 0; i < 15; i ++){
+				var index = i;
+				type = item[i].type;
+				//document.getElementById('nav2_'+(index + 1)+'_txt').innerHTML=item[index].title;
+				(function(index){
+					switch(type){  //推荐位 返回类型
+						case 'content':   //内容
+							document.getElementById('nav2_'+ (index + 1)).title = 'contentId=' + item[index].id;
+							if((index+1)<11){
+								document.getElementById('nav2_'+ (index + 1) + '_img').src = item[index].picurl;
+							}
+							//document.getElementById('nav2_'+(index + 1)+'_txt').innerHTML=item[index].title.split("HD]")[1];
+//							document.getElementById('nav2_'+(index + 1)+'_txt').innerHTML='<span id="nav2_'+(index + 1)+'_move">'+item[index].title.split("HD]")[1]+'</span><span id="nav2_'+(index + 1)+'_copy"></span>';
+							break;
+						case 'category':  //栏目
+							showParentId = item[index].id;
+							if(index == 4){
+								getVideoCode(showParentId);
+							}else{
+								document.getElementById('nav2_'+ (index + 1) + '_img').src = item[index].picurl;
+								XEpg.Util.ajaxGet('../ajax/getInterface.jsp?action=getTagsData&'+ spPro +'type=1&catelogid=' + showParentId,function(obj){
+									var data = XEpg.Util.parseJSON(obj);
+									var list = data.result;
+									document.getElementById('nav2_'+ (index + 1)).title = 'parentId=' +　list[0].parentid + '=catalogId=' + item[index].id;
+								})
+							}
+							break;
+						case 'text' :   //文字
+							noticeTxt= '公告：' + item[index].title;
+							noticeScroll ();
+					}
+				})(i);
+			}
+		})
+	}
+	//获取窗口视频栏目下的所有内容ID
+	function getVideoCode(showParentId){
+		XEpg.Util.ajaxGet('../ajax/getInterface.jsp?action=getIndexData&'+ spPro +'pagesize=5&tmtype=2&orderinfo=1&pageindex=1&catalogid=' + showParentId,function(data){
+			var obj = XEpg.Util.parseJSON(data);
+			var list = obj.result;
+			videoNum = list.length;
+			for(var i = 0 ; i < videoNum ; i ++){
+				idList.push(list[i]);
+			}
+			codeNum = GetRandomNum(0 , (videoNum - 1)) || 0;
+			getDetailCode(codeNum);
+		})
+	}
+	//随机数,用来随机播放读取过来视频code
+	function GetRandomNum(Min,Max){
+		var Range = Max - Min;
+		var Rand = Math.random();
+		return(Min + Math.round(Rand * Range));
+	}
+	//获取当前视频播放code
+	function getDetailCode (codeNum){
+		var detailCode = idList[codeNum].id;
+		var conentCode = null;
+		XEpg.Util.ajaxGet('../ajax/getInterface.jsp?action=getDetailData&'+ spPro +'tmtype=2&contentid=' + detailCode,function(data){
+			var obj = XEpg.Util.parseJSON(data);
+			var listData = obj.result[0];
+			if(listData.subcontents != null){
+				var subLen = listData.subcontents.length;
+			}
+			var conType = listData.contenttype;
+			if(conType == 1){
+				conentCode = listData.contentcode;  //单集
+				document.getElementById('nav2_5_txt').innerHTML = listData.name.split("HD]")[1] || listData.name;
+			}else{
+				conentCode = listData.subcontents[subLen - 1].contentcode;  //有子集
+				document.getElementById('nav2_5_txt').innerHTML = listData.subcontents[subLen - 1].name.split("HD]")[1] || listData.subcontents[subLen - 1].name;
+			}
+			$('nav2_5').title = 'contentId=' +  listData.id;
+			getVideo(conentCode);
+		})
+	}
+	//获取不同平台下的播放路径
+	function getVideo (conentCode) {
+		if(mgPartner == 'ZTE2X'){  //中兴
+			var epgdomain = Authentication.CTCGetConfig("EPGDomain" );
+			var last = epgdomain.lastIndexOf("/");
+			var host = epgdomain.substr( 0, last );
+			var srcHost = host + "/MediaService/SmallScreen?" +
+					"ContentID=" + conentCode + "&Left=302&Top=108&Width=450&Height=297&CycleFlag=0";
+
+			document.getElementById("smallvod").src = srcHost;
+			document.getElementById("videoIcon").style.display = "none";
+			//document.getElementById("nav2_5_img").style.display = "none";
+		}else{  //华为
+			var epgdomain = Authentication.CTCGetConfig("EPGDomain");
+			var srcHost = epgdomain.split("/EPG")[0] + "/EPG/MediaService/SmallScreen.jsp" +
+					"?ContentID="+conentCode+"&Left=302&Top=108&Width=450&Height=297&CycleFlag=0";
+			document.getElementById("smallvod").src = srcHost;
+			document.getElementById("videoIcon").style.display = "none";
+			//document.getElementById("nav2_5_img").style.display = "none";
+		}
+		stopTimer = setTimeout(isStop, 2000);
+	}
+	function isStop (){
+		var iframe = document.getElementById("smallvod");
+		var epgdomain = Authentication.CTCGetConfig("EPGDomain");
+		var iframeContent = (iframe.contentWindow || iframe.contentDocument);
+		clearTimeout(stopTimer);
+		if (mgPartner == 'ZTE2X') {
+			try {
+				mp = iframeContent.mymediaplayer; // 中兴获取Mediaplayer 对象
+			} catch (e) {
+			}
+		} else {
+			try {
+				mp = iframeContent.mp; // 华为获取Mediaplayer 对象
+			} catch (e) {
+			}
+		}
+		if(mp){
+			var endTimer = parseInt(mp.getMediaDuration(),10) * 1000;  //播放总时长
+			var stopTime = null;   //结束当前视屏 播放下一个视频
+			var nowVolume = 50 ;  //当前音量
+			var stbid = Authentication.CTCGetConfig("STBType");
+			var stbid2 = stbid.substring(0,6);
+			if(stbid2 == 'IP906H'){
+				mp.setAudioTrackUIFlag(0); //设置音轨的本地UI显示标志 0:不允许 1：允许
+				mp.setMuteUIFlag(0); //设置静音的本地UI显示标志 0:不允许 1：允许
+				mp.setAudioVolumeUIFlag(0); //设置音量调节本地UI的显示标志 0:不允许 1：允许
+			}
+			mp.playByTime(1, 600 , 1);
+			if(endTimer > 600000){
+				stopTime = 30000;
+			}else{
+				stopTime = endTimer;
+			}
+
+			if(stopTime){
+				var Timer = setTimeout(function(){   //播放下一个视频
+					destoryMP();
+					if(codeNum == (videoNum - 1)){
+						codeNum = 0;
+					}else{
+						codeNum ++ ;
+					}
+					clearTimeout(Timer);
+					getDetailCode(codeNum);
+				},stopTime)
+			}
+		}else{
+			setTimeout(isStop, 2000);
+		}
+	}
+	/*
+	 * 释放终端，停止视频播放*/
+	function destoryMP() {
+		var instanceId = mp.getNativePlayerInstanceID();
+		mp.stop();
+		mp.releaseMediaPlayer(instanceId);
+	}
+	//视频窗口点击
+	function getMovieDetail () {
+		click.content();
+	}
+	//滚动文字的方法
+	function scrollTest(){
+		clearTextStyle();
+		textScroll();
+	}
+	//点击跳转详情页
+	function getDetail () {
+		var id = document.getElementById(XEpg.My.currentId).title;
+		var dataType = id.split("=")[0];
+		switch(dataType){
+			case 'contentId':
+				click.content();
+				break;
+			case 'parentId':
+				//click.catalog();
+				break;
+			case 'special':
+				click.special();
+				break;
+		}
+	}
+	function gotoSyncPage(){
+		var id = document.getElementById(XEpg.My.currentId).title;
+		SP.saveCurrentPageInfo('pageIndex',{   //记录当前焦点数据到cookie
+			'indexflag':'1',
+			'currentId' : XEpg.My.currentId,
+			'epg_info':mg_epginfo
+		});
+		setTimeout(function(){
+			XEpg.Util.gotoPage('topic_detatil.html?'+id+mg_epginfo);
+		},150);
+
+	}
+	function gotoTopic(){
+		var id = document.getElementById(XEpg.My.currentId).title;
+		SP.saveCurrentPageInfo('pageIndex',{   //记录当前焦点数据到cookie
+			'indexflag':'1',
+			'currentId' : XEpg.My.currentId,
+			'epg_info':mg_epginfo
+		});
+		setTimeout(function(){
+			XEpg.Util.gotoPage('v2-special-topic.html?'+id+mg_epginfo);
+		},150);
+
+	}
+	function gotoTongPage(){
+		var id = document.getElementById(XEpg.My.currentId).title;
+		SP.saveCurrentPageInfo('pageIndex',{   //记录当前焦点数据到cookie
+			'currentId' : XEpg.My.currentId,
+			'epg_info':mg_epginfo
+		});
+		setTimeout(function(){
+			XEpg.Util.gotoPage('variety-week.html?'+id+mg_epginfo);
+		},150);
+	}
+	var click = {
+		content : function(){
+			var contId = document.getElementById(XEpg.My.currentId).title.split("=")[1];
+			var contType = '';
+			var currTitle = contId;
+			XEpg.Util.ajaxGet('../ajax/getInterface.jsp?action=getDetailData&'+ spPro +'tmtype=2&contentid=' + contId,function(data){
+				var obj = XEpg.Util.parseJSON(data);
+				var contenttype = obj.result[0].contenttype;
+				var recommendCode = obj.result[0].catalogid.split(",")[0] || obj.result[0].catalogid;
+				contType = obj.result[0].categoryid;
+
+				if(contType === 21){
+					XEpg.Util.gotoPage('detail-zongyi.html?contid=' + contId + '&contenttype=' + contenttype  + mg_epginfo);
+				}else{
+					XEpg.Util.gotoPage('detail-num.html?contid=' + contId + '&contenttype=' + contenttype + '&recommendCode=' + recommendCode + mg_epginfo);
+				}
+			});
+			//跳转前,保存当前焦点、分页等页面信息放入cookie
+			SP.saveCurrentPageInfo('pageIndex',{
+				'currentId' : XEpg.My.currentId,
+				'epg_info': mg_epginfo
+			});
+		},
+		catalog : function(){
+			var catId = document.getElementById(XEpg.My.currentId).title.split("=")[1];
+			var twoCatId = document.getElementById(XEpg.My.currentId).title.split("=")[3];
+			var name = '';
+			if(mgPartner == 'ZTE2X'){
+				switch(catId){
+					case '5326' :   //综艺
+						XEpg.Util.gotoPage("variety-week.html?menuID=5326&catalogName=王牌综艺&twoCatId=" + twoCatId + mg_epginfo);
+						name = '王牌综艺';
+						break;
+					case '5327' :    //电视剧
+						XEpg.Util.gotoPage("movie-week.html?menuID=5327&catalogName=电视剧&twoCatId=" + twoCatId + mg_epginfo);
+						name = '电视剧';
+						break;
+					case '5328' :    //电影
+						XEpg.Util.gotoPage("movie.html?menuID=5328&catalogName=电影&twoCatId=" + twoCatId + mg_epginfo);
+						name = '电影';
+						break;
+					case '5329' :    //少儿
+						XEpg.Util.gotoPage("movie.html?menuID=5329&catalogName=少儿&twoCatId=" + twoCatId + mg_epginfo);
+						name = '少儿';
+						break;
+					case '5330' :    //纪录片
+						XEpg.Util.gotoPage("movie.html?menuID=5330&catalogName=纪录片&twoCatId=" + twoCatId + mg_epginfo);
+						name = '纪录片';
+						break;
+					default :      //其他
+						XEpg.Util.gotoPage("movie.html?menuID=5328&catalogName=电影&twoCatId=" + twoCatId + mg_epginfo);
+						name = '其他';
+				}
+			}else{
+				switch(catId){
+					case '5269' :   //综艺
+						XEpg.Util.gotoPage("variety-week.html?menuID=5269&catalogName=王牌综艺&twoCatId=" + twoCatId + mg_epginfo);
+						name = '王牌综艺';
+						break;
+					case '5270' :    //电视剧
+						XEpg.Util.gotoPage("movie-week.html?menuID=5270&catalogName=电视剧&twoCatId=" + twoCatId + mg_epginfo);
+						name = '电视剧';
+						break;
+					case '5261' :    //电影
+						XEpg.Util.gotoPage("movie.html?menuID=5261&catalogName=电影&twoCatId=" + twoCatId + mg_epginfo);
+						name = '电影';
+						break;
+					case '5271' :    //少儿
+						XEpg.Util.gotoPage("movie.html?menuID=5271&catalogName=少儿&twoCatId=" + twoCatId + mg_epginfo);
+						name = '少儿';
+						break;
+					case '5272' :    //纪录片
+						XEpg.Util.gotoPage("movie.html?menuID=5272&catalogName=纪录片&twoCatId=" + twoCatId + mg_epginfo);
+						name = '纪录片';
+						break;
+					default :      //其他
+						XEpg.Util.gotoPage("movie.html?menuID=5261&catalogName=电影&twoCatId=" + twoCatId + mg_epginfo);
+						name = '其他';
+				}
+			}
+			SP.saveCurrentPageInfo('pageIndex',{'currentId' : XEpg.My.currentId,'epg_info':mg_epginfo}); //记录当前焦点数据到cookie
+		}
+	}
+
+	//跳免费推荐 我的片单 产品介绍
+	function  getDetailPre () {
+		var id = document.getElementById(XEpg.My.currentId).title ;
+		var name = document.getElementById(XEpg.My.currentId + '_txt').innerHTML;
+		SP.saveCurrentPageInfo('pageIndex',{'currentId' : XEpg.My.currentId,'epg_info':mg_epginfo}); //记录当前焦点数据到cookie
+		window.setTimeout(function(){
+			XEpg.Util.gotoPage(id + mg_epginfo);
+		},150);
+	}
+	//跳转至搜索页
+	function gotoSearch(){
+		SP.saveCurrentPageInfo('pageIndex',{'currentId' : XEpg.My.currentId,'epg_info':mg_epginfo}); //记录当前焦点数据到cookie
+		window.setTimeout(function(){
+			XEpg.Util.gotoPage('search.html?na=gs'+mg_epginfo);
+		},150);
+	}
+	//下侧栏目跳转
+	function getDetailList () {
+		var id = document.getElementById(XEpg.My.currentId).title;
+		var currTitle = id.substring(10,(id.indexOf('&',0)));
+		var name = document.getElementById(XEpg.My.currentId + '_txt').innerHTML;
+		var parId = id.split("=")[1];
+		SP.saveCurrentPageInfo('pageIndex',{   //记录当前焦点数据到cookie
+			'currentId' : XEpg.My.currentId,
+			'epg_info':mg_epginfo
+		});
+		window.setTimeout(function(){
+			if(name == "王牌综艺"){
+				XEpg.Util.gotoPage("variety-week.html?" + id + mg_epginfo);
+			}else if(name == "电视剧"){
+				XEpg.Util.gotoPage("movie-week.html?" + id + mg_epginfo);
+			}else{
+				XEpg.Util.gotoPage("movie.html?" + id + mg_epginfo);
+			}
+		},150);
+
+	}
+
+	//文字跑马灯开始
+	var moveObj = null, scrollTimer = null, txtObj = null;
+	function textScroll(){
+		document.getElementById(XEpg.My.currentId).className = 'item item_focus';
+		var m_index1 = parseInt(XEpg.My.currentId.substring(5) , 10);
+		moveObj = document.getElementById('nav2_'+ m_index1 + '_txt');
+		txtObj = document.getElementById('nav2_' + m_index1 + '_move');
+
+		if( moveObj.scrollWidth > moveObj.offsetWidth ){
+			document.getElementById('nav2_' + m_index1 + '_copy').innerHTML =  '　    ' + txtObj.innerHTML;
+			startScroll();//父元素向左循环移动(设置父元素scrollleft)
+		}
+	}
+	function startScroll(){//开始文字滚动
+		if(moveObj.scrollLeft >= (txtObj.offsetWidth + 23) ){
+			moveObj.scrollLeft = 0;
+		}else {
+			moveObj.scrollLeft +=2;
+		}
+		scrollTimer = setTimeout(startScroll, 50);
+	}
+	function clearTextStyle(){//清除文字滚动
+		clearTimeout(scrollTimer);		//清除定时器
+		document.getElementById(XEpg.My.currentId).className = 'item';
+		var m_index1 = parseInt(XEpg.My.currentId.substring(5) , 10);
+		var copyEle = document.getElementById('nav2_' + m_index1 + '_copy');
+		if(copyEle){//清空复制的滚动文字
+			copyEle.innerHTML = '';
+		}
+		if(moveObj){//清空scrollLeft
+			moveObj.scrollLeft = 0;
+		}
+	}
+	function clearTextStyles(){
+		clearTimeout(scrollTimer);
+	}
+
+
+
+	//文字滚动部分
+	var beginTimer = null;
+	var starTimer = null;
+	var textTimer = null;
+	function noticeScroll (){
+		var txtObj01 = document.getElementById('nav_notice01');
+		var txtObj02 = document.getElementById('nav_notice02');
+		if(noticeTxt.length > 20){                         // 当公告的文字字数大于 22 个时，需要滚动，小于 22个时，不滚动！
+			txtObj02.innerHTML = noticeTxt.substring(20);
+			txtObj01.innerHTML = noticeTxt.substring(0,20);
+			textTimer = setInterval(startNotice01,2500);
+		}else {
+			txtObj01.innerHTML = noticeTxt;
+		}
+	}
+	function startNotice01(){
+		var text1 = document.getElementById('nav_notice01').innerHTML;
+		var text2 = document.getElementById('nav_notice02').innerHTML;
+		var top = parseInt(document.getElementById('nav_notice01').style.top, 10);
+		var top2 = parseInt(document.getElementById('nav_notice02').style.top, 10);
+		var txtObj01 = document.getElementById('nav_notice01');
+		var txtObj02 = document.getElementById('nav_notice02');
+		starTimer = setInterval(function(){
+			if(top <= -25 && top2 <= 20){
+				txtObj02.style.top = '12px';
+				clearInterval(starTimer);
+				var str = text1;
+				txtObj01.style.display = 'none';
+				txtObj01.style.top = '12px';
+				txtObj01.innerHTML = text2;
+				txtObj01.style.display = 'block';
+				txtObj02.style.display = 'none';
+				txtObj02.style.top = '47px';
+				txtObj02.innerHTML = str;
+				txtObj02.style.display = 'block';
+				textTimer = setInterval(startNotice01,2500)
+			}else {
+				top -= 2;
+				document.getElementById('nav_notice01').style.top = top + 'px';
+				top2 -= 2;
+				if(top2 <= 12) top2 = 12;
+				document.getElementById('nav_notice02').style.top = top2 + 'px';
+			}
+		},30);
+		clearInterval(textTimer);
+	}
+</script>
+</body>
+</html>

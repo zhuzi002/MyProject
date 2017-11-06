@@ -1,0 +1,668 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta name="page-view-size" content="1280*720" />
+<meta charset="UTF-8">
+<title>模板EPG</title>
+<link rel="stylesheet" href="../css/style.css"/>
+<style type="text/css"></style>
+</head>
+<body bgcolor="transparent">
+
+<div class="pagebg">
+    <div class="pic"><img src="../images/list_bg.jpg" width="1280" height="720" alt=""></div>
+</div>
+<!--<div id="test1" style="z-index: 200; left: 20px; top: 20px; width: 800px; height: 300px; position: absolute; color: #ff0000; word-break:break-all;"></div>-->
+    
+<div class="he-dsj">
+
+<!-- S left ../images/demo/he-dsj_banner.jpg-->
+
+<div class="left">
+	<div class="he-banner"><img id="xyk_img" src="" width="372" height="520" alt=""></div>
+	<div class="he-banner01"><img src="../images/proje.png" width="438" height="586" alt=""></div>
+	<div class=he-wrptxt>
+		<div class="txt" id="xyk_wrptxt_txt"></div>
+	</div>
+</div>
+
+<!-- E left -->
+
+
+<!-- S right -->
+
+<div class="right">
+	<div class="wwyx">
+		<div class="ww" id="xyk_name" style="width: 720px;">
+			
+		</div>
+		<div class="dy" id="xyk_info">
+			
+		</div>
+	</div>
+</div>
+
+<div class="he-dsj_icon">
+	
+	<div class="item" id="xyk_subList">
+		<div class="link"></div>
+		<div class="icon"><img src="../images/he-dsj_icon.png" alt=""></div>
+		<div class="txt">选集</div>
+	</div>
+	<div class="item" id="xyk_play" style="left:122px;">
+		<div class="link01"></div>
+		<div class="icon"><img src="../images/list-icon01.png" alt=""></div>
+		<div class="txt01" id="xyk_play_txt">播放第1集</div>
+	</div>
+	<div class="item" id="xyk_coll" style="left:336px;">
+		<div class="link"></div>
+		<div class="icon" id="xyk_coll_icon"><img src="../images/list-icon.png" alt=""></div>
+		<div class="txt" id="xyk_coll_txt">收藏</div>
+	</div>
+</div>
+
+<div class="he-xj" id="subGroup">
+	
+</div>
+
+<div class="he-lb" id="num1">
+        
+</div>
+
+<!-- E right -->
+
+
+</div>
+</body>
+
+<script type="text/javascript" src="../js/xepg.min.js" ></script>
+<script type="text/javascript" src="../js/com.min.js" ></script>
+<script>
+	var g_param = XEpg.My.parseUrl();		//解析地址栏参数 接收的变量
+	var currentId = g_param.currentId || 'xyk_play'; //初始化焦点
+	
+	var isIndex=g_param.currentId||'0';
+	
+	var g_contentCode = g_param.contentCode;  //剧头ID
+	var g_price = 0; //影片价格
+	var UserID = SP.UserID || 'null';
+	var g_authResult = 0;  //0鉴权通过，1鉴权不通过
+	var g_zoneCode = '8FB4A57B0DC043BC89D859A9C1CF6BDF';//专区编码
+	var g_collResult = 0;//0未收藏，1已收藏
+	var g_recordResult = 0;//0无播放记录，1有播放记录
+	var g_mediaCode = ''; //播放、收藏code
+	var g_name = '';//影片名称
+	var g_contType = '';//影片类型
+	var g_aSubList = [];//子集集合
+	var g_subLength = 0;//子集个数
+	var g_pageNum = 1;                            //总页数
+	var g_pageIndex = g_param.pageIndex ||　1;      //当前页
+	var g_grouSelect = g_param.grouSelect || 'grou_0';
+	var g_numSelect = g_param.numSelect || 'num1_0';
+	var g_volumnCount = 1;//更新至多少集
+	var g_playIndex = 0;//续播第几集
+	var g_playTime = 0;
+	var g_actor = '';
+	var g_pic='';
+	var g_orderType=3;
+	
+	window.onload = function(){
+		XEpg.My.init({'currentId':currentId});
+        getData.conDetail(); 
+    }
+	
+	var getData = {
+		conDetail : function () {  //获取内容详情
+			XEpg.Util.ajaxGet('../data/getContentDetail.jsp?contentCode=' + g_contentCode ,function(data){
+				var data = XEpg.Util.parseJSON(data);
+				var m_item = data.getContentDetailResp || '';
+				if(m_item){
+					g_contType = m_item.elementType || 'Program';
+					g_mediaCode = m_item.code;
+					g_price = parseInt(m_item.price) || 0;
+					g_name = m_item.name;
+					g_volumnCount = m_item.volumnCount;
+					g_actor = m_item.actor;
+					var description = m_item.description;
+					if (description.length > 120) {
+		                description = description.substring(0, 120) + '......';
+		            }
+					g_pic=m_item.poster||'';
+					$('xyk_img').src = m_item.poster;
+					$('xyk_name').innerHTML = g_name + '<span> （共' + g_volumnCount + '集）</span>';
+					$('xyk_info').innerHTML = '导演：' + m_item.director + '<br>主演：' + m_item.actor + '<br>简介：' + description;
+					
+			        getData.getSubList();
+				}
+			});
+		},
+		getSubList : function () {
+			XEpg.Util.ajaxGet('../data/getSeriesSubsetList.jsp?seriesCode='+ g_contentCode +'&firstIndex=0&maxResult=999', function(data){
+				var data = XEpg.Util.parseJSON(data);
+				var m_item = data.getContentListResp.contentInfos || '';
+				if(m_item){
+					g_subLength = m_item.length;
+					for(var i = 0 ; i < g_subLength ; i ++){
+						g_aSubList.push(m_item[i]);
+					}
+					if(g_volumnCount == g_subLength){
+						$('xyk_wrptxt_txt').innerHTML = g_subLength +'集全';
+					}else{
+						$('xyk_wrptxt_txt').innerHTML = '更新至<span>'+ g_subLength +'</span>集';
+					}
+				}
+				getData.getGroup();
+			});
+		},
+		getGroup : function () {  //选集组
+			var grouData = [];  //动态拼接选集组
+			g_pageNum = Math.ceil(g_subLength / 30) ;
+			for (var i = 0; i < g_pageNum; i++) {
+				if (i == (g_pageNum - 1)) {
+					grouData.push(
+						'<div class="item" id="grou_' + i + '" style="left: ' + 134 * i + 'px">',
+							'<div class="txt">' + (1 + i * 30) + '-' + g_subLength + '</div>',
+						'</div>'
+					)
+				} else {
+					grouData.push(
+						'<div class="item" id="grou_' + i + '" style="left: ' + 134 * i + 'px">',
+							'<div class="txt">' + (1 + i * 30) + '-' + ((i + 1) * 30) + '</div>',
+						'</div>'
+					)
+				}
+				
+				if(g_pageNum > 1 && i < (g_pageNum - 1)){
+					grouData.push(
+						'<div class="he-fg" style="left: ' + 145 * (i + 1) + 'px""><img src="../images/he-fg.jpg"></div>'
+					)
+				}
+			}
+			$('subGroup').innerHTML = grouData.join('');
+			$(g_grouSelect).className = 'item item_select';
+			getData.getNum();
+		},
+		getNum : function () {
+			var m_aNumData = [];  
+			var len = '';
+			if(g_subLength < (g_pageIndex * 30)){
+				len = g_subLength;
+			}else{
+				len = g_pageIndex * 30;
+			}
+			for(var i = ((g_pageIndex - 1) * 30);i < len ;i++){    
+				var m_topStyle = Math.floor((i-((g_pageIndex - 1) * 30))/10) * 58;
+				var m_leftStyle = ((i-((g_pageIndex - 1) * 30)) % 10) * 74;
+				m_aNumData.push(
+					
+					'<div class="item" id="num1_'+(i-((g_pageIndex - 1)*30))+'"  title="' + g_aSubList[i].programID + '"  style="top: '+ m_topStyle +'px; left: '+ m_leftStyle +'px;">' ,
+						'<div class="link"></div>',
+						'<div class="txt">' + g_aSubList[i].setNumber + '</div>',
+					'</div>'
+				)
+			}
+		 	$('num1').innerHTML = m_aNumData.join("");
+		 	$(XEpg.My.currentId).className = 'item item_focus';
+		 	numMove();
+		 	//鉴权
+		 	coll.isColl();
+		 	if(g_price != 0){
+				authAll.proAuthDD();
+			}
+		}
+	};
+	//http://36.101.204.156:8090/hainanIPTV/hainanUnifiedIPTV/data/prodCheck.jsp?USER_ID=null&SP_ID=HQHY&SP_PWD=12345678&BUSI_ID=YKYSBY&PROD_ID=HQHYBJ
+	var authAll = {
+		proAuthDD : function(){
+			g_orderType=g_price > 15 ? 4 : 3;
+			if(g_price > 15){
+				g_price=Math.ceil(g_price/10);
+				authAll.proAuthBJ();
+			}else{
+				authAll.proAuthBJ();
+			}
+		},
+		proAuthBNY : function(){
+			var m_proID = '4KHY';
+			XEpg.Util.ajaxGet('../data/prodCheck.jsp?USER_ID='+UserID+'&SP_ID=HQHY&SP_PWD=12345678&BUSI_ID=YKYSBY&PROD_ID=' + m_proID ,function(data){
+				eval('var result1=' + data);
+	            var PROD_STATE_PPV = result1.PROD_STATE;
+	            if (PROD_STATE_PPV == 'Y') {
+	            	g_authResult = 0;
+	                return;
+	            } else if (PROD_STATE_PPV == 'N') {
+	                g_authResult = 1;
+	                authAll.proAuthDDonce();
+	            }
+			});
+		},
+		proAuthBJ : function(){
+			var m_proID = '4KHYBJ';
+			XEpg.Util.ajaxGet('../data/prodCheck.jsp?USER_ID='+UserID+'&SP_ID=HQHY&SP_PWD=12345678&BUSI_ID=YKYSBY&PROD_ID=' + m_proID ,function(data){
+				eval('var result1=' + data);
+	            var PROD_STATE_PPV = result1.PROD_STATE;
+	            if (PROD_STATE_PPV == 'Y') {
+	            	g_authResult = 0;
+	                return;
+	            } else if (PROD_STATE_PPV == 'N') {
+	            	g_authResult = 1;
+	                authAll.proAuthBNY();
+	            }
+	            
+			});
+		},
+		proAuthDDonce : function(){
+			var m_proID = '4KHYPPV3';
+				if(g_price == 3){
+					m_proID = '4KHYPPV3';
+				}else if(g_price == 5){
+					m_proID = '4KHYPPV5';
+				}else{
+					m_proID = '4KHYPPV8';
+				}
+				XEpg.Util.ajaxGet('../data/PPVprodCheck.jsp?USER_ID='+UserID+'&SP_ID=HQHY&SP_PWD=12345678&BUSI_ID=YKYSBY&PROD_ID=' + m_proID+'&PPV_CODE='+g_contentCode ,function(data){
+					eval('var result1=' + data);
+		            var PROD_STATE_PPV = result1.PROD_STATE;
+		            if (PROD_STATE_PPV == 'Y') {
+		            	g_authResult = 0;
+		                return;
+		            } else if (PROD_STATE_PPV == 'N') {
+		                g_authResult = 1;
+		            }
+				});
+		}
+		
+	};
+	
+	function numMove(){
+		
+		XEpg.$('xyk_subList').left({'id':'xyk_coll'}).right({'id':'xyk_play'}).down({'id':g_grouSelect});
+		XEpg.$('xyk_play').click({'func':click.play}).left({'id':'xyk_subList'}).right({'id':'xyk_coll'}).down({'id':g_grouSelect});
+		XEpg.$('xyk_coll').click({'func':click.coll}).left({'id':'xyk_play'}).right({'id':'xyk_subList'}).down({'id':g_grouSelect});
+	
+		for(var i = 0 ; i < g_pageNum ; i++){
+			XEpg.$('grou_' + i).click({'func' : click.grouClick})
+				.left({'func' : move.grouLeft})
+				.right({'func' : move.grouRight})
+				.up({'func' : move.grouUp})
+				.down({'func' : move.grouDown})
+		}
+		
+		for(var i = 0 ; i < 30 ; i++){
+			XEpg.$('num1_' + i).click({'func' : click.seriseplay})
+				.left({'func' : move.num1Left})
+				.right({'func' : move.num1Right})
+				.up({'func' : move.num1Up})
+				.down({'func' : move.num1Down})
+		}
+	}
+	
+	var move = {
+		grouLeft : function(){
+			var index = parseInt(XEpg.My.currentId.substring(5), 10);
+			$(XEpg.My.currentId).className = 'item';
+			$(g_grouSelect).className = 'item item_select';
+			if(index > 0){
+				XEpg.My.currentId = 'grou_' + (index - 1);
+			}else{
+				XEpg.My.currentId = 'grou_' + (g_pageNum - 1);
+			}
+			//$(XEpg.My.currentId).className = 'item item_focus';
+			click.grouClick();
+		},
+		grouRight : function(){
+			var index = parseInt(XEpg.My.currentId.substring(5), 10);
+			$(XEpg.My.currentId).className = 'item';
+			$(g_grouSelect).className = 'item item_select';
+			if(index == (g_pageNum - 1)){
+				XEpg.My.currentId = 'grou_0';
+			}else{
+				XEpg.My.currentId = 'grou_' + (index + 1);
+			}
+			//$(XEpg.My.currentId).className = 'item item_focus';
+			click.grouClick();
+		},
+		grouUp : function(){
+			$(XEpg.My.currentId).className = 'item';
+			XEpg.My.currentId = 'xyk_subList';
+			$(g_grouSelect).className = 'item item_select';
+			$(XEpg.My.currentId).className = 'item item_focus';
+		},
+		grouDown : function(){
+			$(XEpg.My.currentId).className = 'item';
+			XEpg.My.currentId = g_numSelect;
+			$(g_grouSelect).className = 'item item_select';
+			$(XEpg.My.currentId).className = 'item item_focus';
+		},
+		num1Left : function(){
+			var index = parseInt(XEpg.My.currentId.substring(5), 10); //当前焦点下标
+			var grouIndex = parseInt(g_grouSelect.substring(5), 10);   //选集区域numGroup下标
+			var numIndex = g_subLength - ((g_pageNum - 1) * 30);   //集数区域下标
+			$(XEpg.My.currentId ).className = 'item';
+			if(index == 0){   //当前焦点下标为0时
+				if(g_pageNum > 1){  //总页数大于1时
+					if(g_pageIndex == 1){  //当前页为第一页时
+						g_pageIndex = g_pageNum;   //翻页到最后一页
+						$(g_grouSelect).className = 'item';
+						XEpg.My.currentId = 'num1_' + (numIndex - 1);
+						g_grouSelect = 'grou_' + (g_pageNum - 1);
+						$(g_grouSelect).className = 'item item_select';
+						getData.getNum();
+					}else{  //翻页到上一页
+						g_pageIndex --;
+						$(g_grouSelect).className = 'item';
+						XEpg.My.currentId = 'num1_29';
+						g_grouSelect = 'grou_' + (g_pageIndex - 1);
+						$(g_grouSelect).className = 'item item_select';
+						getData.getNum();
+					}
+				}else{ //总页数为1 ，移动到当前页最后一集
+					XEpg.My.currentId = 'num1_' + (numIndex - 1);
+					$(XEpg.My.currentId ).className = 'item item_focus';
+				}
+			}else{ //当前焦点下标大于1，向左移动焦点
+				XEpg.My.currentId = 'num1_' + (index - 1);
+				$(XEpg.My.currentId ).className = 'item item_focus';
+			}
+			
+		},
+		num1Right : function(){
+			var index = parseInt(XEpg.My.currentId.substring(5), 10); //当前焦点下标
+			var grouIndex = parseInt(g_grouSelect.substring(5), 10);   //选集区域numGroup下标
+			var numIndex = g_subLength - ((g_pageNum - 1) * 30);   //集数区域下标
+			$(XEpg.My.currentId).className = 'item';
+			if(g_pageNum == 1){  //总页数为1页的时候
+				if(index == (g_subLength - 1)){  //当前焦点处于当前页集数最后一个时
+					XEpg.My.currentId = 'num1_0';
+				}else{
+					XEpg.My.currentId = 'num1_' + (index + 1);
+				}
+				$(XEpg.My.currentId).className = 'item item_focus';
+			}else{
+				if(g_pageIndex < g_pageNum){   //当前页小于总页数时，说明当前页有30集
+					if(index == 29){       //当前焦点点下标为29，向右 ，翻页
+						g_pageIndex ++ ;
+						$(g_grouSelect).className = 'item';
+						XEpg.My.currentId = 'num1_0';
+						g_grouSelect = 'grou_' + (grouIndex + 1);
+						$(g_grouSelect).className = 'item item_select';
+						getData.getNum();
+					}else{  //当前焦点点下标小于29，焦点向右移
+						XEpg.My.currentId = 'num1_' + (index + 1);
+						$(XEpg.My.currentId).className = 'item item_focus';
+					}
+				}else{ //当前页为最后一页时
+					if(index == (numIndex - 1)){  //当前焦点为当前页最后一个时，翻页到第一页
+						g_pageIndex = 1 ;
+						$(g_grouSelect).className = 'item';
+						XEpg.My.currentId = 'num1_0';
+						g_grouSelect = 'grou_0';
+						$(g_grouSelect).className = 'item item_select';
+						getData.getNum();
+					}else{  //焦点右移
+						XEpg.My.currentId = 'num1_' + (index + 1);
+						$(XEpg.My.currentId).className = 'item item_focus';
+					}
+				}
+			}
+			
+		},
+		num1Up : function(){
+			var index = parseInt(XEpg.My.currentId.substring(5), 10);
+			if(index < 10) { //当前焦点为第一排时
+				$(XEpg.My.currentId).className = 'item';
+				g_numSelect = XEpg.My.currentId;
+				XEpg.My.currentId = g_grouSelect;
+				$(XEpg.My.currentId).className = 'item item_focus'
+			}else { 
+				$(XEpg.My.currentId).className = 'item';
+				XEpg.My.currentId = 'num1_' + (index - 10);
+				$(XEpg.My.currentId).className = 'item item_focus';
+			}
+		},
+		num1Down : function(){
+			var index = parseInt(XEpg.My.currentId.substring(5), 10); //当前焦点下标
+			var numIndex = g_subLength - ((g_pageNum - 1) * 30);  //最后一页集数
+			var numRemainder = g_subLength % 10   //最后一行个数
+			$(XEpg.My.currentId).className = 'item';
+			if(g_pageIndex < g_pageNum){    //当前页小于总页数时   说明当前页有30集
+				if(index < 20) {         //当前焦点下标小于20时
+					XEpg.My.currentId = 'num1_' + (index + 10);
+				}else{
+					XEpg.My.currentId = g_grouSelect;
+				}
+			}else{   //当前页是最后一页时
+				if(numIndex < 11){  //当前页集数小于11，只有一排时
+					XEpg.My.currentId = g_grouSelect;
+				}else if(numIndex > 10 && numIndex < 21){     //只有两排时
+					if(index < 10){  //当前焦点下标小于10
+						XEpg.My.currentId = 'num1_' + (index + 10);
+						if(!$(XEpg.My.currentId)){
+							XEpg.My.currentId = 'num1_' + (numIndex - 1);
+						}
+					}else{   //当前焦点下标大于10
+						XEpg.My.currentId = g_grouSelect;
+					}
+				}else{  //当前页集数有三排
+					if(index < 20){  //当前焦点下标小于10
+						if((index - 9) > (numIndex - 21)){ //当前焦点坐标下方为空时
+							XEpg.My.currentId = 'num1_' + (numIndex - 1);
+						}else{   //当前焦点坐标下方有集数按钮
+							XEpg.My.currentId = 'num1_' + (index + 10);
+						}
+					}else{   //当前焦点下标大于10
+						XEpg.My.currentId = g_grouSelect;
+					}
+				}
+			}
+			$(XEpg.My.currentId).className = 'item item_focus';
+		}
+	}
+	
+	
+	var coll = {
+		isColl : function () {  //是否收藏
+			XEpg.Util.ajaxGet('../data/getCollect.jsp?zoneCode=' + g_zoneCode + '&userID=' + UserID + '&programCode=' + g_contentCode,function(data){
+				var data = XEpg.Util.parseJSON(data);
+	            var m_item = data.getZoneCollectResp;
+	            if(m_item){
+	            	if (m_item.resultCode == 0) {
+		                g_collResult = 1;
+		                $('xyk_coll_txt').className = 'txt01';
+		                $('xyk_coll_icon').className = 'icon02';
+						$('xyk_coll_txt').innerHTML = '已收藏';
+		            } else {
+		                g_collResult = 0;
+		            }
+	            }
+	            getRecord();
+			});
+		},
+		addColl : function () {
+			XEpg.Util.ajaxGet('../data/addCollect.jsp?zoneCode=' + g_zoneCode + '&userID=' + UserID + '&programCode=' + g_contentCode + '&programName=' + encodeURIComponent(g_name) + '&seriesFlag=1&poster='+encodeURIComponent(g_pic),function(data){
+				var data = XEpg.Util.parseJSON(data);
+	            var m_item = data.addZoneCollectResp;
+	            if(m_item){
+	            	if (m_item.resultCode == 0) {
+		                g_collResult = 1;
+		                $('xyk_coll_txt').className = 'txt01';
+		                $('xyk_coll_icon').className = 'icon02';
+						$('xyk_coll_txt').innerHTML = '已收藏';
+		            } else {
+		                return;
+		            }
+	            }
+			});
+		},
+		deleteColl : function () {
+			XEpg.Util.ajaxGet('../data/removeCollect.jsp?zoneCode=' + g_zoneCode + '&userID=' + UserID + '&programCode=' + g_contentCode,function(data){
+				var data = XEpg.Util.parseJSON(data);
+	            var m_item = data.removeZoneCollectResp;
+	            if(m_item){
+	            	if (m_item.resultCode == 0) {
+		                g_collResult = 0;
+		                $('xyk_coll_txt').className = 'txt';
+						$('xyk_coll_txt').innerHTML = '收藏';
+						$('xyk_coll_icon').className = 'icon';
+		            } else {
+		                return;
+		            }
+	            }
+			});
+		}
+	};
+	
+	var click = {
+		play : function () {   //跳播放
+			var m_contentCode = $(XEpg.My.currentId).title;
+			var isOrder = 'N';
+			var m_price = g_price > 15 ? (g_price / 10) : g_price;
+			var orderType = g_orderType;
+			var programID = g_contentCode;
+			var m_playIndex=(g_playIndex + 1)>10?(g_playIndex + 1):'0'+(g_playIndex + 1);
+			var meidaName = g_name+'&nbsp;第' + m_playIndex + '集';
+			var isMovie = 'movie';
+			var backUrl = location.href;
+			backUrl = backUrl.indexOf("?") != -1 ? backUrl.split("?")[0] : backUrl;
+			backUrl += "?" + "currentId=" + XEpg.My.currentId +"&contentCode=" + g_contentCode;
+			var r = parseInt(((Math.random() * (4 - 1 + 1)) + 1), 10);
+			if(g_authResult == 0) {
+				isOrder = 'Y';
+			} else {
+				isOrder = 'N';
+			}
+			XEpg.Util.gotoPage('4kgarden_play.html?programID=' + m_contentCode +
+				'&contentCode=' + programID +
+				'&actor=' + encodeURIComponent(g_actor) +
+				'&mediaName=' + encodeURIComponent(meidaName) +
+				'&isMovie=' + 'series' +
+				'&playTime=' + g_playTime +
+				'&categoryCode=' + SP.indexParentCodeArray['grid' + r].code +
+				'&isOrder=' + isOrder +
+				'&orderType=' + orderType +
+				'&ppvOrderMoney=' + m_price +
+				'&poster='+encodeURIComponent(g_pic)+
+				'&backUrl=' + encodeURIComponent(backUrl));
+		},
+		seriseplay : function () {   //跳播放
+			var m_contentCode = $(XEpg.My.currentId).title;
+			var s_index=parseInt(XEpg.My.currentId.substring(5), 10)
+			var isOrder = 'N';
+			var m_price = g_price > 15 ? (g_price / 10) : g_price;
+			var orderType = g_orderType;
+			var programID = g_contentCode;
+			var m_playIndex=(s_index + 1)>10?(s_index + 1):'0'+(s_index + 1);
+			var meidaName = g_name+'&nbsp;第' + m_playIndex + '集';
+			var isMovie = 'movie';
+			var m_playTime=0;
+			if(g_playIndex==s_index){
+				m_playTime=g_playTime;
+			}
+			var backUrl = location.href;
+			backUrl = backUrl.indexOf("?") != -1 ? backUrl.split("?")[0] : backUrl;
+			backUrl += "?" + "currentId=" + XEpg.My.currentId +"&contentCode=" + g_contentCode;
+			var r = parseInt(((Math.random() * (4 - 1 + 1)) + 1), 10);
+			if(g_authResult == 0) {
+				isOrder = 'Y';
+			} else {
+				isOrder = 'N';
+			}
+			XEpg.Util.gotoPage('4kgarden_play.html?programID=' + m_contentCode +
+				'&contentCode=' + programID +
+				'&actor=' + encodeURIComponent(g_actor) +
+				'&mediaName=' + encodeURIComponent(meidaName) +
+				'&isMovie=' + 'series' +
+				'&playTime=' + m_playTime +
+				'&categoryCode=' + SP.indexParentCodeArray['grid' + r].code +
+				'&isOrder=' + isOrder +
+				'&orderType=' + orderType +
+				'&ppvOrderMoney=' + m_price +
+				'&poster='+encodeURIComponent(g_pic)+
+				'&backUrl=' + encodeURIComponent(backUrl));
+		},
+		coll : function () {   //点击收藏
+			if(g_collResult == 0){
+				coll.addColl();
+			}else{
+				coll.deleteColl();
+			}
+		},
+		grouClick : function(){  //区域3点击事件
+			var index = parseInt(XEpg.My.currentId.substring(5), 10);
+			$(g_grouSelect).className = 'item';
+			g_grouSelect = XEpg.My.currentId;
+			g_pageIndex = index + 1;
+			g_numSelect = 'num1_0';
+			$(g_grouSelect).className = 'item item_select';
+			getData.getNum();
+		}
+	};
+	var g_seriesCode='';
+	function getRecord() {   //是否有播放记录
+		XEpg.Util.ajaxGet('../data/getPlayRecord.jsp?zoneCode=' + g_zoneCode + '&userID=' + UserID + '&programCode=' + g_contentCode, function(data) {
+			
+			var data = XEpg.Util.parseJSON(data);
+			var item = data.getZonePlayRecordResp;
+			var mResultCode = item.resultCode;
+			if(mResultCode == 0){
+				var len = g_aSubList.length;
+				var recordCode = item.seriesCode;
+				g_seriesCode=recordCode;
+				g_playTime = item.playTime;
+				
+				for(var i = 0 ; i < len ; i ++){
+					var mCode = g_aSubList[i].code;
+					if(mCode == recordCode){
+						g_playIndex = i;
+					}
+				}
+				$('xyk_play').title = recordCode;
+				$('xyk_play_txt').innerHTML = '续播第' + (g_playIndex + 1) + '集';
+			}else{
+				$('xyk_play').title = g_aSubList[0].code;
+				$('xyk_play_txt').innerHTML = '播放第1集';
+			}
+			if(isIndex=='0'){
+			    sendLogDetil();
+			}	
+		});
+	}
+	//发送日志
+    function sendLogDetil() {
+    	
+    	if(SP.UserID){
+          var stb = "";
+          try {
+             if (typeof(Authentication) != "undefined") {
+                stb = Authentication.CTCGetConfig("STBType");
+             }
+          } catch (e) {
+          }
+          
+          var epgPlatformType = SP.iptv_flag == 'hw' ? '0' :'1';
+          var reportUrl = "../data/addVodLog.jsp?" +
+          	 "contentCode=" + g_contentCode +
+          	 "&contentName=" + encodeURIComponent(g_name) +
+             "&userID=" + SP.UserID +
+             "&type=1" + 
+             "&stb=" + stb +
+             "&productCode=" + "4KHYDSJ" +
+             "&productName=" + encodeURIComponent("4K花园电视剧") +
+             "&cpID=" + 1007 +
+             "&resolution=1" +
+             "&seriesCode=" + g_seriesCode +
+			 "&seriesName="+ encodeURIComponent(g_name) +
+             "&epgPlatformType=" + epgPlatformType;
+          XEpg.Util.ajaxGet(reportUrl);
+       }
+    }
+	
+	
+	function $(id){
+        return document.getElementById(id);
+    }
+	XEpg.Nav.key_back_event = function(){
+		XEpg.Nav.key_back_opt();
+   };
+</script>
+</html>

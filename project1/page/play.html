@@ -1,0 +1,986 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>芒果TV-GS</title>
+<meta name="page-view-size" content="1280*720" />
+<link rel="stylesheet" href="../css/style_video.css"/>
+</head>
+<body bgcolor="transparent">
+
+<!-- S pagebg -->
+<div class="pagebg">
+	<div class="pic">
+		<img style="display: none;" src=" " />
+	<!--加载播放视频开始-->
+		<!--<iframe id="smallvodFull" name="if_smallscreen" style="position: absolute;background: transparent; top: 0px;left: 0px; display: block;" width="100%" height="100%" frameborder="0" src="" allowtransparency="true"></iframe>-->
+	<!--加载播放视频结束-->
+	</div>
+</div>
+
+
+<!-- E pagebg -->
+<!-- S content -->
+<div class="wrapper" >
+	<div id="test1" style="left: 20px; top: 20px; width: 800px; height: 300px; position: absolute; color: #ff0000; word-break:break-all;"></div>
+	
+	<!--快进、快退、暂停-->
+	<div style="display: none;" id="fast_stop">
+	    <!--S 快进快退 -->
+	    <div class="yq-tvTxt" id="viode_name"></div>
+	    
+	   <!-- <div class="yq-picStop" ><img style="display: none;"  id="center"  src="../image_video/yq-icon-stop.png" height="115" width="115" alt=""></div>
+	    -->
+	    <div class="yq-screenIcon" style="display: block;" id="center">
+	        <div class="txt" style="display: none;" id="multiple_img"></div>
+	        <div class="icon"><img style="display: block;" id="center_img" src="../image_video/yq-icon-osdStop.png" height="81" width="69" style="left: 5px;" alt=""></div>
+	    </div>
+	    <!--E 快进快退 -->
+		<div class="cs-osdBox">
+			<div class="cs-osdicon"><img id="bar_img" src="../image_video/yq-icon-suspended.png" height="64" width="62" alt=""></div>
+			<div class="cs-osdTime" id="playtime"></div>
+			<div class="cs-osdTime"style="left:1125px" id="endtime"></div>
+			<div class="cs-osd-volume">
+			    <!--
+			        progress起始值为width:**px; 最大值为**px;
+			        point起始值为left:**px; 最大值为**px;
+			    -->
+		       <div class="bar">
+		       		<div class="progress" id="mediaBar" style="width:1px;"></div>  <!--最大858-->        
+		       </div>
+	      		 <div class="point" id="mediaPoint" style="left:-17px;"></div>
+	   		</div>
+	   		
+		</div>
+	</div>
+	
+	<!--退出-->
+	<div style="display: none;" id="quit">
+		<!-- S 遮罩 -->	
+		<div class="yq-mask"></div>
+		<!-- E 遮罩 -->
+	    <div class="yq-osdTitle" style="top:200px;font-size: 36px;">你确定退出观看</div>
+	    <!-- 单集退出-->
+	    <div class="yq-btnlist" style="top:301px;display: block;" id="stateOne">
+	    	<div class="item" id="nav1_0"><div class="txt" id="nav1_0_txt">收藏</div></div>
+	    	<div class="item" id="nav1_1" style="left:170px"><div class="txt">确定</div></div>
+	        <div class="item"  style="left:340px" id="nav1_2"><div class="txt">取消</div></div>
+	    </div>
+	    
+	    <!--多集退出-->
+	    <div class="yq-btnlist" style="top:301px;display: none;" id="stateTwo">
+	    <!-- 焦点样式class="item item_focus"-->
+	    	<div class="item" id="nav1_3"><div class="txt">上一集</div></div>
+	    	<div class="item" style="left:170px" id="nav1_4"><div class="txt">确定</div></div>
+	        <div class="item"  style="left:340px" id="nav1_5"><div class="txt">下一集</div></div>
+	        <!--<div class="item" style="top:88px;left:170px" id="nav1_6"><div class="txt">返回</div></div>-->
+	    </div>
+    </div>
+    
+    <!--声音-->
+    <div style="display: none;" id="voice">
+    	<!-- 静音 -->
+	    <div class="yq-volum"><img id="mute" style="display: none;" src="../image_video/yq-icon-volum.png" height="80" width="74" alt=""></div>
+	    <!-- 音量 -->
+	    <div class="yq-volumeBox" id="volbox">
+	       <div class="icon"><img src="../image_video/yq-icon-add.png" height="58" width="58" alt=""></div>
+	       <div class="volumebar"><span id="volbar" style="height:90px"></span></div><!--最大155-->
+	       <div class="icon" style="top:223px"><img src="../image_video/yq-icon-jian.png" height="40" width="58" alt=""></div>
+	    </div>
+    </div>
+    
+    
+    <div id="isEnd" style="display: none;">
+    	<!-- S 遮罩 -->   
+        <div class="yq-mask"></div>
+		<!-- E 遮罩 -->
+		<div class="yq-osdTitle" style="top:217px" id="osdTitle"></div>
+		<div class="yq-osdTitle" style="top:287px">播放完毕</div>
+		 <div class="yq-osdTitle02" id="osdTitle2"></div>
+		<div class="yq-btnlist" style="top:370px;">
+		<!-- 焦点样式class="item item_focus"-->
+		    <div class="item" id="nav1_7"><div class="txt">上一集</div></div>
+		    <div class="item" id="nav1_8" style="left:170px"><div class="txt">返回</div></div>
+		    <div class="item" id="nav1_9" style="left:340px"><div class="txt">下一集</div></div>
+		</div>
+    	
+    </div>
+	
+</div>
+
+<iframe id="smallvodFull" name="if_smallscreen" style="position: absolute; top: 0px;left: 0px; display: block;visibility: hidden;"
+		width="1280" height="720"  src="" frameborder="no" scrolling="no" ></iframe>
+		
+	
+<script src="../js/xepg.min.js"></script>
+<script src="../js/commons.js"></script>
+<script type="text/javascript">
+	var params = XEpg.My.parseUrl();	
+	var param = XEpg.My.parseUrl(decodeURIComponent(window.location.href));   //解析Url
+	var contentId = param.contid;  //内容ID
+	var contentNum = param.playNum; //剧集生效，当前播放集数
+	var contentCode = ''; //单集生效，内容视频code
+	var conCodeList = []; //剧集生效，存储子集contentCode
+	var contentType = null;
+	var backUrl = params.returnUrl;
+	var currentId = 'nav1_1';
+	var colCode = '' ;//收藏code
+	var stbid = '' ;//盒子型号
+	var authCode = '';
+	var ppvprice = '';
+	var useAbled =param.useAbled || '';
+	var mp = null;
+	var preVolume = 5;//每一次增减的音量
+	var nowVolume = 0;//获取当前媒体的音量
+	var totalVolume = 100;//总音量
+	var hiddenTimer = null;//隐藏音量组件，定时器
+	var hiddenPress = null;//隐藏进度条
+	var overTime = null; //播放结束定时器
+	
+	var isPause = false;  //播放状态
+	var trickmode = 'play';
+	var playtime = "";    //当前播放时间
+	var starttime = param.starttime;   //开始播放时间
+	var endtime = "";     //播放总时长
+	var speedindex = 1;   //当前快进倍数
+	var isExit = false;  //退出界面
+	var isNextPlay = false;  
+	var authState = '';
+	var ppvprices = '';
+	var spPro = '';   //portalcode + sptoken 参数
+	var mgPartner = param.mgPartner; //平台信息
+	var mgUserID = param.mgUserID;  //用户ID
+	var mgUserToken = param.mgUserToken;  //临时身份证明
+	var mg_epginfo = '&mgPartner=' + mgPartner + '&mgUserID=' + mgUserID + '&mgUserToken=' + mgUserToken;
+	
+	function $ (id){
+		return document.getElementById(id);
+	}
+	
+	window.onload = function(){
+		stbid = Authentication.CTCGetConfig("STBType");
+		var stbid2 = stbid.substring(0,6);
+		if(stbid2 == 'IP906H'){
+			document.onkeydown = keypress;	//事件监听绑定
+		}else{
+			document.onkeypress = keypress;	//事件监听绑定
+		}
+		voideInfo.platform();
+	}
+	
+	//获取播放信息
+	var voideInfo = {
+		//平台信息
+		platform : function(){
+			if(mgPartner == 'ZTE2X'){  //中兴
+				spPro = 'portalcode=2017gszx&sptoken=CF4EAB0D8DF1E71CA84762F6BA009BD4&';
+			}else{  //华为
+				spPro = 'portalcode=2017gshw&sptoken=96630FB882600EC4A3F0B610535FB2A7&';
+			}
+			voideInfo.getDetail();
+		},
+		//内容详情
+		getDetail : function(){
+			XEpg.Util.ajaxGet('../ajax/getInterface.jsp?action=getDetailData&'+ spPro +'tmtype=2&contentid=' + contentId ,function(obj){
+				var data = XEpg.Util.parseJSON(obj);
+				var item = data.result[0];
+				contentType = item.contenttype;
+				var name = item.name.split("HD]")[1] || item.name;
+				colCode = item.code;
+				authCode = item.contentcode;
+				ppvprice = item.ppvprice || 0;
+				if(contentType == 1 ){//说明是电影，播放电影
+					$("viode_name").innerHTML = name;
+					$("osdTitle").innerHTML = name;
+					contentCode = item.contentcode;
+				}else{
+					for(var i = 0 , len = item.subcontents.length; i < len ; i ++){
+						conCodeList.push(item.subcontents[i])
+					}
+					if(item.categoryid == 21){//说明是综艺，播放综艺
+						conCodeList = conCodeList.reverse();
+						$("viode_name").innerHTML = conCodeList[contentNum - 1].name.split("HD]")[1] || conCodeList[contentNum - 1].name;
+						$("osdTitle").innerHTML = conCodeList[contentNum - 1].name.split("HD]")[1] || conCodeList[contentNum - 1].name;
+						contentCode = conCodeList[contentNum - 1].contentcode;
+						
+					}else{//说明是电视剧，播放电视剧
+						//document.getElementById("test1").innerHTML =  authCode;
+						$("viode_name").innerHTML = conCodeList[contentNum - 1].name.split("HD]")[1] || conCodeList[contentNum - 1].name;
+						$("osdTitle").innerHTML = conCodeList[contentNum - 1].name.split("HD]")[1] || conCodeList[contentNum - 1].name;
+						contentCode = conCodeList[contentNum - 1].contentcode;
+					}
+				}
+				getAuth();
+			})
+		}
+	};
+	function getAuth () {//鉴权
+		var url = "../ajax/gsAuth.jsp?userToken=" + mgUserToken + "&userID=" + mgUserID + "&ContentID=" + authCode + "&productID=8001013020";
+		XEpg.Util.ajaxGet(url,function(data){
+			var obj = XEpg.Util.parseJSON(data);
+			var item = obj.result[0].result;
+			var authResult = parseInt(item , 10);
+			authState = authResult.toString(16);
+		});
+		video.play();
+	}
+	var video = {
+		play : function(){
+			if(mgPartner == 'ZTE2X'){  //中兴
+				var epgdomain = Authentication.CTCGetConfig("EPGDomain" );
+		    	var last = epgdomain.lastIndexOf("/");
+				var host = epgdomain.substr( 0, last );
+				var srcHost = host + "/MediaService/SmallScreen?" +
+		            "ContentID="+contentCode+"&Left=0&Top=0&Width=1280&Height=720&CycleFlag=0";
+				$("smallvodFull").src = srcHost;
+			}else{  //华为
+				var epgdomain = Authentication.CTCGetConfig("EPGDomain" );
+		        var srcHost = epgdomain.split("/EPG")[0] + "/EPG/MediaService/SmallScreen.jsp" +
+		            "?ContentID="+contentCode+"&Left=0&Top=0&Width=1280&Height=720&CycleFlag=0";
+				$("smallvodFull").src = srcHost;
+			}
+			setTimeout(function(){
+				video.getIframe();
+			},1000)
+		},
+		getIframe : function(){
+			var iframe = $("smallvodFull");
+			var iframeContent = (iframe.contentWindow || iframe.contentDocument);
+			if (mgPartner == 'ZTE2X') {
+	            try {
+	                mp = iframeContent.mymediaplayer; // 中兴获取Mediaplayer 对象
+	            } catch (e) {
+	            }
+	        } else {
+	            try {
+	               mp = iframeContent.mp; // 华为获取Mediaplayer 对象
+	            } catch (e) {
+	            }
+	        }
+	        
+	        if(starttime && !isNextPlay){    //根据时间播放
+				mp.playByTime(1, parseInt(starttime), 1);
+			}
+	        video.initMediaPlay();
+			video.initPlayDiv();
+			if(useAbled == 1){//判断是否通过挽留页进入
+				if(contentNum == 1 || contentNum == 2 || contentNum == 3){
+					ppvprices = 0;
+				}
+				if(contentNum == 0 && ppvprice != 0){
+					setInterval(function(){
+						playtime = mp.getCurrentPlayTime();
+						if(playtime >= 300){//判断播放时长，当播放时长大于5分钟
+							//$('test1').innerHTML = "1111111";
+							//$("viode_name").innerHTML = backUrl;
+							backUrl = decodeURIComponent(backUrl);
+							var url = "../ajax/gsOrder.jsp?userToken=" + mgUserToken
+									+ "&userID=" + mgUserID
+									+ "&ContentID=" + authCode
+									+ "&returnurl=" + encodeURIComponent(backUrl) ;
+							XEpg.Util.gotoPage(url);
+						}
+					},1000);
+				}
+				if(ppvprices != 0 && ppvprice != 0){
+					setInterval(function(){
+						playtime = mp.getCurrentPlayTime();
+						if(playtime >= 300){//判断播放时长，当播放时长大于5分钟
+							//$("viode_name").innerHTML = backUrl;
+							backUrl = decodeURIComponent(backUrl);
+							var url = "../ajax/gsOrder.jsp?userToken=" + mgUserToken
+									+ "&userID=" + mgUserID
+									+ "&ContentID=" + authCode
+									+ "&returnurl=" + encodeURIComponent(backUrl) ;
+							XEpg.Util.gotoPage(url);
+						}
+					},1000);
+				}
+			}
+		},
+		initMediaPlay : function(){
+			mp.setMuteFlag(0);//是否静音
+			mp.setCycleFlag(1); //0循环播放   1单次播放
+			mp.setAllowTrickmodeFlag(0); //设置是否允许trick操作。 0:允许 1：不允许
+			mp.setNativeUIFlag(0); //播放器是否显示缺省的Native UI，  0:不允许 1：允许
+			mp.setAudioTrackUIFlag(0); //设置音轨的本地UI显示标志 0:不允许 1：允许
+			mp.setMuteUIFlag(0); //设置静音的本地UI显示标志 0:不允许 1：允许
+			mp.setAudioVolumeUIFlag(0); //设置音量调节本地UI的显示标志 0:不允许 1：允许
+			mp.setVideoDisplayMode(0); //设置为全屏
+			mp.refreshVideoDisplay(); //调整视频显示，需要上面两函数配合
+		},
+		initPlayDiv :function(){
+			playtime = mp.getCurrentPlayTime();//当前播放时间
+			endtime = mp.getMediaDuration(); //总播放时间
+			//starttime = 0;
+			$('playtime').innerHTML = video.convertTime(playtime);
+			$('endtime').innerHTML = video.convertTime(endtime);
+		},
+		//时间格式转换
+		convertTime :function(time){
+			var time_second, time_min, time_hour;
+			if (time == null) {
+				time = mp.getMediaDuration();
+			}
+			time = parseInt(time, 10);
+			time_hour = Math.floor(time / 3600);
+			time_min = Math.floor(time % 3600 / 60);
+			time_second = time % 3600 % 60;
+
+			time_hour = time_hour < 10 ? '0' + time_hour : time_hour;
+			time_min = time_min < 10 ? '0' + time_min : time_min;
+			time_second = time_second < 10 ? '0' + time_second : time_second;
+
+			return time_hour + ':' + time_min + ':' + time_second;
+		},
+		//初始化音量
+		initVolume : function(){
+			nowVolume = mp.getVolume();
+			var height = (nowVolume * 155) / totalVolume;
+			$('volbar').style.height = height + 'px';
+		},
+		//获取当前播放时长，设置滚动条位置
+		getCurrentPlayTime : function(currentPlayTime , endTime){
+			var width = Math.ceil((858 * currentPlayTime) / endTime);
+			$('mediaBar').style.width = width + 'px';
+			$('mediaPoint').style.left = (width - 17) + 'px';
+		},
+		showFastForward : function(){
+			var currentPlayTime = mp.getCurrentPlayTime();
+			var endTime = mp.getMediaDuration();
+			video.getCurrentPlayTime(currentPlayTime , endTime);
+		}
+	}
+	//控制
+	var control = {
+		//音量加
+		volumeUp : function(){
+			if(hiddenTimer){
+				clearTimeout(hiddenTimer);
+			}
+			$("voice").style.display = 'block';
+			$('mute').style.display = 'none';
+			$("volbox").style.display = 'block';
+			if(hiddenTimer){
+				clearTimeout(hiddenTimer);
+			}
+			mp.setMuteFlag(0);  //0为有声， 1为静音
+			nowVolume = mp.getVolume();
+		    nowVolume += preVolume;
+		    if (nowVolume >= totalVolume) {
+		        nowVolume = totalVolume;
+		    }
+		    mp.setVolume(nowVolume);
+		    
+		    var height = (nowVolume * 155) / totalVolume;
+			$('volbar').style.height = height + 'px';
+		
+			hiddenTimer = setTimeout(function(){  //三秒后隐藏音量组件
+				$("voice").style.display = 'none';
+			} , 3000);	
+			
+		},
+		//音量减
+		volumeDown : function(){
+			$("voice").style.display = 'block';
+			$('mute').style.display = 'none';
+			$("volbox").style.display = 'block';
+			if(hiddenTimer){
+				clearTimeout(hiddenTimer);
+			}
+			nowVolume = mp.getVolume();
+		    nowVolume -= preVolume;
+			if (nowVolume <= 0) {
+		        nowVolume = 0;
+		        mp.setMuteFlag(1);
+		        $("volbox").style.display = 'none';
+		        $('mute').style.display = 'block';
+		    }
+		    mp.setVolume(nowVolume);			//设置音量
+		    var height = (nowVolume * 155) / totalVolume;
+			$('volbar').style.height = height + 'px';
+			hiddenTimer = setTimeout(function(){  //三秒后隐藏音量组件
+				$("voice").style.display = 'none';
+			} , 3000);	
+		},
+		//静音
+		setMuteFlag : function(){
+			$("voice").style.display = 'block';
+			
+			if(hiddenTimer){
+				clearTimeout(hiddenTimer);
+			}
+			var muteFlag = mp.getMuteFlag();
+			if (muteFlag == 1) {
+				mp.setMuteFlag(0);
+				initVolume();
+				$("volbox").style.display = 'block';
+				$('mute').style.display = 'none';
+			} else {
+				mp.setMuteFlag(1);
+				//initVolume();
+				$("volbox").style.display = 'none';
+				$('mute').style.display = 'block';
+			}
+			hiddenTimer = setTimeout(function(){  //三秒后隐藏音量组件
+				$("voice").style.display = 'none';
+			} , 3000);
+		},
+		//暂停、播放切换
+		pauseOrPlay : function(){
+			clearTimeout(hiddenPress);
+			if(trickmode == 'pause'){  //暂停到播放
+				mp.resume();
+				$("bar_img").src = '../image_video/yq-icon-play.png'
+				$("center").style.display = 'none';
+				$("fast_stop").style.display = 'block';
+				control.hiddenFastForward();
+				isPause = false;
+				trickmode = 'play';
+			}else if(trickmode == 'play'){
+				mp.pause();
+				video.showFastForward();
+				video.initPlayDiv();
+				$("bar_img").src = '../image_video/yq-icon-stop.png';
+				$("multiple_img").style.display = 'none';
+				$("center_img").style.display = 'block';
+				$("center").style.display = 'block';
+				$("fast_stop").style.display = 'block';
+				trickmode = 'pause';
+				isPause = true;
+				control.hiddenFastForward();
+				
+			}else if(trickmode == 'fastforward' || trickmode == 'fastrewind'){
+				speedindex = 1;
+				mp.resume();
+				$("bar_img").src = '../image_video/yq-icon-play.png';
+				$("center").style.display = 'none';
+				$("fast_stop").style.display = 'block';
+				control.hiddenFastForward();
+				isPause = false;
+				trickmode = 'play';
+			}
+		},
+		//快进
+		fastForward : function(){
+			clearTimeout(hiddenPress);
+			if(isPause == false){
+				$("bar_img").src = '../image_video/yq-icon-fast.png';
+				if(trickmode == 'fastrewind'){
+					clearTimeout(hiddenPress);
+					speedindex = 1;
+					mp.resume();
+					trickmode = 'play';
+					$("bar_img").src = '../image_video/yq-icon-play.png'
+					$("center").style.display = 'none';
+					$("fast_stop").style.display = 'block';
+					control.hiddenFastForward();
+				}else {
+					
+					$("center").style.display = 'block';
+					$("multiple_img").style.display = 'block';
+					$("center_img").style.display = 'none';
+					$("fast_stop").style.display = 'block';
+					
+					speedindex  = speedindex * 2;
+					if (speedindex >= 64) {
+						speedindex = 2;
+					}
+					$("multiple_img").innerHTML = 'x' + speedindex;
+					trickmode = 'fastforward';
+					mp.fastForward(speedindex);
+					var currentPlayTime = mp.getCurrentPlayTime();
+					var endTime = mp.getMediaDuration();
+					if(speedindex > 1){
+						var timer = setInterval(function() {
+						    video.getCurrentPlayTime(mp.getCurrentPlayTime() , mp.getMediaDuration());
+						    video.initPlayDiv();
+						}, 1000);
+					}else{
+						clearInterval(timer)
+					}
+				}
+			}
+		},
+		//快退
+		fastRewind : function(){
+			clearTimeout(hiddenPress);
+			if(isPause == false){
+				$("bar_img").src = '../image_video/yq-icon-slow.png';
+				if(trickmode == 'fastforward'){
+					clearTimeout(hiddenPress);
+					speedindex = 1;
+					mp.resume();
+					trickmode = 'play';
+					$("bar_img").src = '../image_video/yq-icon-play.png'
+					$("center").style.display = 'none';
+					$("fast_stop").style.display = 'block';
+					control.hiddenFastForward();
+				}else {
+					$("center").style.display = 'block';
+					$("multiple_img").style.display = 'block';
+					$("center_img").style.display = 'none';
+					$("fast_stop").style.display = 'block';
+					
+					speedindex  = speedindex * 2;
+					if (speedindex >= 64) {
+						speedindex = 2;
+					}
+					$("multiple_img").innerHTML = '-x' + speedindex;
+					trickmode = 'fastrewind';
+					mp.fastRewind(-speedindex);
+					var currentPlayTime = mp.getCurrentPlayTime();
+					var endTime = mp.getMediaDuration();
+					if(speedindex > 1){
+						var timer = setInterval(function() {
+						    video.getCurrentPlayTime(mp.getCurrentPlayTime() , mp.getMediaDuration());
+						    video.initPlayDiv();
+						}, 1000);
+					}else{
+						clearInterval(timer)
+					}
+				}
+			}
+		},
+		//收藏
+		col : function(){
+			XEpg.Util.ajaxGet('../ajax/getCollInterface.jsp?action=iscoll&username=' + mgUserID + '&stbid=' + stbid + '&contentcode=' + colCode , function(data){
+				
+				var obj = XEpg.Util.parseJSON(data);
+				var showResult = obj.resultcode;
+				if(showResult === '1'){
+					$('nav1_0_txt').innerHTML = '已收藏';
+				}else{
+					$('nav1_0_txt').innerHTML = '收藏';
+				}
+			})
+		},
+		//退出视频
+		exitAction : function(){
+			releaseMedia();
+			backUrl = decodeURIComponent(backUrl) + '&contentNum=' + contentNum;
+			if(backUrl){
+				XEpg.My.gotoPage(decodeURIComponent(backUrl));
+			}
+		},
+		//上一集
+		preVideo : function(){
+			isNextPlay = true;
+			if(overTime){
+				clearInterval(overTime);
+				$("isEnd").style.display = 'none';
+			}
+			
+			if(contentNum > 1){
+				releaseMedia();
+				contentNum -- ;
+				contentCode = conCodeList[contentNum - 1].contentcode;
+				$("viode_name").innerHTML = conCodeList[contentNum - 1].name.split("HD]")[1] || conCodeList[contentNum - 1].name;
+				video.play();
+				
+				$("quit").style.display = 'none';
+				mp.resume();
+				$(XEpg.My.currentId).className = "item";
+				if(contentType == 1){
+					XEpg.My.currentId = "nav1_1";
+				}else{
+					XEpg.My.currentId = "nav1_4";
+				}
+				isExit = false;
+			}else{
+				releaseMedia();
+				backUrl = decodeURIComponent(backUrl) + '&contentNum=' + contentNum;
+				if(backUrl){
+					XEpg.My.gotoPage(decodeURIComponent(backUrl));
+				}
+			}
+		},
+		//下一集
+		nextVideo : function(){
+			if(authState != 0 && ppvprice != 0 && contentNum > 2 ){  //走订购
+				backUrl = decodeURIComponent(backUrl) + '&contentNum=' + contentNum;
+				var url = "../ajax/gsOrder.jsp?userToken=" + mgUserToken
+						+ "&userID=" + mgUserID
+						+ "&ContentID=" + authCode
+						+ "&returnurl=" + encodeURIComponent(backUrl) ;
+				XEpg.Util.gotoPage(url);
+			}else{
+				isNextPlay = true;
+				if(overTime){
+					clearInterval(overTime);
+					$("isEnd").style.display = 'none';
+				}
+				
+				if(contentNum < (conCodeList.length)){
+					releaseMedia();
+					contentNum ++ ;
+					contentCode = conCodeList[contentNum - 1].contentcode;
+					$("viode_name").innerHTML = conCodeList[contentNum - 1].name.split("HD]")[1] || conCodeList[contentNum - 1].name;
+					video.play();
+					
+					$("quit").style.display = 'none';
+					mp.resume();
+					$(XEpg.My.currentId).className = "item";
+					if(contentType == 1){
+						XEpg.My.currentId = "nav1_1";
+					}else{
+						XEpg.My.currentId = "nav1_4";
+					}
+					isExit = false;
+				}else{
+					releaseMedia();
+					backUrl = decodeURIComponent(backUrl) + '&contentNum=' + contentNum;
+					if(backUrl){
+						XEpg.My.gotoPage(decodeURIComponent(backUrl));
+					}
+				}
+			}
+		},
+		//隐藏快退、快进面板
+		hiddenFastForward : function(){
+			hiddenPress = setTimeout(function(){
+				$('fast_stop').style.display = 'none';
+			} , 3000);
+		}
+	}
+	function pressOk(){
+		if(isExit){
+			var index = parseInt(XEpg.My.currentId.substring(5), 10);
+			switch(index)
+			{
+				
+			case 0:
+				clickCol();
+				break;
+			case 1 :
+			case 4 :
+			case 8:
+				if(overTime){
+					clearInterval(overTime);
+					$("isEnd").style.display = 'none';
+				}
+				control.exitAction();  //确认退出	
+				break;
+			case 2 :
+			//case 6 :
+				$("quit").style.display = 'none';
+				mp.resume();
+				$(XEpg.My.currentId).className = "item";
+				if(contentType == 1){
+					XEpg.My.currentId = "nav1_1";
+				}else{
+					XEpg.My.currentId = "nav1_4";
+				}
+				isExit = false;
+				break;
+			case 3:
+			case 7:
+				control.preVideo();
+				break;
+			case 5:
+			case 9:
+				control.nextVideo();
+				break;
+			default:
+				$("quit").style.display = 'none';
+				mp.resume();
+				isExit = false;
+			}
+		}else{
+			control.pauseOrPlay();	
+		}
+	}
+	var pressMove = {
+		right : function(){
+			var index = parseInt(XEpg.My.currentId.substring(5), 10);
+			$(XEpg.My.currentId).className = "item";
+			switch (index){
+				case 0 :
+					XEpg.My.currentId = "nav1_1";
+					break;
+				case 1 :
+					XEpg.My.currentId = "nav1_2";
+					break;
+				case 2 :
+					XEpg.My.currentId = "nav1_0";
+					break;
+				case 3 :
+					XEpg.My.currentId = "nav1_4";
+					break;
+				case 4 :
+					XEpg.My.currentId = "nav1_5";
+					break;
+				case 5 :
+					XEpg.My.currentId = "nav1_3";
+					break;
+				//case 6 :
+				//	XEpg.My.currentId = "nav1_5";
+				//	break;
+				case 7 :
+					XEpg.My.currentId = "nav1_8";
+					break;
+				case 8 :
+					XEpg.My.currentId = "nav1_9";
+					break;
+				case 9 :
+					XEpg.My.currentId = "nav1_7";
+					break;
+				default:
+					return;
+			}
+			$(XEpg.My.currentId).className = "item item_focus";
+		},
+		left : function(){
+			var index = parseInt(XEpg.My.currentId.substring(5), 10);
+			$(XEpg.My.currentId).className = "item";
+			switch (index){
+				case 0 :
+					XEpg.My.currentId = "nav1_2";
+					break;
+				case 1 :
+					XEpg.My.currentId = "nav1_0";
+					break;
+				case 2 :
+					XEpg.My.currentId = "nav1_1";
+					break;
+				case 3 :
+					XEpg.My.currentId = "nav1_5";
+					break;
+				case 4 :
+					XEpg.My.currentId = "nav1_3";
+					break;
+				case 5 :
+					XEpg.My.currentId = "nav1_4";
+					break;
+				//case 6 :
+				//	XEpg.My.currentId = "nav1_3";
+				//	break;
+				case 7 :
+					XEpg.My.currentId = "nav1_9";
+					break;
+				case 8 :
+					XEpg.My.currentId = "nav1_7";
+					break;
+				case 9 :
+					XEpg.My.currentId = "nav1_8";
+					break;
+				default:
+					return;
+			}
+			$(XEpg.My.currentId).className = "item item_focus";
+		}
+	}
+	//退出
+	function showExit(){  
+		mp.pause();
+		$("quit").style.display = 'block';
+		if(contentType == 1){
+			$("stateOne").style.display = 'block';
+			$("stateTwo").style.display = 'none';
+		}
+	}
+	
+	//播放结束
+	function isOverPlay(){
+		var index = 4;
+		if(trickmode == 'fastforward' || trickmode == 'fastrewind'){
+			speedindex = 1;
+			mp.resume();
+			$("bar_img").src = '../image_video/yq-icon-play.png';
+			$("center").style.display = 'none';
+			$("fast_stop").style.display = 'none';
+			isPause = false;
+			trickmode = 'play';
+		}
+		$(XEpg.My.currentId).className = "item";
+		XEpg.My.currentId = "nav1_8";
+		$(XEpg.My.currentId).className = "item item_focus";
+		$("osdTitle").innerHTML = conCodeList[contentNum - 1].name.split("HD]")[1] || conCodeList[contentNum - 1].name;
+		$("isEnd").style.display = 'block';
+		isExit = true;
+		if(contentType == 1){
+			$("isEnd").style.display = 'none';
+			isExit = false;
+			control.exitAction();  //确认退出	
+		}else{
+			overTime = setInterval(function(){
+				index --;
+				if(index == 0){
+					clearInterval(overTime);
+					$("isEnd").style.display = 'none';
+					isExit = false;
+					control.nextVideo();
+				}else{
+					$("osdTitle2").innerHTML = index + '秒后自动播放下一集';
+				}
+			},1000)
+		}
+	}
+	
+	//快退到起点
+	function isBeginNing(){
+		speedindex = 1;
+		mp.resume();
+		$("bar_img").src = '../image_video/yq-icon-play.png';
+		$("center").style.display = 'none';
+		$("fast_stop").style.display = 'none';
+		isPause = false;
+		trickmode = 'play';
+	}
+	//点击收藏
+	function clickCol(){
+		if($('nav1_0_txt').innerHTML === '收藏'){
+			XEpg.Util.ajaxGet('../ajax/getCollInterface.jsp?action=addcoll&username=' + mgUserID + '&stbid=' + stbid + '&contentcode=' + colCode , function(data){
+				
+				var obj = XEpg.Util.parseJSON(data);
+				var showResult = obj.resultcode;
+				if(showResult === '1'){
+					$('nav1_0_txt').innerHTML = '已收藏';
+				}else{
+					return;
+				}
+			})
+
+		}else{
+			XEpg.Util.ajaxGet('../ajax/getCollInterface.jsp?action=delectcoll&username=' + mgUserID + '&stbid=' + stbid + '&contentcode=' + colCode  , function(data){
+				
+				var obj = XEpg.Util.parseJSON(data);
+				var showResult = obj.resultcode;
+				if(showResult === '1'){
+					$('nav1_0_txt').innerHTML = '收藏';
+				}else{
+					return;
+				}
+			})
+		}
+	}
+	//退出视频，返回上一个页面
+	function releaseMedia(){
+		mp.stop();												//停止播放
+		mp.releaseMediaPlayer(mp.getNativePlayerInstanceId());	//释放终端 MediaPlayer 的对象，结束对应MediaPlayer 的生命周期
+	};
+	XEpg.Nav.key_back_opt = function(){
+		//keyClick.showExit();
+		//document.getElementById("test1").innerHTML =  'ceshi';
+	};
+
+	
+	
+	/*******************遥控器事件监听方法****************************/
+	
+	/**
+	 * 遥控器按键事件监听函数
+	 * @param {Object} event
+	 */
+	function keypress(event) {
+		var val = event.which ? event.which : event.keyCode;
+
+		switch (val) {
+		case 8:  //返回
+			if($("quit").style.display == 'block'){
+				$("quit").style.display = 'none';
+				mp.resume();
+				$(XEpg.My.currentId).className = 'item';
+				if(contentType == 1){
+					XEpg.My.currentId = 'nav1_1';
+				}else{
+					XEpg.My.currentId = 'nav1_4';
+				}
+				isExit = false;
+			}else{
+				if(!isExit && (trickmode == 'play')){
+					mp.pause();
+					$("quit").style.display = 'block';
+		        	
+					if(contentType == 1){
+						control.col(); //收藏
+						XEpg.My.currentId = "nav1_1";
+						$("stateOne").style.display = 'block';
+						$("stateTwo").style.display = 'none';
+					}else{
+						XEpg.My.currentId = "nav1_4";
+						$("stateOne").style.display = 'none';
+						$("stateTwo").style.display = 'block';
+					}
+					$(XEpg.My.currentId).className = "item item_focus";
+					isExit = true;
+				}
+			}
+		break;
+		case 259:
+			control.volumeUp();			//音量加
+			break;
+		case 260:
+			control.volumeDown();		//音量减法
+			break;
+		case 261:
+			control.setMuteFlag();		//静音
+			break;
+		case 37: 			//向左
+			if(!isExit){
+				control.fastRewind();
+				$(XEpg.My.currentId).className = "item";
+			}else{
+				pressMove.left();
+			}
+			break;
+		case 38:            //向上
+			//pressMove.up();
+			break;
+		case 40:			//向下
+			//pressMove.down();
+			break;
+		case 39: 			//向右
+			if(!isExit){
+				control.fastForward();
+				$(XEpg.My.currentId).className = "item";
+			}else{
+				pressMove.right();
+			}
+			break;
+		case 264:			//快进
+			control.fastForward();		
+			break;
+	    case 265:			//快退
+	        control.fastRewind();		
+	        break;
+		case 263:
+		case 13:
+			pressOk();			//确认键
+			break;
+		case 272:			
+	        releaseMedia();		
+	        break;
+		case 768:
+			goUtility();		//虚拟键：播放完成或者发生error执行
+				break;
+			default:
+				break;
+		}
+		return 0;
+	};
+	
+	//虚拟键：播放完成或者发生error执行
+	function goUtility() {
+	    eval("eventJson = " + Utility.getEvent());
+		var typeStr = eventJson.type;
+		switch (typeStr) {
+			case "EVENT_MEDIA_ERROR":
+				control.exitAction();
+				break;
+		    case "EVENT_MEDIA_END":
+	            isOverPlay();
+	            break;
+	        case "EVENT_MEDIA_BEGINING":
+	        	isBeginNing();
+	            break;
+	        default:
+	            return 1;
+		    }
+		    return 1;
+		};
+		
+</script>
+
+</body>
+</html>

@@ -1,0 +1,686 @@
+<!DOCTYPE HTML>
+<html id="html">
+<head>
+    <meta name="page-view-size" content="1280*720"/>
+    <meta charset="UTF-8">
+    <title>4K播放</title>
+    <link rel="stylesheet" href="../css/playstyle.css"/>
+    <style type="text/css">
+        /* S= CSS Reset
+        ----------------------------------------------- */
+        body, table, caption, tbody, tfoot, thead, tr, th, td, ul, li, p, h1 {
+            margin: 0px;
+            padding: 0px;
+            border: 0px;
+        }
+
+        body {
+            font-size: 24px;
+            font-family: Microsoft YaHei, sans-serif;
+            line-height: 100%;
+        }
+
+        ul, ol {
+            list-style: none;
+        }
+
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        img {
+            border: 0;
+        }
+
+        /* E= CSS Reset */
+
+        /* S= Global
+        ----------------------------------------------- */
+        body, .wrapper, .pagebg {
+            height: 720px;
+            width: 1280px;
+            overflow: hidden;
+        }
+
+        body {
+            color: #ffffff;
+            position: relative;
+        }
+
+        .wrapper, .pagebg {
+            left: 0px;
+            position: absolute;
+            top: 0px;
+
+        }
+        .pagebg img {
+            display: block; /* clear some space 对于html5中背景图比原高度多出3PX的问题*/
+        }
+
+        .item, .link, .txt-wrap, .txt, .btn, .icon, .pic, .pic-shade, .cover, .num {
+            position: absolute;
+        }
+
+        .txtHidden {
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .clearfix:after {
+            clear: both;
+            content: '';
+            display: block;
+            height: 0;
+        }
+
+        .clearfix {
+            zoom: 1;
+        }
+
+        /* S= common ----------------------------------------------- */
+        .cs-titTxt.play, .cs-titTxt.load {
+            position: absolute;
+            top: 33px;
+            left: 61px;
+            font-size: 36px;
+            color: #ffff02;
+        }
+
+        .cs-tips {
+            position: absolute;
+            top: 30px;
+            left: 219px;
+            width: 72px;
+            height: 32px;
+            background: url(../image/cs-tipBg.png) no-repeat;
+        }
+
+        .cs-tips .txt {
+            width: 72px;
+            text-align: center;
+            line-height: 32px;
+        }
+
+        .cs-time {
+            position: absolute;
+            top: 26px;
+            left: 1044px;
+            width: 174px;
+            text-align: right;
+            font-size: 36px;
+            color: #f0f0f0;
+        }
+
+        .cs-iconPlay {
+            position: absolute;
+            top: 236px;
+            left: 574px;
+        }
+
+        .cs-info {
+            position: absolute;
+            top: 593px;
+            width: 1280px;
+            height: 127px;
+            background: url(../image/cs-mask-b.png) repeat-y;
+            z-index: 2;
+        }
+
+        .cs-stopBtn {
+            position: absolute;
+            top: 33px;
+            left: 78px;
+        }
+
+        .cs-info .scroll {
+            position: absolute;
+            top: 53px;
+            left: 167px;
+            width: 1037px;
+            height: 22px;
+            background: url(../image/cs-scrollBg.png) no-repeat;
+        }
+
+        .cs-info .progress {
+            position: absolute;
+            width: 1037px;
+            height: 22px;
+            background: url(../image/cs-scrollBg03.png) no-repeat;
+        }
+
+        .cs-info .bar {
+            position: absolute;
+            width: 1037px;
+            height: 22px;
+            background: url(../image/cs-scrollBg02.png) no-repeat;
+        }
+
+        .cs-info .point {
+            position: absolute;
+            width: 24px;
+            height: 22px;
+            background: url(../image/cs-point.png) no-repeat;
+        }
+
+        .cs-info .cs-timeTxt {
+            position: absolute;
+            top: 20px;
+            left: 173px;
+            font-size: 30px;
+            color: #faf8eb;
+            width: 160px;
+        }
+
+        /*音量style*/
+        .cs-volum {
+            position: absolute;
+            left: 1169px;
+            top: 35px;
+        }
+
+        .cs-volumeBox {
+            position: absolute;
+            left: 1170px;
+            top: 215px;
+            width: 69px;
+            height: 214px;
+            background: url(../image/cs-bg-volum.png) no-repeat;
+        }
+
+        .cs-volumeBox .icon {
+            position: absolute;
+            left: 24px;
+            top: 11px;
+        }
+
+        .cs-volumeBox .point {
+            position: absolute;
+            top: 38px;
+            left: 26px;
+        }
+
+        .volumebar {
+            position: absolute;
+            left: 30px;
+            top: 44px;
+            width: 8px;
+            height: 136px;
+            background: url(../image/cs-bg-volumebar.png) repeat-y;
+        }
+
+        .volumebar span {
+            position: absolute;
+            left: 0px;
+            bottom: 0px;
+            background: #00ce5e;
+            width: 8px;
+        }
+
+        /*播放推出Style*/
+        .cs-titTxt.back {
+            position: absolute;
+            top: 58px;
+            left: 98px;
+            width: 770px;
+            font-size: 36px;
+            color: #ffff02;
+        }
+
+        .cs-seeBtn {
+            position: absolute;
+            top: 173px;
+            left: 104px;
+        }
+
+        .cs-seeBtn .item {
+            width: 154px;
+            height: 49px;
+            background: #58647f;
+        }
+
+        .cs-seeBtn .item .txt {
+            width: 154px;
+            text-align: center;
+            line-height: 49px;
+            font-size: 30px;
+            color: #dbdde1;
+        }
+
+        .cs-seeBtn .item_focus .txt {
+            color: #7f3616;
+        }
+
+        .cs-seeBtn .item_focus {
+            background: #ffff02;
+        }
+
+        .cs-text-a {
+            position: absolute;
+            top: 166px;
+            left: 450px;
+        }
+
+        .cs-titText {
+            position: absolute;
+            top: 175px;
+            left: 450px;
+            font-size: 26px;
+            color: #fff;
+            width: 120px;
+        }
+
+        .cs-text-a .item {
+            top: 66px;
+        }
+
+        .cs-text-a .item .txt {
+            color: #bfbfbf;
+            width: 242px;
+        }
+
+        .cs-text-a .item_focus .txt {
+            font-size: 26px;
+            color: #ffff02;
+        }
+
+        .cs-picTxt {
+            position: absolute;
+            top: 169px;
+            left: 720px;
+            width: 200px;
+            font-size: 26px;
+            line-height: 30px;
+        }
+
+        .cs-arrow-down {
+            position: absolute;
+            top: 638px;
+            left: 451px;
+        }
+
+        .w-list01 {
+            left: 666px;
+            position: absolute;
+            top: 207px;
+        }
+
+        .w-list01 .item {
+            background: url(../image/w-list01.png) no-repeat;
+            height: 287px;
+            width: 214px;
+            z-index: 2;
+        }
+
+        .w-list01 .item .pic {
+            left: 33px;
+            top: 33px;
+        }
+
+        .w-list01 .item .pic,
+        .w-list01 .item .pic img {
+            height: 221px;
+            width: 148px;
+        }
+
+        .w-list01 .item .txt-wrap {
+            bottom: 33px;
+            left: 33px;
+            width: 148px;
+            height: 64px;
+            background: url(../image/cs-picTxtBg.png) no-repeat;
+        }
+
+        .w-list01 .item .txt {
+            width: 130px;
+            left: 40px;
+            bottom: 9px;
+            color: #c0c1c1;
+            font-size: 22px;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .w-list01 .item_focus {
+            background: url(../image/w-list01_focus.png) no-repeat;
+            z-index: 3;
+        }
+
+        /*5 秒后i返回详情*/
+        .cs-tipTxt {
+            position: absolute;
+            top: 253px;
+            left: 95px;
+            width: 260px;
+            font-size: 20px;
+        }
+
+        .cs-tipTxt span.num {
+            font-size: 24px;
+            color: #ffff02;
+        }
+
+        /*加载*/
+        .cs-loading {
+            position: absolute;
+            top: 272px;
+            left: 613px;
+        }
+
+        .cs-loadTxt {
+            position: absolute;
+            top: 358px;
+            left: 455px;
+            width: 375px;
+            text-align: center;
+            font-size: 28px;
+            color: #f1f1f1;
+        }
+
+        .time-comm .item {
+            background: url(../image/seek01.png) no-repeat;
+        }
+
+        .time-comm .item_focus {
+            background: url(../image/seek-focus01.png) no-repeat;
+        }
+
+        .btn-area .item {
+            background: url(../image/cs-btn04.png) no-repeat;
+            color: #d8d8d8;
+        }
+
+        .btn-area .item_focus {
+            background: url(../image/cs-btn4-focus.png) no-repeat;
+            color: #7f3616;
+        }
+
+        .cs-tipTxt-1 {
+            position: absolute;
+            top: 32px;
+            left: 358px;
+            width: 740px;
+            height: 30px;
+            font-size: 20px;
+            text-align: right;
+            line-height: 30px;
+        }
+
+        .cs-tipTxt-1 span {
+            color: #ffde00;
+        }
+
+        .cs-btn-1 {
+            position: absolute;
+            top: 30px;
+            left: 1110px;
+        }
+
+        .cs-btn .item {
+            width: 120px;
+            height: 42px;
+        }
+
+        .cs-btn .item_focus {
+            background: url(../image/cs-btn.png) no-repeat;
+        }
+
+        .cs-txt01 {
+            position: absolute;
+            left: 251px;
+            top: 270px;
+            font-size: 28px;
+            color: #dcdce9
+        }
+
+        .cs-orderBtn {
+            position: absolute;
+            top: 263px;
+            left: 897px;
+        }
+
+        .cs-orderBtn .item {
+            width: 140px;
+            height: 52px;
+            background: url(../image/cs-orderBtn.png) no-repeat;
+        }
+
+        .cs-orderBtn .item_focus {
+            background: url(../image/cs-orderBtn-focus.png) no-repeat;
+        }
+
+        .cs-orderBtn .item .icon-a {
+            background: url(../image/cs-iconBuy.png) no-repeat;
+        }
+
+        .cs-orderBtn .item_focus .icon-a {
+            background: url(../image/cs-iconBuy02.png) no-repeat;
+        }
+
+        .cs-orderBtn .item .icon-a {
+            width: 35px;
+            height: 35px;
+            position: absolute;
+            left: 10px;
+            top: 10px;
+        }
+
+        .cs-orderBtn .item .txt {
+            font-size: 30px;
+            width: 84px;
+            top: 10px;
+            left: 55px;
+            color: #dbdde1;
+            text-align: center;
+            line-height: 30px;
+        }
+
+        .cs-orderBtn .item_focus .txt {
+            color: #7f3616;
+        }
+
+        .cs-txt01 span {
+            font-size: 36px;
+            color: #e0e001;
+        }
+    </style>
+</head>
+<body bgcolor="transparent" id="body">
+
+<!--<div id="divContent" style="width:1200px;height:350px;word-break: break-all;word-wrap: break-word;position:absolute;left:40px;top:40px;z-index: 10000;background: rgba(0,0,0,0.7);color: red;font-size: 16px;"></div>-->
+
+<!-- S pagebg -->
+<div class="pagebg" id="bgImage" style="display:none;">
+    <div class="pic"><img id="backImage" src="../image/cs-maskBg02.png" alt=""></div>
+</div>
+<!-- E pagebg -->
+
+<!-- S content -->
+<div class="wrapper" id="bg">
+<!--<div id="test1" style="left: 20px; top: 20px; width: 800px; height: 300px; position: absolute; color: #ff0000; word-break:break-all;"></div>-->
+    <!-- 播放页面按钮等 BEGIN -->
+    <div id="mediaInfo" style="display:none;">
+        <!-- s top -->
+        <div class="cs-titTxt play" id="mediaName"></div>
+        <!--<div class="cs-tips" id="clarity" style="display:none;">-->
+        <!--<div class="txt" id="mediaClarity">高清</div>-->
+        <!--</div>-->
+
+        <div id="x-num" style="position:absolute;top:91px;left:1110px; width:132px;height:132px;display: none;">
+            <img id="x-num-img" src="../image/icon-x2.png" alt="快进倍数">
+            <!--<img src="../image/icon-x4.png" alt="快进倍数"/>-->
+            <!--<img src="../image/icon-x8.png" alt="快进倍数"/>-->
+            <!--<img src="../image/icon-x16.png" alt="快进倍数"/>-->
+            <!--<img src="../image/icon-x32.png" alt="快进倍数"/>-->
+            <!--<img src="../image/icon-x64.png" alt="快进倍数"/>-->
+            <!--<img src="../image/icon-x2-a.png" alt="快退倍数"/>-->
+            <!--<img src="../image/icon-x4-a.png" alt="快退倍数"/>-->
+            <!--<img src="../image/icon-x8-a.png" alt="快退倍数"/>-->
+            <!--<img src="../image/icon-x16-a.png" alt="快退倍数"/>-->
+            <!--<img src="../image/icon-x32-a.png" alt="快退倍数"/>-->
+            <!--<img src="../image/icon-x64-a.png" alt="快退倍数"/>-->
+
+        </div>
+
+        <!-- E top -->
+        <div class="cs-iconPlay" id="bigPic">
+            <img id="playBigPic" src="../image/cs-stop.png" alt="播放">
+            <!--<img src="../image/cs-stop.png" alt="暂停">-->
+            <!-- <img src="../image/cs-on.png" alt="快进">-->
+            <!--<img src="../image/cs-rewind.png" alt="快退">-->
+        </div>
+        <!-- S info -->
+        <div class="cs-info" id="cs-info">
+            <div class="cs-stopBtn">
+                <img id="playSamllPic" src="../image/cs-icon-stop.png" alt="暂停">
+                <!-- <img src="../image/cs-icon-play02.png" alt="播放">-->
+                <!-- <img src="../image/cs-icon-on.png" alt="快进">-->
+                <!--<img src="../image/cs-icon-rewind.png" alt="快退">-->
+            </div>
+            <div class="scroll" id="scroll">
+                <!--"progress"=缓冲
+                     "bar"=进度条
+                     "point" =点   -->
+                <div class="progress" style="width:266px;display:none;"></div>
+                <div class="bar" id="mediaBar" style="width:0px;"></div>
+                <div class="point" id="mediaPoint" style="left:0px;"></div>
+            </div>
+            <div class="cs-timeTxt" id="playtime"></div>
+            <div class="cs-timeTxt" style="left:1037px;text-align:right;" id="endtime"></div>
+
+            <div class="inputTime" id="inputTime" style="display: none;">
+                <div style="position:absolute;top:131px;left:173px; width:350px; height:58px; font-size:32px; color:#f0f0f0;">
+                    请输入跳转时间
+                </div>
+                <div class="time-comm" id="time_area0">
+                    <div id="time_area0_0" class="item"
+                         style="position:absolute;top:75px;left:396px;width:149px; height:151px; text-align:center; line-height:151px; font-size:36px; color:#f0f0f0;"></div>
+                    <div id="time_area0_1" class="item"
+                         style="position:absolute;top:75px;left:454px;width:149px; height:151px; text-align:center; line-height:151px; font-size:36px; color:#f0f0f0;"></div>
+                </div>
+                <div style="position:absolute;top:115px; left:558px; width:18px; text-align:center; height:64px; line-height:64px;font-size:36px; color:#f0f0f0;">
+                    :
+                </div>
+                <div class="time-comm" id="time_area1">
+                    <div id="time_area1_0" class="item"
+                         style="position:absolute;top:75px;left:532px;width:149px; height:151px; text-align:center; line-height:151px; font-size:36px; color:#f0f0f0;"></div>
+                    <div id="time_area1_1" class="item"
+                         style="position:absolute;top:75px;left:590px;width:149px; height:151px; text-align:center; line-height:151px; font-size:36px; color:#f0f0f0;"></div>
+                </div>
+                <div style="position:absolute;top:115px; left:694px; width:18px; text-align:center; height:64px; line-height:68px;font-size:36px; color:#f0f0f0;">
+                    :
+                </div>
+                <div class="time-comm" id="time_area2">
+                    <div id="time_area2_0" class="item"
+                         style="position:absolute;top:75px;left:668px;width:149px; height:151px; text-align:center; line-height:151px; font-size:36px; color:#f0f0f0;"></div>
+                    <div id="time_area2_1" class="item"
+                         style="position:absolute;top:75px;left:726px;width:149px; height:151px; text-align:center; line-height:151px; font-size:36px; color:#f0f0f0;"></div>
+                </div>
+                <div class="btn-area" id="btn_area">
+                    <div id="btn_area_0" class="item"
+                         style="position:absolute;top:127px;left:925px;width:112px; height:48px; line-height:48px; text-align:center; font-size:28px;">
+                        确定
+                    </div>
+                    <div id="btn_area_1" class="item"
+                         style="position:absolute;top:127px;left:1055px; width:112px; height:48px; line-height:48px; text-align:center; font-size:28px;">
+                        取消
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 播放页面按钮 END-->
+
+    <!--订购提示开始-->
+    <div id="order_box" style="display: none;">
+        <div class="cs-tipTxt-1">您可以免费试看前6分钟，开通<span>「4K花园」</span>会员尽情看！</div>
+        <div class="cs-time" id="date" style="display: none;"></div>
+        <div class="cs-btn-1" id="orderBox">
+            <div class="item" id="ordeBox_0"><img src="../image/cs-btn.png" alt=""></div>
+        </div>
+    </div>
+    <!--订购提示结束-->
+    <!--返回页面 BEGIN-->
+    <div id="backPage" style="display:none;">
+        <div class="cs-titTxt back" id="videoName"></div>
+        <!--S cs-seeBtn-->
+        <div class="cs-seeBtn" id="playBtn">
+
+        </div>
+
+        <!--5秒后返回详情页 BEGIN-->
+        <div class="cs-tipTxt" id="time" style="display:none;"><span class="num" id="backTime">5</span><span
+                id="backPageUrl" style="position:absolute;left:15px;">秒后返回详情页</span></div>
+
+        <!--5秒后返回详情页END-->
+        <!--E cs-seeBtn-->
+        <div class="cs-titText" id="performer">演员</div>
+        <!--S cs-text-a-->
+        <div class="cs-text-a" id="performerList">
+
+        </div>
+        <!--E cs-text-a-->
+        <div class="cs-arrow-down"><img src="../image/cs-arrow-down.png" alt=""></div>
+        <!--S cs-pic-a-->
+        <div class="cs-picTxt">相关推荐</div>
+        <!-- S 相关推荐 -->
+        <div class="w-list01" id="hotList">
+            <!-- 焦点为
+                class="item item_focus" -->
+
+
+        </div>
+        <!-- E 相关推荐 -->
+        <!--E cs-pic-a-->
+    </div>
+    <!--返回页面 END-->
+
+    <!--音量加减 BEGIN-->
+    <div id="volumeBox" style="display:none;">
+        <div class="cs-volumeBox">
+            <div class="icon"><img src="../image/cs-icon-add.png" width="21" height="21"></div>
+            <div class="volumebar" id="volumebar"><span id="changeVolume" style="height:96px"></span></div>
+            <!--point的top最顶值为为"38px"-->
+            <div class="point" id="volumePoint" style="top:74px;"><img src="../image/cs-ellipse.png" width="17"
+                                                                       height="17"></div>
+            <div class="icon" id="down-icon" style="top:180px"><img src="../image/cs-icon-jian.png" width="21"
+                                                                    height="5"></div>
+        </div>
+    </div>
+    <!--音量加减END-->
+
+    <!-- E info -->
+</div>
+<div class="wrapper" id="order" style="display: none;background:url(../image/cs-maskBg02.png) no-repeat;z-index:100;">
+
+</div>
+
+<div id="addPlay" style="width:1280px;height:720px;position:absolute;left:0px;top:0px;">
+    <!--加载播放视频开始-->
+    <!--<iframe id="videoPlay" name="videoPlay" style="position: absolute;background: transparent; top: 0px;left: 0px; display: block;" width="100%" height="100%" frameborder="0" src="" allowtransparency="true"></iframe>-->
+    <!--加载播放视频结束-->
+</div>
+<script src="../js/xepg.min.js"></script>
+<script>
+    (function () {
+        var argObj = XEpg.My.parseUrl();
+        var arg = XEpg.Util.getCookie('playArgs');
+        XEpg.Util.setCookie('playArgs', '-1');
+        if (argObj.RST) {
+            if (arg != '-1') {
+                var url = location.href + '&' + arg;
+                location.href = url;
+            }
+        }
+    })();
+
+</script>
+<script type="text/javascript" src="../js/com.min.js" ></script>
+<script type="text/javascript"src="../js/4kgarden_play.js"></script>
+</body>
+</html>

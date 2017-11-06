@@ -1,0 +1,376 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <meta name="page-view-size" content="1280*720" />
+    <meta charset="UTF-8">
+    <title>芒果通栏列表页</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style type="text/css">
+        body {
+            background: url(../images/bg01.jpg) no-repeat;
+        }
+
+    </style>
+</head>
+<body>
+<div class="wrapper">
+    <!-- 标题 -->
+    <div class="yq-title02" style="top:44px;">免费专区</div>
+
+    <!-- 页码 -->
+    <div class="yq-listTips" id="nav_page" style="left: 912px;"></div>
+
+    <!-- 电影列表 -->
+    <div class="yq-movieList" style="left:38px; top:68px; width:1190px;">
+        <div class="scrollbox" style="top:0;" id="nav1">
+            <!-- 第一排 -->
+            <!-- 焦点 class="item item_focus" -->
+
+        </div>
+    </div>
+
+    <!-- 箭头 -->
+    <div class="yq-arrow"style="left:620px; top:63px;display: none;" id="arrow" >
+        <div class="item item_focus"  id="nav_top" >
+            <div class="icon-arrowUp"></div>
+        </div>
+        <div class="item item_focus"  id="nav_bottom"  style="top:615px">
+            <div class="icon-arrowDown"></div>
+        </div>
+    </div>
+
+</div>
+<script src="../js/xepg.min.js"></script>
+<script src="../js/commons.js"></script>
+<script>
+    var SP = XEpg.SP;
+    var param = XEpg.My.parseUrl();
+    var parentId = '';
+    var currentId = param.currentId ;
+    var pageIndex = param.pageindex || 1;  //当前页
+    var pageTotal = 1;  //总页数
+    var pageNum = 1;//当前页个数
+    var dataState = false;
+    var isUpPage = false;    //是否项上 或下翻页
+    var isLeftPage = false;  //上否向左翻页
+    var curIndex = '';  //上下翻页之前焦点位子
+    var contentObj = {};		//内容列表数据缓存
+    
+    var spPro = '';   //portalcode + sptoken 参数
+	var mgPartner = param.mgPartner; //平台信息
+	var mgUserID = param.mgUserID;  //用户ID
+	var mgUserToken = param.mgUserToken;  //临时身份证明
+	var cmsCode = '';
+	var mg_epginfo = '&mgPartner=' + mgPartner + '&mgUserID=' + mgUserID + '&mgUserToken=' + mgUserToken;
+
+    //监听返回事件，返回上一级页面
+    XEpg.Nav.key_back_opt = function(){
+        setTimeout(function(){
+            XEpg.Navigation.gotoBackNavigationUrl('pageIndex');
+        },150);
+    };
+
+    window.onload = function () {
+        XEpg.My.init({"currentId":currentId});
+      
+      	if(mgPartner == 'ZTE2X'){  //中兴
+			spPro = 'portalcode=2017gszx&sptoken=CF4EAB0D8DF1E71CA84762F6BA009BD4&';
+			parentId = '5396';
+			cmsCode = '5422';
+		}else{  //华为
+			spPro = 'portalcode=2017gshw&sptoken=96630FB882600EC4A3F0B610535FB2A7&';
+			parentId = '5395';
+			cmsCode = '5421';
+		}
+		
+        getArrowList();
+    }
+
+
+
+    function getArrowList () {
+        XEpg.Util.ajaxGet("../ajax/getInterface.jsp?action=getIndexData&"+ spPro +"pagesize=12&tmtype=2&orderinfo=1&pageindex=" + pageIndex + "&catalogid=" + parentId , initData);
+
+    }
+
+    function initData (obj) {
+        //clearData();
+        var data = XEpg.Util.parseJSON(obj);
+        var dataList = [];
+        pageNum = data.result.length;
+        for (var i = 0 ; i < pageNum ; i++ ) {
+            var item = data.result[i];
+			var topStyle = Math.floor(i / 6) * 294;
+			var leftStyle = (i % 6) * 197;
+			var name = item.name.split('HD]')[1] || item.name
+            dataList.push(
+	            '<div class="item" id="nav1_'+ i +'" style="left:'+ leftStyle +'px; top:'+ topStyle +'px;"  title="contid=' + item.id + '&contenttype='+ item.contenttype + '&recommendCode=' + cmsCode + '&cateType=' + item.categoryid +'">',
+	                '<div class="icon"></div>',
+	                '<div class="pic"><img id="nav1_'+ i +'_img" src="'+ item.midimg +'" ></div>',
+	                '<div class="txt" id="nav1_'+ i +'_move" >',
+	                    '<span id="nav1_'+ i +'_txt">'+ name +'</span>',
+	                    '<span id="nav1_'+ i +'_copy"></span>',
+	                '</div>',
+	            '</div>'
+            )
+            
+            contentObj[item['id']] = item; 	//数据上报获取内容使用
+        }
+        $('nav1').innerHTML = dataList.join("");
+        setCurrent();
+
+        init();
+        pageTotal = data.pagetotal;   //获取最大页
+        pageIndex = data.pageindex;  //获取当前页
+		
+        //上下角标焦点显示条件
+        if(pageTotal > 1){
+            document.getElementById("arrow").style.display = "block";
+        }
+
+        $("nav_page").innerHTML = '<span>' + pageIndex + '</span>/' + pageTotal ;
+    }
+    
+    function setCurrent(){
+    	
+    	if(currentId && !dataState){
+        	XEpg.My.currentId = param.currentId;
+        	dataState = true;
+        }else{
+        	if(isUpPage){
+        		XEpg.My.currentId = 'nav1_' + curIndex;
+        		if(!$(XEpg.My.currentId)){
+					//XEpg.My.currentId = 'nav1_' + (pageNum - 1);
+					XEpg.My.currentId = 'nav1_' + (curIndex - 6);
+					if(!$(XEpg.My.currentId)){
+						XEpg.My.currentId = 'nav1_' + (pageNum - 1);
+					}
+				}
+        		isUpPage = false;
+        	}else if(isLeftPage){
+        		XEpg.My.currentId = 'nav1_' + (pageNum - 1);
+        		isLeftPage = false;
+        	}else{
+        		XEpg.My.currentId = 'nav1_0';
+        	}
+        }
+        $(XEpg.My.currentId).className = 'item item_focus'; //显示焦点
+    }
+    
+    function init () {
+    	for(var i = 0 ; i < pageNum ; i ++){
+    		XEpg.$("nav1_" + i).click({"func":getDetail})
+    			.down({'func' : move.down})
+    			.up({'func' : move.up})
+    			.right({'func' : move.right})
+    			.left({'func' : move.left})
+    			.focus({"func":textScroll})
+    			.blur({'func':clearTextStyle});
+    	}
+    }
+    
+    var move = {
+    	up :　function(){
+    		var index = parseInt(XEpg.My.currentId.substring(5),10);
+    		clearTextStyle();
+    		curIndex = index;
+    		$(XEpg.My.currentId).className = 'item';
+    		if(pageTotal == 1){  //只有一页
+    			if(pageNum < 7){   //只有一排
+    				return;
+    			}else{
+    				if(index < 6){   //两排  当前焦点第一排
+						XEpg.My.currentId = 'nav1_' + (index + 6);
+						if(!$(XEpg.My.currentId)){
+							XEpg.My.currentId = 'nav1_' + (pageNum - 1);
+						}
+    				}else{  //两排  第二排
+    					XEpg.My.currentId = 'nav1_' + (index - 6);
+    				}
+    			}
+    			$(XEpg.My.currentId).className = 'item item_focus';
+    			textScroll();
+    		}else{  //多页
+    			if(index < 7){  //焦点在第一排
+    				if(pageIndex === 1){  //第一页
+    					pageIndex = pageTotal;  //跳到最后一页
+    				}else{
+    					pageIndex --;
+    				}
+    				
+    				isUpPage = true;
+    				XEpg.Util.ajaxGet("../ajax/getInterface.jsp?action=getIndexData&"+ spPro +"pagesize=12&tmtype=2&orderinfo=1&pageindex="+pageIndex+ "&catalogid=" + parentId,initData);
+    			}else{
+    				XEpg.My.currentId = 'nav1_' + (index - 6);
+    				$(XEpg.My.currentId).className = 'item item_focus';
+    				textScroll();
+    			}
+    		}
+    	},
+    	down : function(){
+    		var index = parseInt(XEpg.My.currentId.substring(5),10);
+    		clearTextStyle();
+    		curIndex = index;
+    		$(XEpg.My.currentId).className = 'item';
+    		if(pageTotal === 1){  //只有一页
+    			if(pageNum < 7){   //只有一排
+    				return;
+    			}else{
+    				if(index > 5){   //两排  当前焦点第二排
+						XEpg.My.currentId = 'nav1_' + (index - 6);
+						
+    				}else{  //两排  第二排
+    					XEpg.My.currentId = 'nav1_' + (index + 6);
+    					if(!$(XEpg.My.currentId)){
+							XEpg.My.currentId = 'nav1_' + (pageNum - 1);
+						}
+    				}
+    			}
+    			$(XEpg.My.currentId).className = 'item item_focus';
+    			textScroll();
+    		}else{  //多页
+    			if(index > 5 || pageNum < 7){  //焦点在第二排或者 只有一排
+    				if(pageIndex === pageTotal){  //第一页
+    					pageIndex = 1;  //跳到最后一页
+    				}else{
+    					pageIndex ++;
+    				}
+    				clearTextStyle();
+    				isUpPage = true;
+    				XEpg.Util.ajaxGet("../ajax/getInterface.jsp?action=getIndexData&"+ spPro +"pagesize=12&tmtype=2&orderinfo=1&pageindex="+pageIndex + "&catalogid=" + parentId,initData);
+    			}else{
+    				XEpg.My.currentId = 'nav1_' + (index + 6);
+    				if(!$(XEpg.My.currentId)){
+							XEpg.My.currentId = 'nav1_' + (pageNum - 1);
+						}
+    				$(XEpg.My.currentId).className = 'item item_focus';
+    				textScroll();
+    			}
+    		}
+    	},
+    	right : function(){
+    		var index = parseInt(XEpg.My.currentId.substring(5),10);
+    		clearTextStyle();
+    		$(XEpg.My.currentId).className = 'item';
+   			if(index === (pageNum - 1)){
+   				if(pageIndex === pageTotal){
+   					pageIndex = 1;
+   				}else{
+   					pageIndex ++;
+   				}
+   				clearTextStyle();
+				XEpg.Util.ajaxGet("../ajax/getInterface.jsp?action=getIndexData&"+ spPro +"pagesize=12&tmtype=2&orderinfo=1&pageindex="+pageIndex+"&catalogid="+parentId,initData);
+   			}else{
+   				XEpg.My.currentId = 'nav1_' + (index + 1);
+   				$(XEpg.My.currentId).className = 'item item_focus';
+   				textScroll();
+   			}
+    	},
+    	left : function(){
+    		var index = parseInt(XEpg.My.currentId.substring(5),10);
+    		clearTextStyle();
+    		$(XEpg.My.currentId).className = 'item';
+   			if(index === 0){
+   				if(pageIndex === 1){
+   					pageIndex = pageTotal;
+   				}else{
+   					pageIndex --;
+   				}
+   				clearTextStyle();
+				isLeftPage = true;
+				XEpg.Util.ajaxGet("../ajax/getInterface.jsp?action=getIndexData&"+ spPro +"pagesize=12&tmtype=2&orderinfo=1&pageindex="+pageIndex+"&catalogid="+parentId,initData);
+   			}else{
+   				XEpg.My.currentId = 'nav1_' + (index - 1);
+   				$(XEpg.My.currentId).className = 'item item_focus';
+   				textScroll();
+   			}
+    	}
+    }
+
+    function getDetail () {
+        var url = document.getElementById(XEpg.My.currentId).title;
+        var cateType = url.split("=")[4];
+        var currTitle = url.substring(11,(url.indexOf('&',0)));
+
+        //跳转前,保存当前焦点、分页等页面信息放入cookie
+        XEpg.SP.saveCurrentPageInfo('pageList',{
+            'currentId' : XEpg.My.currentId ,
+            'pageindex' : pageIndex,
+            'epg_info' : mg_epginfo
+        });
+
+        setTimeout(function(){
+        	if(cateType === '21'){
+				XEpg.Util.gotoPage("detail-zongyi.html?" + url + mg_epginfo);
+			}else{
+				XEpg.Util.gotoPage("detail-num.html?" + url + mg_epginfo);
+			}
+        },150);
+    }
+
+	XEpg.Nav.key_pageDown_event = function(){
+		curIndex = parseInt(XEpg.My.currentId.substring(5),10);
+		clearTextStyle();
+		if(pageIndex < pageTotal){ 
+			pageIndex ++;
+		}
+		isUpPage = true;
+		XEpg.Util.ajaxGet("../ajax/getInterface.jsp?action=getIndexData&"+ spPro +"pagesize=12&tmtype=2&orderinfo=1&pageindex="+pageIndex+"&catalogid="+parentId,initData);
+
+	}
+    
+    XEpg.Nav.key_pageUp_event = function(){
+		curIndex = parseInt(XEpg.My.currentId.substring(5),10);
+		clearTextStyle();
+		if(pageIndex > 1){ 
+			pageIndex --;
+		}
+		isUpPage = true;
+		XEpg.Util.ajaxGet("../ajax/getInterface.jsp?action=getIndexData&"+ spPro +"pagesize=12&tmtype=2&orderinfo=1&pageindex="+pageIndex+"&catalogid="+parentId,initData);
+
+	}
+
+	function $(id){
+		return document.getElementById(id);
+	}
+
+    var moveObj = null, scrollTimer = null, txtObj = null;
+
+    function textScroll(){
+        document.getElementById(XEpg.My.currentId).className = 'item item_focus';
+        var index = parseInt(XEpg.My.currentId.slice(5), 10);
+        moveObj = document.getElementById('nav1_' + index + '_move');
+        txtObj = document.getElementById('nav1_' + index + '_txt');
+
+        if( moveObj.scrollWidth > moveObj.offsetWidth ){
+            document.getElementById('nav1_' + index + '_copy').innerHTML =  '　 ' + txtObj.innerHTML;
+            startScroll();//父元素向左循环移动(设置父元素scrollleft)
+        }
+    }
+
+    function startScroll(){
+        if(moveObj.scrollLeft >= (txtObj.offsetWidth + 23) ){
+            moveObj.scrollLeft = 0;
+        }else {
+            moveObj.scrollLeft +=2;
+        }
+        scrollTimer = setTimeout(startScroll, 50);
+    }
+    function clearTextStyle(){
+        clearTimeout(scrollTimer);		//清除定时器
+        document.getElementById(XEpg.My.currentId).className = 'item';
+        var index = parseInt(XEpg.My.currentId.slice(5), 10);
+        var copyEle = document.getElementById('nav1_' + index + '_copy');
+        if(copyEle){
+            //清空复制的滚动文字
+            copyEle.innerHTML = '';
+        }
+        if(moveObj){
+            //清空scrollLeft
+            moveObj.scrollLeft = 0;
+        }
+    }
+
+</script>
+</body>
+</html>

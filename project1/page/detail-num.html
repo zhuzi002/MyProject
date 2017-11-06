@@ -1,0 +1,787 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+	<meta name="page-view-size" content="1280*720" />
+	<meta charset="UTF-8">
+	<!--<meta charset="gbk">-->
+	<title>详情页</title>
+	<link rel="stylesheet" href="../css/style.css">
+	<style type="text/css">
+		body{
+			background:url(../images/bg01.jpg) no-repeat;
+		}
+	</style>
+</head>
+<body>
+<div class="wrapper">
+	<div id="test1" style="left: 20px; top: 20px; width: 800px; height: 300px; position: absolute; color: #ff0000; word-break:break-all;"></div>
+
+	<!-- 标题	 -->
+	<div class="yq-title02" id="nav_name"></div>
+	<!-- 简介大图 -->
+	<div class="bigpic">
+		<div class="pic"><img id="nav_img"  src="" height="240" width="160" alt=""></div>
+	</div>
+	<!-- 简介内容-->
+	<div class="detailTxt" id="nav_writerdisplay"> </div>
+	<div class="detailTxt" id="nav_actordisplay" style="top:167px"></div>
+	<div class="detailTxt" id="nav_description" style="top:210px"></div>
+
+	<div class="detailBtn" id="nav1" style="display: none;">
+		<div class="item" id="nav1_0" style="display: none;">
+			<div class="skin skin01" id="nav1_0_skin">
+				<div class="icon icon01" id="nav1_0_icon"></div>
+				<div class="txt" id="nav1_0_txt">播放</div>
+			</div>
+		</div>
+		<div class="item" id="nav1_1" style="display: none;">
+			<div class="skin skin01" id="nav1_1_skin">
+				<div class="icon icon02" id="nav1_1_icon"></div>
+				<div class="freeIcon" id='freeIcon' style='display:none'><img src="../images/cs-free-icon-a.png"></div>
+				<div class="txt" id="nav1_1_txt">选集</div>
+			</div>
+		</div>
+
+		<div class="item" id="nav1_2" style="left:121px; ">
+			<div class="skin skin01" id="nav1_2_skin">
+				<div class="icon icon03" id="nav1_2_icon"></div>
+				<div class="txt" id="nav1_2_txt">收藏</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- 推荐影片 -->
+	<div class="detailsList" id="nav2">
+		<!-- 焦点 class="item item_focus"-->
+		<div class="item" id="nav2_0">
+			<div class="pic"><img id="nav2_0_img" src="" height="210" width="140"  alt=""></div>
+			<div class="txt" id="nav2_0_move">
+				<span id="nav2_0_txt"></span>
+				<span id="nav2_0_copy"></span>
+			</div>
+			<div  id="nav2_0_icon" style="background: url(../images/yq-icon_03.png);"></div>
+		</div>
+		<div class="item" id="nav2_1" style="left:170px">
+			<div class="pic"><img id="nav2_1_img" src="" height="210" width="140"  alt=""></div>
+			<div class="txt" id="nav2_1_move">
+				<span id="nav2_1_txt"></span>
+				<span id="nav2_1_copy"></span>
+			</div>
+			<div  id="nav2_1_icon"></div>
+		</div>
+		<div class="item"id="nav2_2"  style="left:340px">
+			<div class="pic"><img id="nav2_2_img" src="" height="210" width="140"  alt=""></div>
+			<div class="txt" id="nav2_2_move">
+				<span id="nav2_2_txt"></span>
+				<span id="nav2_2_copy"></span>
+			</div>
+			<div  id="nav2_2_icon"></div>
+		</div>
+		<div class="item" id="nav2_3" style="left:510px">
+			<div class="pic"><img id="nav2_3_img" src="" height="210" width="140"  alt=""></div>
+			<div class="txt" id="nav2_3_move">
+				<span id="nav2_3_txt"></span>
+				<span id="nav2_3_copy"></span>
+			</div>
+			<div  id="nav2_3_icon"></div>
+		</div>
+		<div class="item" id="nav2_4" style="left:680px">
+			<div class="pic"><img id="nav2_4_img" src="" height="210" width="140"  alt=""></div>
+			<div class="txt" id="nav2_4_move">
+				<span id="nav2_4_txt"></span>
+				<span id="nav2_4_copy"></span>
+			</div>
+			<div  id="nav2_4_icon"></div>
+		</div>
+		<div class="item" id="nav2_5" style="left:850px">
+			<div class="pic"><img id="nav2_5_img" src="" height="210" width="140"  alt=""></div>
+			<div class="txt" id="nav2_5_move">
+				<span id="nav2_5_txt"></span>
+				<span id="nav2_5_copy"></span>
+			</div>
+			<div  id="nav2_5_icon"></div>
+		</div>
+		<div class="item"id="nav2_6"  style="left:1020px">
+			<div class="pic" ><img id="nav2_6_img" src=""  alt=""></div>
+			<div class="txt" id="nav2_6_move">
+				<span id="nav2_6_txt"></span>
+				<span id="nav2_6_copy"></span>
+			</div>
+			<div  id="nav2_6_icon"></div>
+		</div>
+	</div>
+
+	<div class="moiveNum" id="nav_moiveNum" style="display: none">
+		<div class="numChoose" id="nav3">
+
+		</div>
+
+		<div class="numBtn" id="nav4">
+
+		</div>
+
+		<div class="yq-iconClose" id="nav5">
+			<!-- 焦点 class="item item_focus"   -->
+			<div class="item " id="nav5_0">
+			</div>
+		</div>
+
+	</div>
+
+</div>
+
+
+<script src="../js/xepg.min.order.js"></script>
+<script src="../js/commons.js"></script>
+<script type="text/javascript">
+	var SP = XEpg.SP;
+	var numUrl = (window.location.href).split("&result")[0] || window.location.href;
+	var numUrl2 = decodeURIComponent(numUrl);
+	var param = parseQueryString(numUrl2);  //URL解析成对象
+	//var param = XEpg.My.parseUrl();   //解析地址栏参数 接收的变量
+	var currentId = '';
+	var contId = param.contid || '';   // 内容ID
+	var recommendList = '';//电视剧、电影、少儿、纪录片
+	var contenttype = param.contenttype || 1;   //影片类型
+	var contentObj = {};		//内容列表数据缓存
+	var totalNum = 0;   //总集数
+	var pageNum = 1;   //总页数
+	var pageIndex = param.pageIndex ||　1;  //当前页
+	var detailData = []; // 如果为电视剧，则保存子集数据；
+	var groupSelect = param.groupSelect || 'nav3_0';
+	var numSelect = param.numSelect || 'nav4_0';
+	var playNum = param.contentNum || 0; //当前播放集数
+	var stbid = '';   //盒子型号
+	var colCode = null;   //收藏code
+	var authCode = null;   //鉴权code
+	var ppvprice = 0;
+	var recommendCode = param.recommendCode;
+	var ismaster = param.ismaster || 'oneGo';
+	var useAbled = param.useAbled || '0';
+	var spPro = '';   //portalcode + sptoken 参数
+	var mgPartner = param.mgPartner || ''; //平台信息
+	var mgUserID = param.mgUserID || '';  //用户ID
+	var mgUserToken = param.mgUserToken || '';  //临时身份证明
+	var backUrl =  parseQueryString(numUrl).backUrl || '';
+	var mg_epginfo = '&mgPartner=' + mgPartner + '&mgUserID=' + mgUserID +'&mgUserToken=' + mgUserToken+'&backUrl='+backUrl;
+	//监听返回事件，返回上一级页面
+	XEpg.Nav.key_back_opt = function(){
+	 	if($('nav_moiveNum').style.display == 'block'){
+			click.nav5Close();
+			recMove();
+		}else{
+			if(useAbled == 1){
+				XEpg.Util.gotoPage('popup-layer.html?'+mg_epginfo);
+			}else if(ismaster == 'oneGo'){
+			XEpg.Navigation.gotoBackNavigationUrl();
+			}else{
+			XEpg.Util.gotoPage('index.html?epg=gs' + mg_epginfo);
+			}
+		}
+	};
+
+	window.onload = function(){
+		if(!mgPartner){
+			ismaster = 'twoGo';
+			var from = unescape(numUrl);
+			if(from&&from.indexOf("<partner>")!=-1&&from.indexOf("</partner>")!=-1){
+				var partner = from.split("<partner>");
+				var partner1 = partner[1].split("</partner>");
+				mgPartner = partner1[0];  //获取平台类别
+			}
+			
+			if(from&&from.indexOf("<oss_user_id>")!=-1&&from.indexOf("</oss_user_id>")!=-1){   
+				var userId = from.split("<oss_user_id>");
+				var userId1 = userId[1].split("</oss_user_id>");
+				mgUserID = userId1[0];  //获取用户ID
+			}
+			
+			if(from&&from.indexOf("<userToken>")!=-1&&from.indexOf("</userToken>")!=-1){   
+				var userToken = from.split("<userToken>");
+				var userToken1 = userToken[1].split("</userToken>");
+				mgUserToken = userToken1[0];  //临时身份证明
+			}
+		}
+		mg_epginfo = '&mgPartner=' + mgPartner + '&mgUserID=' + mgUserID + '&mgUserToken=' + mgUserToken + '&backUrl=' + backUrl;
+		
+		
+		if(mgPartner == 'ZTE2X'){  //中兴
+			spPro = 'portalcode=2017gszx&sptoken=CF4EAB0D8DF1E71CA84762F6BA009BD4&';
+		}else{  //华为
+			spPro = 'portalcode=2017gshw&sptoken=96630FB882600EC4A3F0B610535FB2A7&';
+		}
+		if(contenttype == 1){
+			$('nav1_1').style.display = 'none';
+			$('nav1_0').style.display = 'block';
+			currentId = param.currentId || 'nav1_0';
+		}else{
+			$('nav1_0').style.display = 'none';
+			$('nav1_1').style.display = 'block';
+			currentId = param.currentId || 'nav1_1';
+		}
+		$('nav1').style.display = 'block';
+		XEpg.My.init({'currentId':currentId});
+		XEpg.My.pageLoadShowFocus();  //显示焦点
+		
+		if(playNum > 0){
+			groupSelect1 = Math.ceil(playNum / 30)
+			numSelect1 = (playNum % 30);
+			numSelect = 'nav4_' + (numSelect1 - 1);
+			groupSelect = 'nav3_' + (groupSelect1 - 1);
+			pageIndex = groupSelect1;
+		}
+		
+		getDetail(); //获取详情数据
+		//recMove();
+	};
+	
+	//获取内容详情
+	function getDetail(){
+		
+		XEpg.Util.ajaxGet('../ajax/getInterface.jsp?action=getDetailData&'+ spPro +'tmtype=2&contentid=' + contId , function(data){
+			var obj = XEpg.Util.parseJSON(data);
+			var item = obj.result;
+			
+			var categoryId = item[0].categoryid  || param.contenttype ;
+			var name = item[0].name.split("HD]")[1] || item[0].name;
+			var episodecount = item[0].episodecount;
+			if(!recommendCode){
+				recommendCode = item[0].catalogid.split(",")[0] || item[i].catalogid;
+			}
+			authCode = item[0].contentcode;
+			ppvprice = item[0].ppvprice || 0;
+			if(contenttype == 1){
+				$('nav_name').innerHTML = name;
+				$('nav1_0').title = '0';
+				playNum = 0;
+			}else{
+				totalNum = item[0].subcontents.length; 
+				if(episodecount == totalNum){
+					$('nav_name').innerHTML = name+ '&nbsp<span class="yq-stitle">'+ episodecount + '集全'+'</span>';
+				}else{
+					$('nav_name').innerHTML = name+ '&nbsp<span class="yq-stitle">'+'更新到'+item[0].updatedepisodes+ '集'+'</span>';
+				}
+				
+				for(var i = 0 ; i < totalNum ; i++){
+		 			detailData.push(item[0].subcontents[i]);
+		 		}
+			}
+			$('nav_img').src = item[0].midimg;
+			$('nav_writerdisplay').innerHTML = '导演 ： '+ item[0].writerdisplay;
+			$('nav_actordisplay').innerHTML = '主演 ： '+ item[0].actordisplay;
+			$('nav_description').innerHTML = item[0].description;
+			
+			if($('nav1_0').style.display == 'block'){
+				$('nav1_0').title = item[0].contentcode;
+			}
+
+			if(ppvprice != 0){  //收费片子显示前三集免费
+				$('freeIcon').style.display = 'block';
+			}else{
+				$('freeIcon').style.display = 'none';
+			}
+			
+			colCode = item[0].code;
+			getRecommend();
+			recMove();
+			//stbid = Authentication.CTCGetConfig("STBType") || 'STB001';
+			isColl();
+		})
+	}
+	
+	function isColl(){
+		XEpg.Util.ajaxGet('../ajax/getCollInterface.jsp?action=iscoll&username=' + mgUserID + '&stbid=' + stbid + '&contentcode=' + colCode , function(data){
+			
+			var obj = XEpg.Util.parseJSON(data);
+			var showResult = obj.resultcode;
+			if(showResult === '1'){
+				$('nav1_2_skin').className = 'skin skin02';
+				$('nav1_2_txt').innerHTML = '已收藏';
+			}else{
+				$('nav1_2_skin').className = 'skin skin01';
+				$('nav1_2_txt').innerHTML = '收藏';
+			}
+			$('nav1').style.display = 'block';
+			
+		})
+	}
+		
+	//下侧推荐位
+	function getRecommend() {
+		
+		XEpg.Util.ajaxGet('../ajax/getInterface.jsp?action=getIndexData&'+ spPro +'pagesize=8&tmtype=2&orderinfo=1&pageindex=1&catalogid=' + recommendCode,function(data){
+
+			var obj = XEpg.Util.parseJSON(data);
+			var dataList = [];
+			var len = 0;
+			clearData ();
+			if(obj.result.length < 8){
+				len = obj.result.length;
+			}else{
+				len = 8;
+			}
+			for(var i = 0 ; i < len  ; i ++){
+				var item = obj.result[i];
+				dataList.push(item);
+				contentObj[item['id']] = item; 	//数据上报获取内容使用
+			};
+			
+			for (var i = 0;i < (len - 1); i++) {
+				if(dataList[i].id == param.contid){
+					dataList.splice(i,1)
+				}
+				var name = dataList[i].name.split("HD]")[1] || dataList[i].name;
+				$('nav2_' + i + '_img').src = dataList[i].midimg;
+				$('nav2_' + i + '_txt').innerHTML = name;
+				$('nav2_' + i).title = 'contid=' + dataList[i].id + '&contenttype='+ dataList[i].contenttype + '&recommendCode=' + recommendCode;
+				$('nav2_' + i).style.display = 'block';
+			}
+		})
+		
+	}
+
+	//无遮罩焦点逻辑
+	function recMove () {
+		var topSelect = '';
+		if(contenttype == 1){
+			topSelect = 'nav1_0';
+			XEpg.$('nav1_0').click({'func':click.isFree}).down({'id':'nav2_0'}).up({'id':'nav2_0'}).right({'id':'nav1_2'}).left({'id':'nav1_2'});
+			XEpg.$('nav1_2').click({'func':click.col}).down({'id':'nav2_0'}).up({'id':'nav2_0'}).right({'id':'nav1_0'}).left({'id':'nav1_0'});
+		}else{
+			topSelect = 'nav1_1';
+			//XEpg.$('nav1_0').click({'func':click.xuBo}).down({'id':'nav2_0'}).up({'id':'nav2_0'}).right({'id':'nav1_1'}).left({'id':'nav1_2'});
+			XEpg.$('nav1_1').click({'func':click.selClick}).down({'id':'nav2_0'}).up({'id':'nav2_0'}).right({'id':'nav1_2'}).left({'id':'nav1_2'});
+			XEpg.$('nav1_2').click({'func':click.col}).down({'id':'nav2_0'}).up({'id':'nav2_0'}).right({'id':'nav1_1'}).left({'id':'nav1_1'});
+		
+		}
+		for(var i = 0 ; i < 7 ; i++){
+			XEpg.$('nav2_' + i).click({'func':click.getDetail})
+				.left({'id' : 'nav2_' + (i == 0 ? 6 : i - 1)})
+				.right({'id' : 'nav2_' + (i == 6 ? 0 : i + 1)})
+				.up({'id' : topSelect})
+				.down({'id' : topSelect})
+				.focus({"func":textScroll})
+				.blur({'func':clearTextStyle});
+		}
+	};
+	
+	//遮罩焦点逻辑
+	function numMove(){
+		for(var i = 0 ; i < pageNum ; i++){
+			XEpg.$('nav3_' + i).click({'func' : click.nav3Click})
+				.left({'func' : move.nav3Left})
+				.right({'func' : move.nav3Right})
+				.up({'func' : move.nav3Up})
+				.down({'func' : move.nav3Down})
+		}
+		for(var i = 0 ; i < 30 ; i++){
+			XEpg.$('nav4_' + i).click({'func' : click.isFree})
+				.left({'func' : move.nav4Left})
+				.right({'func' : move.nav4Right})
+				.up({'func' : move.nav4Up})
+				.down({'func' : move.nav4Down})
+		}
+		
+		XEpg.$('nav5_0').click({'func':click.nav5Close})
+			.left({'func':move.nav5Left})
+			.right({'func':click.nav5Close})
+			.up({'func' : click.nav5Close})
+			.down({'func' : move.nav5Down})
+	};
+	//点击事件
+	var click = {
+		selClick : function(){  //点击选集
+			$('nav_moiveNum').style.display = 'block';
+			data.getGroup(); 
+			$(XEpg.My.currentId).className = 'item';
+			XEpg.My.currentId = numSelect;
+			$(XEpg.My.currentId).className = 'item item_focus';
+		},
+		xuBo : function(){
+			
+		},
+		isFree : function(){
+			var m_index = parseInt((XEpg.My.currentId).split('_')[1], 10);
+			if(ppvprice == 0){
+				click.play(); //免费
+			}else{
+				if(pageIndex == 1 && m_index < 3 && contenttype != 1){
+					click.play(); //免费
+				}else{
+					click.authority(); //收费
+				}
+			}
+		},
+		authority : function(){  //鉴权
+			var url = "../ajax/gsAuth.jsp?userToken=" + mgUserToken + "&userID=" + mgUserID + "&ContentID=" + authCode + "&productID=8001013020";
+			XEpg.Util.ajaxGet(url,function(data){
+				var obj = XEpg.Util.parseJSON(data);
+				var item = obj.result[0].result;
+				var authResult = parseInt(item , 10);
+				var authState = authResult.toString(16);
+				
+				if(authState == 0){
+					click.play();  //鉴权通过
+				}else{
+					click.getOrder();
+				}
+			})
+		},
+		getOrder : function(){
+			var backUrl = window.location.href.indexOf("?") > -1 ? window.location.href.substring(0, window.location.href.indexOf("?")) : window.location.href;
+			backUrl +='?contid=' + contId 
+					+ '&contenttype=' + contenttype 
+					+ '&pageIndex=' +　pageIndex　
+					+ '&groupSelect=' +　groupSelect 
+					+ '&ismaster=' + ismaster
+					+ '&numSelect=' + XEpg.My.currentId 
+					+ '&playNum=' + playNum 
+					+ '&recommendCode=' + recommendCode
+					+ mg_epginfo;
+			var url = "../ajax/gsOrder.jsp?userToken=" + mgUserToken 
+					+ "&userID=" + mgUserID 
+					+ "&ContentID=" + authCode 
+					+ "&returnurl=" + encodeURIComponent(backUrl) ;
+			XEpg.Util.gotoPage(url);
+			
+		},
+		play : function(){   //视频播放
+			if(contenttype == 1){
+				playNum = 0;
+			}else{
+				playNum = $(XEpg.My.currentId).title
+			}
+			var backUrl = window.location.href.indexOf("?") > -1 ? window.location.href.substring(0, window.location.href.indexOf("?")) : window.location.href;
+        	backUrl +='?epg=gs&contid=' + contId + '&contenttype=' + contenttype + '&pageIndex=' +　pageIndex　+ '&groupSelect=' +　groupSelect + '&ismaster=' + ismaster + '&numSelect=' + XEpg.My.currentId + '&playNum=' + playNum+ '&useAbled='+useAbled + '&recommendCode=' + recommendCode + mg_epginfo;
+			
+			XEpg.Util.gotoPage('play.html?returnUrl=' + encodeURIComponent(backUrl));
+			
+		},
+		col : function(){  //收藏
+			
+			if($('nav1_2_txt').innerHTML === '收藏'){
+				XEpg.Util.ajaxGet('../ajax/getCollInterface.jsp?action=addcoll&username=' + mgUserID + '&stbid=' + stbid + '&contentcode=' + colCode , function(data){
+					
+					var obj = XEpg.Util.parseJSON(data);
+					var showResult = obj.resultcode;
+					if(showResult === '1'){
+						$('nav1_2_skin').className = 'skin skin02';
+						$('nav1_2_txt').innerHTML = '已收藏';
+					}else{
+						return;
+					}
+				})
+
+			}else{
+				XEpg.Util.ajaxGet('../ajax/getCollInterface.jsp?action=delectcoll&username=' + mgUserID + '&stbid=' + stbid + '&contentcode=' + colCode  , function(data){
+					
+					var obj = XEpg.Util.parseJSON(data);
+					var showResult = obj.resultcode;
+					if(showResult === '1'){
+						$('nav1_2_skin').className = 'skin skin01';
+						$('nav1_2_txt').innerHTML = '收藏';
+					}else{
+						return;
+					}
+				})
+			}
+		},
+		getDetail : function(){   //推荐位
+			var url = $(XEpg.My.currentId).title;
+			var currTitle = url.substring(11,(url.indexOf('&',0)));
+			//跳转单条内容详情页
+			setTimeout(function(){
+				XEpg.My.gotoPage('detail-num.html?' + url+ '&useAbled='+useAbled + mg_epginfo);
+			},150);
+		},
+		nav5Close : function(){  //关闭遮罩
+			$(XEpg.My.currentId).className = 'item';
+			$('nav_moiveNum').style.display = 'none';
+			XEpg.My.currentId = 'nav1_1';
+			$(XEpg.My.currentId).className = 'item item_focus';
+		},
+		nav3Click : function(){  //区域3点击事件
+			var index = parseInt(XEpg.My.currentId.substring(5), 10);
+			$(groupSelect).className = 'item';
+			groupSelect = XEpg.My.currentId;
+			pageIndex = index + 1;
+			data.getNum();
+			XEpg.My.currentId = 'nav4_0';
+			$(groupSelect).className = 'item item_select';
+			$(XEpg.My.currentId).className = 'item item_focus';
+		}
+	}
+	
+	var data = {
+		getGroup : function(){
+			var groupData = [];  //动态拼接选集组
+			pageNum = Math.ceil(totalNum/30) ;
+			for (var i = 0; i < pageNum; i++) {
+				if (i == (pageNum - 1)) {
+					groupData.push(
+						'<div class="item" id="nav3_' + i + '"  style="left: ' + 108 * i + 'px">' + (1 + i * 30) + '-' + totalNum + '</div>'
+					)
+				} else {
+					groupData.push(
+						'<div class="item" id="nav3_' + i + '"  style="left: ' + 108 * i + 'px">' + (1 + i * 30) + '-' + ((i + 1) * 30) + '</div>'
+					)
+				}
+			}
+			$('nav3').innerHTML = groupData.join("");
+			$(groupSelect).className = 'item item_select';
+			data.getNum();
+		},
+		getNum : function(){   //动态拼接选集
+			var numData = [];  
+			var len = '';
+			if(totalNum < (pageIndex * 30)){
+				len = totalNum;
+			}else{
+				len = pageIndex * 30;
+			}
+			for(var i = ((pageIndex - 1) * 30);i < len ;i++){    
+				var topStyle = Math.floor((i-((pageIndex - 1) * 30))/10) * 70;
+				var leftStyle = ((i-((pageIndex - 1) * 30)) % 10) * 110;
+				numData.push(
+					'<div class="item" id="nav4_'+(i-((pageIndex - 1)*30))+'"  title="' + detailData[i].episodeindex + '"  style="top: '+ topStyle +'px; left: '+ leftStyle +'px;">' ,
+						'<div class="icon" id="nav4_'+(i-((pageIndex - 1)*30))+'_icon" style="display:none"><img src="../images/cs-free-icon.png" width="53" height="29"></div>',
+						'<div class="txt">' + detailData[i].episodeindex + '</div>' ,
+					'</div>'
+				)
+			}
+		 	$('nav4').innerHTML = numData.join("");
+		 	if(pageIndex == 1 && ppvprice != 0){
+		 		if(len > 3 ){
+		 			len = 3;
+		 		}
+		 		for(var j = 0 ; j < len ; j ++){
+			 		$("nav4_" + j + "_icon").style.display = 'block';
+			 	}
+		 	}
+		 	numMove();
+		}
+	};
+	
+	
+	var move = {
+		nav3Left : function(){
+			var index = parseInt(XEpg.My.currentId.substring(5), 10);
+			$(XEpg.My.currentId).className = 'item';
+			$(groupSelect).className = 'item item_select';
+			if(index > 0){
+				XEpg.My.currentId = 'nav3_' + (index - 1);
+			}else{
+				XEpg.My.currentId = 'nav5_0';
+			}
+			$(XEpg.My.currentId).className = 'item item_focus';
+		},
+		nav3Right : function(){
+			var index = parseInt(XEpg.My.currentId.substring(5), 10);
+			$(XEpg.My.currentId).className = 'item';
+			$(groupSelect).className = 'item item_select';
+			if(index == (pageNum - 1)){
+				XEpg.My.currentId = 'nav5_0';
+			}else{
+				XEpg.My.currentId = 'nav3_' + (index + 1);
+			}
+			$(XEpg.My.currentId).className = 'item item_focus';
+		},
+		nav3Up : function(){
+			click.nav5Close();
+		},
+		nav3Down : function(){
+			$(XEpg.My.currentId).className = 'item';
+			XEpg.My.currentId = numSelect;
+			$(groupSelect).className = 'item item_select';
+			$(XEpg.My.currentId).className = 'item item_focus';
+		},
+		nav4Left : function(){
+			var index = parseInt(XEpg.My.currentId.substring(5), 10); //当前焦点下标
+			var groupIndex = parseInt(groupSelect.substring(5), 10);   //选集区域numGroup下标
+			var numIndex = totalNum - ((pageNum - 1) * 30);   //集数区域下标
+			$(XEpg.My.currentId ).className = 'item';
+			if(index == 0){   //当前焦点下标为0时
+				if(pageNum > 1){  //总页数大于1时
+					if(pageIndex == 1){  //当前页为第一页时
+						pageIndex = pageNum;   //翻页到最后一页
+						data.getNum();
+						$(groupSelect).className = 'item';
+						XEpg.My.currentId = 'nav4_' + (numIndex - 1);
+						groupSelect = 'nav3_' + (pageNum - 1);
+						$(groupSelect).className = 'item item_select';
+					}else{  //翻页到上一页
+						pageIndex --;
+						data.getNum();
+						$(groupSelect).className = 'item';
+						XEpg.My.currentId = 'nav4_29';
+						groupSelect = 'nav3_' + (groupIndex - 1);
+						$(groupSelect).className = 'item item_select';
+					}
+				}else{ //总页数为1 ，移动到当前页最后一集
+					XEpg.My.currentId = 'nav4_' + (numIndex - 1);
+				}
+			}else{ //当前焦点下标大于1，向左移动焦点
+				$(XEpg.My.currentId).className = 'item';
+				XEpg.My.currentId = 'nav4_' + (index - 1);
+			}
+			$(XEpg.My.currentId ).className = 'item item_focus';
+		},
+		nav4Right : function(){
+			var index = parseInt(XEpg.My.currentId.substring(5), 10); //当前焦点下标
+			var groupIndex = parseInt(groupSelect.substring(5), 10);   //选集区域numGroup下标
+			var numIndex = totalNum - ((pageNum - 1) * 30);   //集数区域下标
+			$(XEpg.My.currentId).className = 'item';
+			if(pageNum == 1){  //总页数为1页的时候
+				if(index == (totalNum - 1)){  //当前焦点处于当前页集数最后一个时
+					XEpg.My.currentId = 'nav4_0';
+				}else{
+					XEpg.My.currentId = 'nav4_' + (index + 1);
+				}
+			}else{
+				if(pageIndex < pageNum){   //当前页小于总页数时，说明当前页有20集
+					if(index == 29){       //当前焦点点下标为29，向右 ，翻页
+						pageIndex ++ ;
+						data.getNum();
+						$(groupSelect).className = 'item';
+						XEpg.My.currentId = 'nav4_0';
+						groupSelect = 'nav3_' + (groupIndex + 1);
+						$(groupSelect).className = 'item item_select';
+					}else{  //当前焦点点下标小于29，焦点向右移
+						XEpg.My.currentId = 'nav4_' + (index + 1);
+					}
+				}else{ //当前页为最后一页时
+					if(index == (numIndex - 1)){  //当前焦点为当前页最后一个时，翻页到第一页
+						pageIndex = 1 ;
+						data.getNum();
+						$(groupSelect).className = 'item';
+						XEpg.My.currentId = 'nav4_0';
+						groupSelect = 'nav3_0';
+						$(groupSelect).className = 'item item_select';
+					}else{  //焦点右移
+						XEpg.My.currentId = 'nav4_' + (index + 1);
+					}
+				}
+			}
+			$(XEpg.My.currentId).className = 'item item_focus';
+		},
+		nav4Up : function(){
+			var index = parseInt(XEpg.My.currentId.substring(5), 10);
+			if(index < 10) { //当前焦点为第一排时
+				$(XEpg.My.currentId).className = 'item';
+				numSelect = XEpg.My.currentId;
+				XEpg.My.currentId = groupSelect;
+				$(XEpg.My.currentId).className = 'item item_focus'
+			}else { 
+				$(XEpg.My.currentId).className = 'item';
+				XEpg.My.currentId = 'nav4_' + (index - 10);
+				$(XEpg.My.currentId).className = 'item item_focus';
+			}
+		},
+		nav4Down : function(){
+			var index = parseInt(XEpg.My.currentId.substring(5), 10); //当前焦点下标
+			var numIndex = totalNum - ((pageNum - 1) * 30);  //最后一页集数
+			var numRemainder = totalNum % 10   //最后一行个数
+			$(XEpg.My.currentId).className = 'item';
+			if(pageIndex < pageNum){    //当前页小于总页数时   说明当前页有30集
+				if(index < 20) {         //当前焦点下标小于20时
+					XEpg.My.currentId = 'nav4_' + (index + 10);
+				}else{
+					XEpg.My.currentId = groupSelect;
+				}
+			}else{   //当前页是最后一页时
+				if(numIndex < 11){  //当前页集数小于11，只有一排时
+					XEpg.My.currentId = groupSelect;
+				}else if(numIndex > 10 && numIndex < 21){     //只有两排时
+					if(index < 10){  //当前焦点下标小于10
+						XEpg.My.currentId = 'nav4_' + (index + 10);
+						if(!$(XEpg.My.currentId)){
+							XEpg.My.currentId = 'nav4_' + (numIndex - 1);
+						}
+					}else{   //当前焦点下标大于10
+						XEpg.My.currentId = groupSelect;
+					}
+				}else{  //当前页集数有三排
+					if(index < 20){  //当前焦点下标小于10
+						if((index - 9) > (numIndex - 21)){ //当前焦点坐标下方为空时
+							XEpg.My.currentId = 'nav4_' + (numIndex - 1);
+						}else{   //当前焦点坐标下方有集数按钮
+							XEpg.My.currentId = 'nav4_' + (index + 10);
+						}
+					}else{   //当前焦点下标大于10
+						XEpg.My.currentId = groupSelect;
+					}
+				}
+			}
+			$(XEpg.My.currentId).className = 'item item_focus';
+		},
+		nav5Left : function(){
+			$(XEpg.My.currentId).className = 'item';
+			XEpg.My.currentId = 'nav3_' + (pageNum - 1);
+			$(XEpg.My.currentId).className = 'item item_focus';
+		},
+		nav5Down : function(){
+			$(XEpg.My.currentId).className = 'item';
+			XEpg.My.currentId = numSelect;
+			$(XEpg.My.currentId).className = 'item item_focus';
+		}
+	}
+
+	function clearData () {
+		for(var i = 0; i < 7; i++){
+			$('nav2_' + i).style.display = 'none';
+		}
+	}
+	
+	//文字滚动
+	var moveObj = null, scrollTimer = null, txtObj = null;
+
+	function textScroll(){
+		document.getElementById(XEpg.My.currentId).className = 'item item_focus';
+		var index = parseInt(XEpg.My.currentId.substring(5) , 10);
+		moveObj = document.getElementById('nav2_' + index + '_move');
+		txtObj = document.getElementById('nav2_' + index + '_txt');
+
+		if( moveObj.scrollWidth > moveObj.offsetWidth ){
+			document.getElementById('nav2_' + index + '_copy').innerHTML =  '　    ' + txtObj.innerHTML;
+			startScroll();//父元素向左循环移动(设置父元素scrollleft)
+		}
+	}
+
+	function startScroll(){
+
+		if(moveObj.scrollLeft >= (txtObj.offsetWidth + 30) ){
+			moveObj.scrollLeft = 0;
+		}else {
+			moveObj.scrollLeft +=2;
+		}
+
+		scrollTimer = setTimeout(startScroll, 50);
+	}
+	function clearTextStyle(){
+		clearTimeout(scrollTimer);		//清除定时器
+		document.getElementById(XEpg.My.currentId).className = 'item';
+		var index = parseInt(XEpg.My.currentId.substring(5) , 10);
+		var copyEle = document.getElementById('nav2_' + index + '_copy');
+		if(copyEle){
+			//清空复制的滚动文字
+			copyEle.innerHTML = '';
+		}
+		if(moveObj){
+			//清空scrollLeft
+			moveObj.scrollLeft = 0;
+		}
+	}
+	function parseQueryString(url) {
+		var json = {};
+		var arr = url.substr(url.indexOf('?') + 1).split('&');
+		arr.forEach(function(item) {
+			var tmp = item.split('=');
+			json[tmp[0]] = tmp[1];
+		})
+		return json;
+	}
+
+</script>
+</body>
+</html>

@@ -1,0 +1,375 @@
+<!DOCTYPE HTML>
+<html>
+
+	<head>
+		<meta name="page-view-size" content="1280*720" />
+		<meta charset="UTF-8">
+		<title>模板EPG</title>
+		<link rel="stylesheet" href="../css/style.css" />
+		<style type="text/css"></style>
+	</head>
+
+	<body bgcolor="transparent">
+
+		<div class="pagebg">
+			<div class="pic"><img src="../images/list_bg.jpg" width="1280" height="720" alt=""></div>
+		</div>
+
+		<div class="he-xiang">
+
+			<!-- S left -->
+
+			<div class="left">
+				<div class="he-banner" style="left:34px; top:24px;"><img id="xyk_img" src="" width="372" height="520" alt=""></div>
+				<div class="he-banner"><img src="../images/proje.png" width="438" height="586" alt=""></div>
+				<div class=he-wrptxt id="xyk_wrptxt" style="display: none;">
+					<div class="txt" id="xyk_wrptxt_txt"></div>
+				</div>
+			</div>
+
+			<div class="right">
+				<div class="chaoren">
+					<div class="man" id="xyk_name">
+
+					</div>
+
+					<div class="daoyan" id="xyk_info">
+
+					</div>
+				</div>
+				<div class="listicon" id="xyk_listicon">
+					<div class="item" id="xyk_play">
+						
+						<div class="icon"><img src="../images/list-icon01.png" alt=""></div>
+						<div class="txt" id="xyk_play_txt">播放</div>
+					</div>
+					<div class="item" id="xyk_coll" style="left:126px;">
+						
+						<div class="icon" id="xyk_coll_icon"><img src="../images/list-icon.png" alt=""></div>
+						<div class="txt" id="xyk_coll_txt">收藏</div>
+					</div>
+				</div>
+				<div class="jianjie" id="xyk_description">
+
+				</div>
+
+			</div>
+
+			<!-- E left -->
+
+		</div>
+
+	</body>
+
+	<script type="text/javascript" src="../js/xepg.min.js"></script>
+	<script type="text/javascript" src="../js/com.min.js"></script>
+	<script>
+		var g_param = XEpg.My.parseUrl(); //解析地址栏参数 接收的变量
+		var currentId = g_param.currentId || 'xyk_play'; //初始化焦点
+		var g_contentCode = g_param.contentCode; //剧头ID
+
+		var isIndex = g_param.currentId || '0';
+
+		var g_price = 0; //影片价格
+		var g_authResult = 0; //0鉴权通过，1鉴权不通过
+		var g_zoneCode = '8FB4A57B0DC043BC89D859A9C1CF6BDF'; //专区编码
+		var g_collResult = 0; //0未收藏，1已收藏
+		var g_recordResult = 0; //0无播放记录，1有播放记录
+		var g_mediaCode = ''; //播放、收藏code
+		var g_name = ''; //影片名称
+		var g_programID = ''; //
+		var g_actor = ''; //
+		var g_isMovie = '';
+		var g_playTime = 0;
+		var UserID = SP.UserID || 'null';
+		var g_pic = '';
+		var g_orderType = 3;
+		window.onload = function() {
+			XEpg.My.init({
+				'currentId': currentId
+			});
+			XEpg.My.pageLoadShowFocus(); //显示焦点
+			getData.conDetail();
+			move.init1();
+		}
+
+		var getData = {
+			conDetail: function() { //获取内容详情
+				XEpg.Util.ajaxGet('../data/getContentDetail.jsp?contentCode=' + g_contentCode, function(data) {
+					var data = XEpg.Util.parseJSON(data);
+					var m_item = data.getContentDetailResp || '';
+					if(m_item) {
+						g_mediaCode = m_item.code;
+						g_programID = m_item.programID;
+						g_price = parseInt(m_item.price) || 0;
+						g_actor = m_item.actor;
+						g_name = m_item.name;
+						g_isMovie = m_item.elementType;
+						g_pic = m_item.poster || '';
+						$('xyk_img').src = m_item.poster || '';
+						$('xyk_name').innerHTML = g_name;
+						if(g_price === 0) {
+							$('xyk_info').innerHTML = '导演：' + m_item.director + '<br>主演：' + m_item.actor+ 　'<br><span id="priceshow" style="display:none;">价格：免费</span>';
+						} else {
+							var m_price = g_price > 15 ? (parseInt(g_price / 10)) : g_price;
+							if(g_price > 15){
+								$('xyk_info').innerHTML = '导演：' + m_item.director + '<br>主演：' + m_item.actor + 　'<br><span id="priceshow" style="display:none;">价格：' + m_price + '元（单片）</span>';
+							}else{
+								$('xyk_info').innerHTML = '导演：' + m_item.director + '<br>主演：' + m_item.actor + 　'<br><span id="priceshow" style="display:none;">价格：15元/月（包月）</span>';
+							}
+							
+						}
+						$('xyk_description').innerHTML = m_item.description;
+						$('xyk_name').style.display = 'none';
+						$('xyk_info').style.display = 'none';
+						$('xyk_description').style.display = 'none';
+						if(isIndex == '0') {
+							sendLogDetil();
+						}
+					}
+					coll.isColl();
+					//鉴权
+					if(g_price != 0) {
+						authAll.proAuthDD();
+					}else{
+						$('priceshow').style.display = 'block';
+						$('xyk_name').style.display = 'block';
+						$('xyk_info').style.display = 'block';
+						$('xyk_description').style.display = 'block';
+					}
+				});
+			}
+		};
+
+		var coll = {
+			isColl: function() { //是否收藏
+				XEpg.Util.ajaxGet('../data/getCollect.jsp?zoneCode=' + g_zoneCode + '&userID=' + UserID + '&programCode=' + g_contentCode, function(data) {
+					var data = XEpg.Util.parseJSON(data);
+					var m_item = data.getZoneCollectResp;
+					if(m_item) {
+						if(m_item.resultCode == 0) {
+							g_collResult = 1;
+							$('xyk_coll_txt').className = 'txt01';
+							$('xyk_coll_icon').className = 'icon02';
+							$('xyk_coll_txt').innerHTML = '已收藏';
+						} else {
+							g_collResult = 0;
+						}
+					}
+					getRecord();
+				});
+			},
+			addColl: function() {
+				XEpg.Util.ajaxGet('../data/addCollect.jsp?zoneCode=' + g_zoneCode + '&userID=' + UserID + '&programCode=' + g_contentCode + '&programName=' + encodeURIComponent(g_name) + '&seriesFlag=0&poster=' + encodeURIComponent(g_pic), function(data) {
+					var data = XEpg.Util.parseJSON(data);
+					var m_item = data.addZoneCollectResp;
+					if(m_item) {
+						if(m_item.resultCode == 0) {
+							g_collResult = 1;
+							$('xyk_coll_txt').className = 'txt01';
+							$('xyk_coll_icon').className = 'icon02';
+							$('xyk_coll_txt').innerHTML = '已收藏';
+						} else {
+							return;
+						}
+					}
+				});
+			},
+			deleteColl: function() {
+				XEpg.Util.ajaxGet('../data/removeCollect.jsp?zoneCode=' + g_zoneCode + '&userID=' + UserID + '&programCode=' + g_contentCode, function(data) {
+					var data = XEpg.Util.parseJSON(data);
+					var m_item = data.removeZoneCollectResp;
+					if(m_item) {
+						if(m_item.resultCode == 0) {
+							g_collResult = 0;
+							$('xyk_coll_txt').className = 'txt';
+							$('xyk_coll_txt').innerHTML = '收藏';
+							$('xyk_coll_icon').className = 'icon';
+						} else {
+							return;
+						}
+					}
+				});
+			}
+		};
+
+		var move = {
+			init1: function() {
+				XEpg.$('xyk_play').click({
+					'func': click.play
+				}).left({
+					'id': 'xyk_coll'
+				}).right({
+					'id': 'xyk_coll'
+				});
+				XEpg.$('xyk_coll').click({
+					'func': click.coll
+				}).left({
+					'id': 'xyk_play'
+				}).right({
+					'id': 'xyk_play'
+				});
+			}
+		};
+
+		var click = {
+			play: function() { //跳播放
+				var m_contentCode = $(XEpg.My.currentId).title;
+				var isOrder = 'N';
+				var m_price = g_price > 15 ? (g_price / 10) : g_price;
+				var orderType = g_orderType;
+				var programID = g_contentCode;
+				var meidaName = g_name;
+				var isMovie = 'movie';
+				var backUrl = location.href;
+				backUrl = backUrl.indexOf("?") != -1 ? backUrl.split("?")[0] : backUrl;
+				backUrl += "?" + "currentId=" + XEpg.My.currentId + "&contentCode=" + g_contentCode;
+				var r = parseInt(((Math.random() * (4 - 1 + 1)) + 1), 10);
+				if(g_authResult == 0) {
+					isOrder = 'Y';
+				} else {
+					isOrder = 'N';
+				}
+				XEpg.Util.gotoPage('4kgarden_play.html?programID=' + g_mediaCode +
+					'&contentCode=' + programID +
+					'&actor=' + encodeURIComponent(g_actor) +
+					'&mediaName=' + encodeURIComponent(meidaName) +
+					'&isMovie=' + isMovie +
+					'&playTime=' + g_playTime +
+					'&categoryCode=' + SP.indexParentCodeArray['grid' + r].code +
+					'&isOrder=' + isOrder +
+					'&orderType=' + orderType +
+					'&ppvOrderMoney=' + m_price +
+					'&poster=' + encodeURIComponent(g_pic) +
+					'&backUrl=' + encodeURIComponent(backUrl));
+			},
+			coll: function() { //点击收藏
+				if(g_collResult == 0) {
+					coll.addColl();
+				} else {
+					coll.deleteColl();
+				}
+			}
+		};
+		var authAll = {
+			proAuthDD: function() {
+				g_orderType = g_price > 15 ? 4 : 3;
+				if(g_price > 15) {
+					g_price = Math.ceil(g_price / 10);
+					authAll.proAuthBJ();
+				} else {
+					authAll.proAuthBJ();
+				}
+			},
+			proAuthBNY: function() {
+				var m_proID = '4KHY';
+				XEpg.Util.ajaxGet('../data/prodCheck.jsp?USER_ID=' + UserID + '&SP_ID=HQHY&SP_PWD=12345678&BUSI_ID=YKYSBY&PROD_ID=' + m_proID, function(data) {
+					eval('var result1=' + data);
+					var PROD_STATE_PPV = result1.PROD_STATE;
+					if(PROD_STATE_PPV == 'Y') {
+						g_authResult = 0;
+						$('xyk_name').style.display = 'block';
+						$('xyk_info').style.display = 'block';
+						$('xyk_description').style.display = 'block';
+						return;
+					} else if(PROD_STATE_PPV == 'N') {
+						g_authResult = 1;
+						authAll.proAuthDDonce();
+					}
+				});
+			},
+			proAuthBJ: function() {
+				var m_proID = '4KHYBJ';
+				XEpg.Util.ajaxGet('../data/prodCheck.jsp?USER_ID=' + UserID + '&SP_ID=HQHY&SP_PWD=12345678&BUSI_ID=YKYSBY&PROD_ID=' + m_proID, function(data) {
+					eval('var result1=' + data);
+					var PROD_STATE_PPV = result1.PROD_STATE;
+					if(PROD_STATE_PPV == 'Y') {
+						g_authResult = 0;
+						$('xyk_name').style.display = 'block';
+						$('xyk_info').style.display = 'block';
+						$('xyk_description').style.display = 'block';
+						return;
+					} else if(PROD_STATE_PPV == 'N') {
+						g_authResult = 1;
+						authAll.proAuthBNY();
+					}
+				});
+			},
+			proAuthDDonce: function() {
+				var m_proID = '4KHYPPV3';
+				if(g_price == 3) {
+					m_proID = '4KHYPPV3';
+				} else if(g_price == 5) {
+					m_proID = '4KHYPPV5';
+				} else {
+					m_proID = '4KHYPPV8';
+				}
+				XEpg.Util.ajaxGet('../data/PPVprodCheck.jsp?USER_ID=' + UserID + '&SP_ID=HQHY&SP_PWD=12345678&BUSI_ID=YKYSBY&PROD_ID=' + m_proID + '&PPV_CODE=' + g_contentCode, function(data) {
+					eval('var result1=' + data);
+					var PROD_STATE_PPV = result1.PROD_STATE;
+					if(PROD_STATE_PPV == 'Y') {
+						g_authResult = 0;
+					} else if(PROD_STATE_PPV == 'N') {
+						g_authResult = 1;
+						$('priceshow').style.display = 'block';
+					}
+					$('xyk_name').style.display = 'block';
+					$('xyk_info').style.display = 'block';
+					$('xyk_description').style.display = 'block';
+				});
+			}
+
+		};
+
+		function getRecord() { //是否有播放记录
+
+			XEpg.Util.ajaxGet('../data/getPlayRecord.jsp?zoneCode=' + g_zoneCode + '&userID=' + UserID + '&programCode=' + g_contentCode, function(data) {
+
+				var data = XEpg.Util.parseJSON(data);
+				var item = data.getZonePlayRecordResp;
+				var mResultCode = item.resultCode;
+				if(mResultCode == 0) {
+					g_playTime = item.playTime;
+					$('xyk_play_txt').innerHTML = '续播';
+				}
+			});
+			//getData.showListicon();
+		}
+
+		function $(id) {
+			return document.getElementById(id);
+		}
+		//发送日志
+		function sendLogDetil() {
+
+			if(SP.UserID) {
+				var stb = "";
+				try {
+					if(typeof(Authentication) != "undefined") {
+						stb = Authentication.CTCGetConfig("STBType");
+					}
+				} catch(e) {}
+
+				var epgPlatformType = SP.iptv_flag == 'hw' ? '0' : '1';
+				var reportUrl = "../data/addVodLog.jsp?" +
+					"contentCode=" + g_contentCode +
+					"&contentName=" + encodeURIComponent(g_name) +
+					"&userID=" + SP.UserID +
+					"&type=0" +
+					"&stb=" + stb +
+					"&productCode=" + "4KHYDY" +
+					"&productName=" + encodeURIComponent("4K花园电影") +
+					"&cpID=" + 1007 +
+					"&resolution=1" +
+					"&seriesCode=" +
+					"&seriesName=" +
+					"&epgPlatformType=" + epgPlatformType;
+				XEpg.Util.ajaxGet(reportUrl);
+			}
+		}
+		XEpg.Nav.key_back_event = function() {
+			XEpg.Nav.key_back_opt();
+		};
+	</script>
+
+</html>

@@ -1,0 +1,286 @@
+﻿/* S= CSS Reset
+----------------------------------------------- */
+body, div, table, caption, tbody, tfoot, thead, tr, th, td, ul, li, p, h1 { margin:0px; padding:0px; border:0px; }
+body { font-size: 24px; font-family:Microsoft YaHei,sans-serif; line-height: 100%; } 
+ul, ol { list-style: none; }
+table { border-collapse:collapse; border-spacing:0; }
+a { text-decoration: none; }
+img { border: 0; }
+/* E= CSS Reset */
+
+/* S= Global
+----------------------------------------------- */
+body, .wrapper, .pagebg {
+	height: 720px;
+	width: 1280px;
+	overflow: hidden;
+}
+body {
+	color: #ffffff;
+	position: relative;
+}
+.wrapper, .pagebg {
+	left: 0;
+	position:absolute;
+	top: 0;
+}
+.wrapper { z-index:2;}
+.pagebg { z-index:1;}
+.pagebg img {
+	display: block; /* clear some space 对于html5中背景图比原高度多出3PX的问题*/
+}
+.item, .link, .txt-wrap, .txt, .btn, .icon, .pic, .pic-shade, .cover, .num {
+	position:absolute;
+}
+.txtHidden {
+	text-overflow:ellipsis;
+	white-space:nowrap; 
+	overflow:hidden; 
+}
+.clearfix:after {
+    clear:both;
+    content: '';
+    display:block;
+    height:0;
+}
+.clearfix { zoom:1;}
+/* E= Global */
+
+/* S= ch index ----------------------------------------------- */
+.ch-btn01 {
+	position: absolute;
+	left: 1160px;
+	top: 11px;
+}
+.ch-btn01 .item {
+	background: url(../images/ch-btn01.png) no-repeat;
+	width:92px;
+	height:59px;
+}
+.ch-btn01 .txt {
+	color:#9d51fb;
+	font-size:20px;
+	text-align:center;
+	left: 10px;
+	top: 17px;
+	width:72px;
+	height:24px;
+}
+.ch-btn01 .item_focus {
+	background: url(../images/ch-btn01_focus.png) no-repeat;
+}
+.ch-btn01 .item_focus .txt {
+	color:#ffffff;
+}
+.ch-poster-list {
+	position: absolute;
+	left:12px;
+	top: 507px;
+}
+.ch-poster-list .item {
+	background: url(../images/ch-list01.png) no-repeat;
+	width:138px;
+	height:191px;
+	z-index:2;
+}
+.ch-poster-list .item .pic {
+	left:15px;
+	top:15px;
+	z-index:3;
+}
+.ch-poster-list .item .pic,
+.ch-poster-list .item .pic img,
+.ch-poster-list .item .txt-wrap {
+	width:108px;
+	height:161px;
+}
+.ch-poster-list .item .txt-wrap { 
+	background: url(../images/ch-list01-txt.png) no-repeat;
+	left: 15px;
+	top:15px;
+	z-index:5;
+}
+.ch-poster-list .item .txt {
+	color:#828282;
+	font-size:18px;
+	text-align:center;
+	left: 0;
+	top: 130px;
+	width:108px;
+	height:24px;
+	overflow:hidden;
+}
+.ch-poster-list .item_focus {
+	background: url(../images/ch-list01_focus.png) no-repeat;
+	z-index:4;
+}
+.ch-poster-list .item_focus .txt {
+	color:#e5e5e5;
+}
+
+.ch-lottery-btn {
+	position: absolute;
+	left: 823px;
+	top: 202px;
+	z-index:5;
+}
+.ch-lottery-btn .item {
+	width:216px;
+	height:200px;
+}
+.ch-lottery-btn .item_focus {
+	background: url(../images/ch-btn-click_focus.png) no-repeat;
+}
+.ch-lottery-btn .item_gray {
+	background: url(../images/ch-btn-click_gray.png) no-repeat;
+}
+.ch-lottery03 {
+	z-index:3;
+}
+.ch-lottery01 {
+	position: absolute;
+	left: 704px;
+	top: 51px;
+}
+.ch-lottery01 .item {
+	width:220px;
+	height:197px;
+}
+.ch-lottery01 .item_focus {
+	background: url(../images/ch-lottery01_focus.png) no-repeat;
+}
+.ch-lottery02 {
+	position: absolute;
+	left: 925px;
+	top: 53px;
+}
+.ch-lottery02 .item {
+	width:216px;
+	height:197px;
+}
+.ch-lottery02 .item_focus {
+	background: url(../images/ch-lottery02_focus.png) no-repeat;
+}
+.ch-lottery03 {
+	position: absolute;
+	left: 1011px;
+	top: 178px;
+}
+.ch-lottery03 .item {
+	width:161px;
+	height:248px;
+}
+.ch-lottery03 .item_focus {
+	background: url(../images/ch-lottery03_focus.png) no-repeat;
+}
+.ch-lottery04 {
+	position: absolute;
+	left: 925px;
+	top: 352px;
+}
+.ch-lottery04 .item {
+	width:215px;
+	height:200px;
+}
+.ch-lottery04 .item_focus {
+	background: url(../images/ch-lottery04_focus.png) no-repeat;
+}
+.ch-lottery05 {
+	position: absolute;
+	left: 704px;
+	top: 351px;
+}
+.ch-lottery05 .item {
+	width:220px;
+	height:200px;
+}
+.ch-lottery05 .item_focus {
+	background: url(../images/ch-lottery05_focus.png) no-repeat;
+}
+.ch-lottery06 {
+	position: absolute;
+	left: 674px;
+	top: 177px;
+}
+.ch-lottery06 .item {
+	width:161px;
+	height:248px;
+}
+.ch-lottery06 .item_focus {
+	background: url(../images/ch-lottery06_focus.png) no-repeat;
+}
+.ch-btnskin {
+	position: absolute;
+	left: 747px;
+	top: 609px;
+}
+.ch-btnskin .item {
+	width:200px;
+	height:90px;
+}
+.ch-btnskin .item .txt {
+	font-size:30px;
+	font-family:SimHei;
+	font-weight:bold;
+	text-align:center;
+	line-height:56px;
+	left: 30px;
+	top: 18px;
+	width:142px;
+	height:56px;
+}
+.ch-btnskinA .item {
+	background: url(../images/ch-btn03.png) no-repeat;
+}
+.ch-btnskinB .item {
+	background: url(../images/ch-btn03_1.png) no-repeat;
+}
+.ch-btnskin .item_focus {
+	background: url(../images/ch-btn03_focus.png) no-repeat;
+}
+/* E= ch index */
+
+/* S= ch list ----------------------------------------------- */
+.ch-win-list {
+	position: absolute;
+	left: 208px;
+	top: 197px;
+	width: 920px;
+	overflow: hidden;
+}
+.ch-win-list .scrollBox {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 920px;
+}
+.ch-win-list .item .txt {
+	font-size:22px;
+	line-height: 40px;
+}
+.ch-win-list .item .txt01 {
+	width: 240px;
+}
+.ch-win-list .item .txt02,
+.ch-win-list .item .txt03 {
+	width: 300px;
+	text-align: center;
+}
+.ch-win-list .item .txt02 {
+	left: 275px;
+}
+.ch-win-list .item .txt03 {
+	left: 610px;
+}
+.ch-win-list01 .txt {
+	color:#764e12;
+}
+.ch-win-list02 .txt {
+	color:#0e7faf;
+}
+/* =E ch list */
+
+
+
+
+

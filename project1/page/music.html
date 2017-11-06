@@ -1,0 +1,844 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta name="page-view-size" content="1280*720" />
+    <meta charset="UTF-8">
+    <title>芒果星闻 | 芒果TV-高清</title>
+    <script>
+        //页面加载时间和持续时间
+        var resptime = {
+            sRequ  : 0,		//请求开始时间(页面开始渲染之前时间)
+            eRequ : 0,		//请求结束时间 (页面渲染完成时间)
+            ePage : 0		//跳转或回车页面时间
+        }
+        resptime.sRequ = +new Date();		//记录请求开始时间
+    </script>
+    <style type="text/css">
+        /* S= CSS Reset
+        ----------------------------------------------- */
+        body, table, caption, tbody, tfoot, thead, tr, th, td, ul, li, p, h1 { margin:0px; padding:0px; border:0px; }
+        body { font-size: 24px; font-family: Microsoft YaHei,sans-serif; line-height: 100%; }
+        ul, ol { list-style: none; }
+        table { border-collapse:collapse; border-spacing:0; }
+        a { text-decoration: none; }
+        img { border: 0; }
+        /* E= CSS Reset */
+
+        /* S= Global
+        ----------------------------------------------- */
+        body, .wrapper, .pagebg {
+            height: 720px;
+            width: 1280px;
+            overflow: hidden;
+        }
+        body {
+            color: #ffffff;
+            position: relative;
+        }
+        .wrapper, .pagebg {
+            left: 0;
+            position:absolute;
+            top: 0;
+        }
+        .pagebg img {
+            display: block; /* clear some space 对于html5中背景图比原高度多出3PX的问题*/
+        }
+        .item, .link, .txt-wrap, .txt, .btn, .icon, .pic, .pic-shade, .cover, .num {
+            position:absolute;
+        }
+        .txtHidden {
+            white-space:nowrap;
+            overflow:hidden;
+        }
+        .clearfix:after {
+            clear:both;
+            content: '';
+            display:block;
+            height:0;
+        }
+        .clearfix { zoom:1;}
+        /*
+        文字过短需居中时 width < 外部容器单位宽度 时 span class="txtSlideWrap txtNoSlide"
+        文字过长需滚动时 width > 外部容器单位宽度 时 span class="txtSlideWrap"
+        */
+        span.txtSlideWrap,
+        span.txtSlideWrap div,
+        span.txtNoSlide div {
+            padding: 0!important;
+            margin: 0!important;
+        }
+        span.txtSlideWrap {
+            display: block;
+            height: 100%;
+            width: 100%!important;
+            overflow: hidden;
+            position: relative;
+        }
+        span.txtSlideWrap div {
+            position: absolute;
+            top: 0;
+            white-space: nowrap;
+        }
+        span.txtNoSlide div {
+            width: 100%;
+        }
+        .pigbg{
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+        /* E= Global */
+        .logo{
+            position:absolute;
+            top:48px;
+            left:90px;
+        }
+
+        .logo{
+            font-size:44px;
+            color:#a998bd;
+            width:600px;
+            height:60px;}
+        .cs-menu{
+            position:absolute;
+            top:109px;
+            left:92px;
+            width:1099px;
+            height:76px;
+            overflow:hidden;}
+        .cs-menu .scrollBox{
+            position:absolute;
+            top:0px;
+            left:0px;
+            width:2000px;
+            height:76px;
+        }
+        cs-menu .scrollBox .nav, .nav02 {
+            position:absolute;
+            top:0px;
+            left:0px;
+        }
+
+        .nav{
+            position:absolute;
+            top:0px;
+            left:0px;
+        }
+        .nav .item{
+            width:188px;
+            height:76px;
+        }
+        .nav .item .txt {
+            left:6px;
+            top:20px;
+            font-size: 28px;
+            width:176px;
+            height:38px;
+            text-align:center;
+            white-space:nowrap;
+            overflow:hidden;
+        }
+        .nav .item .txt, .nav .item .scroll {
+            color:#7f728e;
+            text-align:center;
+            width:170px;
+            line-height:40px;
+        }
+
+        .nav .item_focus {
+            background:url(../images/nav-focus.png) no-repeat;
+        }
+        .nav .item_focus .scroll,
+        .nav .item_focus .txt{
+            color:#fff;
+        }
+        .nav .item_select .scroll,
+        .nav .item_select .txt {
+            color:#ffbd36;
+        }
+        .arrow-l,
+        .arrow-r{
+            position:absolute;
+            top:131px;
+            left:60px;
+        }
+        .arrow-l .item,
+        .arrow-r .item{
+            width:21px;
+            height:36px;
+        }
+        .arrow-l .item{
+            background:url(../images/cs-arrow-l.png) no-repeat;
+        }
+        .arrow-l .item_focus{
+            background:url(../images/cs-arrow-l-focus.png) no-repeat;
+        }
+        .arrow-r .item{
+            background:url(../images/cs-arrow-r.png) no-repeat;
+        }
+        .arrow-r .item_focus{
+            background:url(../images/cs-arrow-r-focus.png) no-repeat;
+        }
+        .cs-txtList{
+            position:absolute;
+            top:241px;
+            left:92px;
+        }
+        .cs-txtList .item{
+            width:349px;
+            height:49px;
+        }
+        .cs-txtList .item .txt{
+            width:320px;
+            height:49px;
+            font-size:26px;
+            color:#7f728e;
+            line-height:46px;
+            left:18px;
+            overflow:hidden;
+            white-space: nowrap;
+        }
+        .cs-txtList .item_focus{
+            background:url(../images/cs-txt-focus.png) no-repeat;
+        }
+        .cs-txtList .item_focus .txt{
+            color:#fff;
+        }
+        .cs-txtList .item_select .txt{
+            color:#ffbd36;
+        }
+        .arrow-up,
+        .arrow-down{
+            position:absolute;
+            top:206px;
+            left:248px;
+        }
+        .arrow-up .item,
+        .arrow-down .item{
+            width:30px;
+            height:16px;
+        }
+        .arrow-up .item{
+            background:url(../images/cs-arrow-up.png) no-repeat;
+        }
+        .arrow-up .item_focus{
+            background:url(../images/cs-arrow-up-focus.png) no-repeat;
+        }
+        .arrow-down .item{
+            background:url(../images/cs-arrow-down.png) no-repeat;
+        }
+        .arrow-down .item_focus{
+            background:url(../images/cs-arrow-down-focus.png) no-repeat;
+        }
+        .cs-video{
+            position:absolute;
+            top:191px;
+            left:438px;
+        }
+        .cs-video .item{
+            width:754px;
+            height:427px;
+        }
+        .cs-video .item .pic{
+            top:3px;
+            left:3px;
+        }
+        .cs-video .item .pic,
+        .cs-video .item .pic img{
+            width:748px;
+            height:421px;
+        }
+        .cs-video .item_focus{
+            background:url(../images/cs-video-focus.png) no-repeat;
+        }
+        .cs-videoTxt{
+            position:absolute;
+            top:624px;
+            left:456px;
+        }
+        .cs-videoTxt .txt{
+            left:46px;
+            font-size:29px;
+            width:662px;
+            height:38px;
+            line-height:35px;
+            color:#d8d8d8;
+            overflow:hidden;
+            white-space: nowrap;
+        }
+        .cs-page{
+            position:absolute;
+            top:635px;
+            left:113px;
+            width:110px;
+            font-size:22px;
+            color:#6586f9;
+            height:35px;
+        }
+    </style>
+</head>
+<body bgcolor="transparent">
+<!-- S pagebg -->
+<div class="pagebg">
+    <div class="pic"><img src="../images/cs-indexBg_01.jpg" width="1280" height="194"></div>
+    <div class="pic" style="top:194px;"><img src="../images/cs-indexBg_02.jpg" width="441" height="526"></div>
+    <div class="pic" style="left:1189px;top:194px;"><img src="../images/cs-indexBg_04.jpg" width="91" height="421"></div>
+    <div class="pic" style="top:615px;left:441px;"><img src="../images/cs-indexBg_05.jpg" width="839" height="105"></div>
+</div>
+<!-- E pagebg -->
+<!-- S content -->
+<div class="wrapper">
+    <div class="logo">音乐</div>
+</div>
+<!-- S menu -->
+<div class="cs-menu">
+    <!--控制内容左右滑动 则改变left值(left初始值为92px)实现 第二屏为-1099px -->
+    <div class="scrollBox">
+        <div class="nav" id="columnList">
+            <!--<div class="item">-->
+                <!--<div class="txt"> <div class="scroll" style="left:0;">我想和你唱</div></div>-->
+            <!--</div>-->
+            <!--<div class="item" style="left:195px;">-->
+                <!--<div class="txt"><div class="scroll" style="left:0;">我是歌手</div></div>-->
+            <!--</div>-->
+            <!--<div class="item item_select" style="left:370px;">-->
+                <!--<div class="txt"><div class="scroll" style="left:0;">超级女生</div></div>-->
+            <!--</div>-->
+        </div>
+
+    </div>
+    <!-- E scrollBox -->
+</div>
+<!-- E menu --> <!-- arrow -->
+<div class="arrow-l">
+    <div class="item" id="left-icon" style="display:none;"></div>
+</div>
+<div class="arrow-r" id="right-icon" style="left:1210px; display:none;">
+    <div class="item "></div>
+</div>
+<!-- arrow -->
+<!-- S cs-txtList -->
+<div class="cs-txtList">
+    <div class="item" id="nav2_0" style="display:none;">
+        <!--<div class="txt" id="nav2_0_txt"></div>-->
+        <div class="txt-wrap"  >
+            <div class="txt" id="nav2_0_move">
+                <span id="nav2_0_txt"></span>
+                <span id="nav2_0_copy"></span>
+            </div>
+        </div>
+    </div>
+    <div class="item" id="nav2_1" style="top:56px; display:none;">
+        <div class="txt-wrap"  >
+            <div class="txt" id="nav2_1_move">
+                <span id="nav2_1_txt"></span>
+                <span id="nav2_1_copy"></span>
+            </div>
+        </div>
+    </div>
+    <div class="item" id="nav2_2" style="top:112px; display:none;">
+        <div class="txt-wrap"  >
+            <div class="txt" id="nav2_2_move">
+                <span id="nav2_2_txt"></span>
+                <span id="nav2_2_copy"></span>
+            </div>
+        </div>
+    </div>
+    <div class="item" id="nav2_3" style="top:168px; display:none;">
+        <div class="txt-wrap"  >
+            <div class="txt" id="nav2_3_move">
+                <span id="nav2_3_txt"></span>
+                <span id="nav2_3_copy"></span>
+            </div>
+        </div>
+    </div>
+    <div class="item" id="nav2_4" style="top:224px; display:none;">
+        <div class="txt-wrap"  >
+            <div class="txt" id="nav2_4_move">
+                <span id="nav2_4_txt"></span>
+                <span id="nav2_4_copy"></span>
+            </div>
+        </div>
+    </div>
+    <div class="item" id="nav2_5" style="top:280px; display:none;">
+        <div class="txt-wrap"  >
+            <div class="txt" id="nav2_5_move">
+                <span id="nav2_5_txt"></span>
+                <span id="nav2_5_copy"></span>
+            </div>
+        </div>
+    </div>
+    <div class="item" id="nav2_6" style="top:336px; display:none;">
+        <div class="txt-wrap"  >
+            <div class="txt" id="nav2_6_move">
+                <span id="nav2_6_txt"></span>
+                <span id="nav2_6_copy"></span>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- E  cs-txtList -->
+<!-- arrow -->
+<div class="arrow-up">
+    <div class="item" id="up-icon"></div>
+</div>
+<div class="arrow-down" style="top:641px;">
+    <div class="item" id="down-icon"></div>
+</div>
+<!-- arrow -->
+<!-- S page -->
+<div class="cs-page" id="pageInfo">0页</div>
+<!-- E page -->
+<!-- S video -->
+<div class="cs-video">
+    <div class="item" id="nav3_0">
+        <div class="pic"><img src="../images/demopic/pic02-748X421.jpg" alt=""></div>
+    </div>
+</div>
+<div class="cs-videoTxt">
+    <div class="icon" style="top:3px;"><img src="../images/cs-icon02.png" alt=""></div>
+    <div class="txt" id="nav3_0_txt"></div>
+</div>
+<!-- E video -->
+
+<!-- E content -->
+
+</body>
+<script src="../js/xepg.min.js"></script>
+<script src="../js/commons.js"></script>
+<script>
+
+    var currentId = 'nav1_0';               // 当前页面初始化焦点
+    var param = XEpg.My.parseUrl();         // 获取 URL 参数对象
+    var menuSelectId  = 'nav1_0';         // 头部导航栏 ， 驻留样式的 ID
+    var listSelectId = 'nav2_0';     // 左侧列表， 驻留样式的 ID
+    var catalogid = '';                     // 导航栏目的 ID
+    var pageNumber = 1;                     // 当前页码
+    var totalPage = 1;                      // 总页数
+
+    var serialList = [];                    // 缓存导航栏目数据
+    var menuLen = 1;                        //导航栏长度
+    var listLen = 1;                        //最后一页个数
+	var moveNum = 0;                   //移动变量
+
+    var SP = XEpg.SP;
+    var contentObj = {};		//返回页面内容数据缓存
+
+
+    //监听返回事件，返回上一级页面
+    XEpg.Nav.key_back_opt = function(){
+        SP.LOGGER.sendExitEvent(2,resptime.sRequ);
+        setTimeout(function(){
+            XEpg.Navigation.gotoBackNavigationUrl();
+        },150);
+    };
+
+    window.onload = function() {
+        currentId = param.currentId || 'nav1_0';
+        XEpg.My.init({"currentId": currentId});
+        XEpg.My.pageLoadShowFocus();
+
+        // 初始化获取头部导航栏 数据
+        XEpg.Util.ajaxGet('http://localhost:8080/testwork/getInterface.jsp?action=getIndexData&pagesize=10&tmtype=2&orderinfo=1&pageindex=1&catalogid=3907', function(data){
+            var obj = XEpg.Util.parseJSON(data);
+            var list = obj.result || null;
+            var len = 1;
+            var html =[];
+            menuLen = list.length;
+            
+            if(list && menuLen > 0){
+                catalogid = list[0].id;
+                for(var i = 0 ; i < menuLen; i++){
+                    var item = obj.result[i];
+                    html.push(
+                        '<div class="item" id="nav1_' + i + '" style="left:' + (i * 190) + 'px;" title="' + list[i].id + '">',
+                        '<div class="txt-wrap"><div class="txt" id="nav1_' + i + '_move"><span id="nav1_' + i + '_txt">' + list[i].name + '</span><span id="nav1_' + i + '_copy">' + list[i].name + '</span>',
+                        '</div></div></div>'
+                    );
+                    contentObj[item['id']] = item; 	//数据上报获取内容使用
+                }
+
+                $('columnList').innerHTML = html.join("");
+                $(menuSelectId ).className = 'item item_select';
+                XEpg.My.init({"currentId": currentId});
+                XEpg.My.pageLoadShowFocus();
+                stopScroll();
+                startScroll();
+
+                // 获取第一个栏目的数据
+                getRecommendData();
+            }
+        });
+
+    }
+
+    // 初始化头部导航栏目的移动逻辑
+    function init(){
+    	for(var i = 0 ; i < menuLen ; i ++){
+    		XEpg.$('nav1_' + i).click({'func':operation.getData})
+    			.down({'func':operation.menuDown})
+    			.right({'func' : operation.menuRight})
+    			.up({'func' : operation.menuUp})
+    			.left({'func' : operation.menuLeft})
+    			.focus({"func":startScroll})
+    			.blur({'func':stopScroll});
+    	}
+   }
+
+    // 初始化左侧列表移动逻辑
+    function initNav2(){
+    	for(var i = 0 ; i < 7 ; i ++){
+    		XEpg.$('nav2_' + i).click({'func':operation.getListData})
+    			.up({"func":operation.listUp})
+    			.down({'func':operation.listDown})
+    			.right({'func':operation.listRight})
+    			.left({'func' : operation.listLeft})
+    			.focus({"func":startScroll}).blur({'func':stopScroll});
+    	}
+        XEpg.$('nav3_0').click({'func':operation.clickWindows})
+        	.up({"func": operation.nav3Up})
+        	.left({"func":operation.nav3Left})
+        	.right({"func":operation.nav3Left})
+        	.down({"func": operation.nav3Up});
+    }
+
+    // 操作逻辑
+    var operation = {
+        isShowCurrentPage:1,
+        menuRight:function(){
+        	var index = parseInt(XEpg.My.currentId.charAt(5), 10);
+        	$(XEpg.My.currentId).className = 'item';
+            $(menuSelectId).className = 'item item_select';
+            if(menuLen > 6){
+            	if((index - moveNum) == 5){
+            		moveNum ++;
+            		if((moveNum + 6) > menuLen){
+            			moveNum = 0;
+            			XEpg.My.currentId = 'nav1_0';
+            		}else{
+            			XEpg.My.currentId = 'nav1_'+ (5 + moveNum);
+            		}
+            		for(var i = 0 ; i < menuLen ; i ++){
+            			$("nav1_" + i).style.left = ((i - moveNum) * 190) + 'px';
+            			console.log($("nav1_" + i).style.left );
+            		}
+            	}else{
+            		XEpg.My.currentId = 'nav1_' + (index + 1);
+            	}
+            }else{
+            	if(index == (menuLen - 1)){
+	            	 XEpg.My.currentId = 'nav1_0';
+	            }else{
+	            	 XEpg.My.currentId = 'nav1_' + (index + 1);
+	            }
+            }
+           
+            $(XEpg.My.currentId).className = 'item item_focus';
+            stopScroll();
+            startScroll();
+        },
+        menuUp:function(){
+        	$(XEpg.My.currentId).className = 'item';
+            $(menuSelectId).className = 'item item_select';
+            if($('nav2_6').style.display == 'none'){
+            	XEpg.My.currentId = 'nav2_' +　(listLen - 1);
+            }else{
+            	XEpg.My.currentId = 'nav2_6';
+            }
+            $(XEpg.My.currentId).className = 'item item_focus';
+            stopScroll();
+            startScroll();
+        },
+        menuLeft:function(){
+        	var index = parseInt(XEpg.My.currentId.charAt(5), 10);
+        	$(XEpg.My.currentId).className = 'item';
+            $(menuSelectId).className = 'item item_select';
+            if(menuLen > 6 && moveNum > 0){
+            	if((index - moveNum) == 0){
+            		moveNum --;
+        			XEpg.My.currentId = 'nav1_'+ moveNum;
+            		for(var i = 0 ; i < menuLen ; i ++){
+            			$("nav1_" + i).style.left = ((i - moveNum) * 190) + 'px';
+            			console.log($("nav1_" + i).style.left );
+            		}
+            	}else{
+            		XEpg.My.currentId = 'nav1_' + (index - 1);
+            	}
+            }else{
+            	if(index == 0){
+            		if(menuLen > 6){
+	            	 XEpg.My.currentId = 'nav1_5';
+		            }else{
+		            	 XEpg.My.currentId = 'nav1_' + (menuLen - 1);
+		            }
+            	}else{
+            		XEpg.My.currentId = 'nav1_' + (index - 1);
+            	}
+            }
+            
+            $(XEpg.My.currentId).className = 'item item_focus';
+            stopScroll();
+            startScroll();
+        },
+        menuDown:function(){
+            $(XEpg.My.currentId).className = 'item';
+            $(menuSelectId ).className = 'item item_select';
+            XEpg.My.currentId = 'nav2_0';
+            $(XEpg.My.currentId).className = 'item item_focus';
+            stopScroll();
+            startScroll();
+        },
+        listUp:function(){
+            var index = parseInt(XEpg.My.currentId.charAt(5), 10);
+            $(XEpg.My.currentId).className = 'item';
+            if(index > 0){
+                XEpg.My.currentId = 'nav2_' + (index - 1);
+            }else {
+                XEpg.My.currentId = 'nav2_6';
+                if(pageNumber == 1){
+                    XEpg.My.currentId = menuSelectId ;
+                   // return;
+                }else {
+                    $('down-icon').className = 'item item_focus';
+                    pageNumber--;
+                    initNextPageInfo();
+                }
+            }
+            stopScroll();
+            startScroll();
+            if(operation.isShowCurrentPage == pageNumber){
+                $(listSelectId).className = 'item item_select';
+            }else {
+                $(listSelectId).className = 'item';
+            }
+            $(XEpg.My.currentId).className = 'item item_focus';
+        },
+        listRight:function(){
+            //$(nav1SelectId).className = 'item';
+            stopScroll();
+            //nav1SelectId = XEpg.My.currentId;
+            $(XEpg.My.currentId).className = 'item';
+            if(operation.isShowCurrentPage == pageNumber){
+                $(listSelectId).className = 'item item_select';
+            }else {
+                $(listSelectId).className = 'item';
+            }
+            XEpg.My.currentId = 'nav3_0';
+            $(XEpg.My.currentId).className = 'item item_focus';
+        },
+        listLeft:function(){
+        	//$(nav1SelectId).className = 'item';
+            stopScroll();
+            //nav1SelectId = XEpg.My.currentId;
+            $(XEpg.My.currentId).className = 'item';
+            if(operation.isShowCurrentPage == pageNumber){
+                $(listSelectId).className = 'item item_select';
+            }else {
+                $(listSelectId).className = 'item';
+            }
+            XEpg.My.currentId = 'nav3_0';
+            $(XEpg.My.currentId).className = 'item item_focus';
+        },
+        listDown:function(){
+            var index = parseInt(XEpg.My.currentId.charAt(5), 10);
+            $(XEpg.My.currentId).className = 'item';
+            if(index < 6){
+                if($('nav2_' + (index + 1)).style.display == 'none'){
+                    XEpg.My.currentId = menuSelectId ;
+                    
+                }else {
+                    XEpg.My.currentId = 'nav2_' + (index + 1);
+                }
+            }else {
+                //XEpg.My.currentId = 'down-icon';
+                XEpg.My.currentId = 'nav2_0';
+                if(pageNumber == totalPage){
+                    return;
+                }
+                pageNumber++;
+                initNextPageInfo();
+            }
+
+            stopScroll();
+            startScroll();
+            if(operation.isShowCurrentPage == pageNumber){
+                $(listSelectId).className = 'item item_select';
+            }else {
+                $(listSelectId).className = 'item';
+            }
+            $(XEpg.My.currentId).className = 'item item_focus';
+        },
+        nav3Up:function(){
+        	$(XEpg.My.currentId).className = 'item';
+        	XEpg.My.currentId = menuSelectId ;
+        	stopScroll();
+            startScroll();
+            $(XEpg.My.currentId).className = 'item item_focus';
+        	
+        },
+        nav3Left:function(){
+            $(XEpg.My.currentId).className = 'item';
+            XEpg.My.currentId = listSelectId;
+            $(XEpg.My.currentId).className = 'item item_focus';
+        },
+        getData:function(){
+            catalogid = $(XEpg.My.currentId).title;
+            pageNumber = 1;
+	
+            //数据上报
+            var item,parentid,currTitle = $(XEpg.My.currentId).title;
+            //OK键数据上报
+            if( contentObj[currTitle] ){
+                item = contentObj[currTitle];
+                if(item.parentid){
+                    parentid = item.parentid;
+                }
+                SP.LOGGER.clickEleEvent(2,{
+                    'code' : currTitle,
+                    'type' : SP.CONTENT,
+                    'name' : item.name,
+                    '_pos' : 1
+                },parentid);
+            }
+            SP.LOGGER.sendExitEvent(2,resptime.sRequ);	//日志
+			operation.clear();
+            getRecommendData();
+            $(menuSelectId).className = 'item';
+            menuSelectId  = XEpg.My.currentId;
+            $(menuSelectId).clasName = 'item item_select';
+            $(XEpg.My.currentId).className = 'item item_focus';
+        },
+        getListData:function(){
+        	if(XEpg.My.currentId == listSelectId){
+        		alert('全屏播放')
+        	}else{
+        		$(listSelectId).className = 'item';
+	            listSelectId  = XEpg.My.currentId;
+	            $(listSelectId).clasName = 'item item_select';
+	            $(XEpg.My.currentId).className = 'item item_focus';
+        	}
+        },
+        clickWindows : function(){
+        	alert('全屏播放')
+        },
+        blur:function(){
+            $(XEpg.My.currentId).className = 'item';
+            $(menuSelectId ).className = 'item item_select';
+
+        },
+        clear:function(){
+            for(var i = 0; i < 7; i++){
+                $('nav2_' + i).style.display = 'none';
+            }
+        }
+    }
+
+
+    // 获取第一导航栏数据
+    function getRecommendData(){
+        //获取第一栏目的数据
+        XEpg.Util.ajaxGet('http://localhost:8080/testwork/getInterface.jsp?action=getDetailData&tmtype=2&contentid=' + catalogid, function(data){
+            var obj = XEpg.Util.parseJSON(data);
+            var list = obj.result[0].subcontents || null;
+            var count = list.length || 0;
+            
+            listLen = (count % 7) || 0;
+            if(count > 0){
+                serialList = list;      // 保存 ajax 返回的数据
+                totalPage = Math.ceil(count / 7);
+                for(var i = 0; i < 7; i++){
+                    $('nav2_' + i).title = list[i].contentcode || '';
+                    $('nav2_' + i + '_txt').innerHTML = list[i].name;
+                    $('nav2_' + i).style.display = 'block';
+                }
+
+                // 显示页码信息
+                $('pageInfo').innerHTML = pageNumber + '/' + totalPage + '页';
+                $(listSelectId).className = 'item item_select';
+                if(totalPage > pageNumber){
+                    $('down-icon').className = 'item item_focus';
+                }
+            }
+        });
+                // 初始化 ， 导航栏， 列表  焦点移动逻辑
+        init();
+        initNav2();
+    }
+
+
+    // 获取上一页，下一页数据
+    function initNextPageInfo(){
+        var index = (pageNumber - 1) * 7;
+        operation.clear();
+        var length = serialList.length;
+        for(var i = 0; i < 7; i++, index++){
+            if(index >= length) {
+                break;
+            }
+            $('nav2_' + i).title = serialList[index].contentcode || '';
+            $('nav2_' + i + '_txt').innerHTML = serialList[index].name;
+            $('nav2_' + i).style.display = 'block';
+        }
+        $('pageInfo').innerHTML = pageNumber + '/' + totalPage + '页';
+
+        if(pageNumber == totalPage){
+            $('down-icon').className = 'item';
+            
+        }else {
+            $('up-icon').className = 'item item_focus';
+        }
+
+        if(pageNumber == 1){
+            $('down-icon').className = 'item item_focus';
+            $('up-icon').className = 'item';
+        }
+    }
+
+
+    // 文字滚动
+    var moveObj = null, scrollTimer = null, txtObj = null;
+    function startScroll(){
+        $(XEpg.My.currentId).className = 'item item_focus';
+        //var index = parseInt(XEpg.My.currentId.substring(5) , 10);
+        //var ind
+        moveObj = document.getElementById(XEpg.My.currentId + '_move');
+        txtObj = document.getElementById(XEpg.My.currentId + '_txt');
+
+        if( moveObj.scrollWidth > moveObj.offsetWidth ){
+            document.getElementById(XEpg.My.currentId + '_copy').innerHTML =  '　   ' + txtObj.innerHTML;
+            timerScroll();//父元素向左循环移动(设置父元素scrollleft)
+        }
+    }
+
+    function timerScroll(){
+        if(moveObj.scrollLeft >= (txtObj.offsetWidth + 30) ){
+            moveObj.scrollLeft = 0;
+        }else {
+            moveObj.scrollLeft +=2;
+        }
+        scrollTimer = setTimeout(timerScroll, 50);
+    }
+
+    // 失去焦点时，停止文字滚动
+    function stopScroll(){
+        $(XEpg.My.currentId).className = 'item';
+        $(menuSelectId ).className = 'item item_select';
+        clearTimeout(scrollTimer);
+        var copyEle = document.getElementById(XEpg.My.currentId + '_copy');
+        if(copyEle){
+            //清空复制的滚动文字
+            copyEle.innerHTML = '';
+        }
+        if(moveObj){
+            //清空scrollLeft
+            moveObj.scrollLeft = 0;
+        }
+    }
+    
+
+    function $(id){
+        return document.getElementById(id);
+    }
+</script>
+</html>

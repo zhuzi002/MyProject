@@ -1,0 +1,80 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta name="page-view-size" content="1280*720" />
+<meta charset="UTF-8">
+<title>芒果TV-高清</title>
+<style type="text/css">
+/* S= CSS Reset
+----------------------------------------------- */
+body, table, caption, tbody, tfoot, thead, tr, th, td, ul, li, p, h1 { margin:0px; padding:0px; border:0px; }
+body { font-size: 24px; font-family: Microsoft YaHei,sans-serif; line-height: 100%; } 
+ul, ol { list-style: none; }
+table { border-collapse:collapse; border-spacing:0; }
+a { text-decoration: none; }
+img { border: 0; }
+/* E= CSS Reset */
+
+/* S= Global
+----------------------------------------------- */
+body, .wrapper, .pagebg {
+	height: 720px;
+	width: 1280px;
+	overflow: hidden;
+}
+body {
+	color: #ffffff;
+	position: relative;
+}
+.wrapper, .pagebg {
+	left: 0;
+	position:absolute;
+	top: 0;
+}
+.pagebg img {
+	display: block; /* clear some space 对于html5中背景图比原高度多出3PX的问题*/
+}
+.item, .link, .txt-wrap, .txt, .btn, .icon, .pic, .pic-shade, .cover, .num {
+	position:absolute;
+}
+/* E= Global */
+</style>
+</head>
+<body bgcolor="transparent">
+<!-- S pagebg -->
+<div class="pagebg">
+    <div class="pic"><img src="../images/ch-bg-introduce.jpg" width="1280" height="720" /></div>
+</div>
+<!-- E pagebg --> 
+
+<!-- S content -->
+<div class="wrapper">
+
+</div>
+<!-- E content -->
+<script src="../js/xepg.min.js"></script>
+<script src="../js/commons.js"></script>
+<script type="text/javascript">
+	var param = XEpg.My.parseUrl();
+	var mgPartner = param.mgPartner; //平台信息
+	var mgUserID = param.mgUserID;  //用户ID
+	var mgUserToken = param.mgUserToken;  //临时身份证明
+	var mg_epginfo = '&mgPartner=' + mgPartner + '&mgUserID=' + mgUserID + '&mgUserToken=' + mgUserToken;
+
+    //监听返回事件，返回上一级页面
+    XEpg.Nav.key_back_opt = function(){
+        setTimeout(function(){
+            XEpg.Navigation.gotoBackNavigationUrl('pageIndex');
+        },150);
+    };
+
+	XEpg.Nav.key_ok_event=function() {
+		setTimeout(function(){
+			 XEpg.Navigation.gotoBackNavigationUrl('pageIndex');
+		},150);
+	}
+
+
+</script>
+</body>
+</html>

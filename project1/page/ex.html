@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			th,td{
+				height: 30px;
+				line-height: 30px;
+			}
+		</style>
+	</head>
+	<body>
+		<div style="position: absolute;">
+		<span onclick="addOneData(0)" style="background: #FF9900; color: #333333; border-radius: 5px; padding: 10px; cursor: pointer;">添加免费体验</span>
+		<span onclick="addTwoData(0)" style="background: #FF9900; color: #333333; border-radius: 5px; padding: 10px; cursor: pointer;">添加王牌综艺</span>
+		<span onclick="addTwoData(1)" style="background: #FF9900; color: #333333; border-radius: 5px; padding: 10px; cursor: pointer;">添加电视剧</span>
+		<span onclick="addTwoData(2)" style="background: #FF9900; color: #333333; border-radius: 5px; padding: 10px; cursor: pointer;">添加电影</span>
+		<span onclick="addTwoData(3)" style="background: #FF9900; color: #333333; border-radius: 5px; padding: 10px; cursor: pointer;">添加少儿</span>
+		<span onclick="addTwoData(4)" style="background: #FF9900; color: #333333; border-radius: 5px; padding: 10px; cursor: pointer;">添加记录片</span>
+		<span onclick="addOneData(1)" style="background: #FF9900; color: #333333; border-radius: 5px; padding: 10px; cursor: pointer;">添加浪花一朵朵</span>
+		<span onclick="addTwoData(5)" style="background: #FF9900; color: #333333; border-radius: 5px; padding: 10px; cursor: pointer;">添加同步剧</span>
+		<span><select id="group"></select></span>
+		<span onclick="addTable()" style="background: #FF9900; color: #333333; border-radius: 5px; padding: 10px; cursor: pointer;">添加选中</span>
+		<span onclick="clearTable()" style="background: #FF9900; color: #333333; border-radius: 5px; padding: 10px; cursor: pointer;">清除</span>
+		<span onclick="exTable('tablecont')" style="background: #FF9900; color: #333333; border-radius: 5px; padding: 10px; cursor: pointer;">导出</span>
+		</div>
+		<div style="width: 100%; height: 580px; overflow: auto;">
+			<table id="tablecont" style="padding-top: 40px;">
+				
+			</table>
+		</div>
+		
+		
+	</body>
+	<script type="text/javascript" src="../js/xepg.min.js" ></script>
+	<script type="text/javascript">
+		var g_parentId=[5269,5270,5261,5271,5272,5457];
+		var g_parentName=["王牌综艺","电视剧","电影","少儿","纪录片","同步剧"];
+		var g_nowIdIndex=0;
+		var g_catalogId=[5395,5295];
+		var g_catalogName=["免费体验","浪花一朵朵"];
+		var g_nowOneIdIndex=0;
+		function $(id){
+			return document.getElementById(id);
+		}
+		function addOneData(idindex){
+			g_nowOneIdIndex=idindex;
+			XEpg.Util.ajaxGet("../ajax/getInterface.jsp?action=getIndexData&portalcode=2017gshw&sptoken=96630FB882600EC4A3F0B610535FB2A7&pagesize=999&tmtype=2&orderinfo=1&pageindex=1&catalogid="+g_catalogId[idindex],dealOneData)
+		}
+		function dealOneData(obj){
+			var data = XEpg.Util.parseJSON(obj);
+			var item = data.result;
+			var thtml='<tr><th colspan="16" style="font-size:26px;">'+g_catalogName[g_nowOneIdIndex]+'</th></tr>';
+			thtml+='<tr><th>ID</th><th>片名</th><th>ID</th><th>片名</th><th>ID</th><th>片名</th><th>ID</th><th>片名</th><th>ID</th><th>片名</th><th>ID</th><th>片名</th><th>ID</th><th>片名</th><th>ID</th><th>片名</th></tr>';
+            for(var i = 0; i < item.length;){
+            	var ttd='';
+            	for(var j=0;j<8;j++){
+            		if(item[i+j]){
+            			ttd+='<td>'+item[i+j].id+'</td><td>'+item[i+j].name+'</td>';
+            		}else{
+            			ttd+='<td>&nbsp;</td><td>&nbsp;</td>';
+            		}
+            	}
+            	thtml+='<tr>'+ttd+'</tr>';		
+            	i=i+8;
+            }
+            $("tablecont").innerHTML=$("tablecont").innerHTML+thtml;
+			
+		}
+		function addTwoData(idindex){
+			g_nowIdIndex=idindex;
+			XEpg.Util.ajaxGet("../ajax/getInterface.jsp?action=getTagsData&portalcode=2017gshw&sptoken=96630FB882600EC4A3F0B610535FB2A7&type=1&parentid="+g_parentId[idindex],dealTwoData)
+		}
+		function dealTwoData(obj){
+			var data = XEpg.Util.parseJSON(obj);
+			var item = data.result;
+			var thtml='<tr><th colspan="16" style="font-size:26px;">'+g_parentName[g_nowIdIndex]+'</th></tr>';
+			var options='';
+			for(var i = 0; i < item.length; i++){ 
+				options+='<option id="'+item[i].id+'" value="'+item[i].name+'">'+item[i].name+'</option>';
+           	}
+			$("group").innerHTML=options;
+	        $("tablecont").innerHTML=$("tablecont").innerHTML+thtml;
+		}
+		function clearTable(){
+			$("tablecont").innerHTML="";
+		}
+		function addTable(){
+			var index = $("group").selectedIndex; // 选中索引
+			var id=$("group").options[index].id;
+			var name=$("group").options[index].value;
+			var thtml='<tr><th colspan="8" style="font-size:26px;">'+id+'</th><th colspan="8" style="font-size:26px;">'+name+'</th></tr>';
+			thtml+='<tr><th>ID</th><th>片名</th><th>ID</th><th>片名</th><th>ID</th><th>片名</th><th>ID</th><th>片名</th><th>ID</th><th>片名</th><th>ID</th><th>片名</th><th>ID</th><th>片名</th><th>ID</th><th>片名</th></tr>';
+			$("tablecont").innerHTML=$("tablecont").innerHTML+thtml;
+			XEpg.Util.ajaxGet("../ajax/getInterface.jsp?action=getIndexData&portalcode=2017gshw&sptoken=96630FB882600EC4A3F0B610535FB2A7&pagesize=999&tmtype=2&orderinfo=1&pageindex=1&catalogid="+id,function(objs){
+					var datas = XEpg.Util.parseJSON(objs);
+					var items = datas.result;
+					var thtmls='';
+					for(var i = 0; i < items.length;){   						
+						var ttd='';
+		            	for(var j=0;j<8;j++){
+		            		if(items[i+j]){
+		            			ttd+='<td>'+items[i+j].id+'</td><td>'+items[i+j].name+'</td>';
+		            		}else{
+		            			ttd+='<td>&nbsp;</td><td>&nbsp;</td>';
+		            		}
+		            	}
+		            	thtmls+='<tr>'+ttd+'</tr>';		
+		            	i=i+8;
+		            }
+					$("tablecont").innerHTML=$("tablecont").innerHTML+thtmls;
+			});
+		}
+		function exTable(tableid){
+			var curTbl = document.getElementById(tableid);
+	        var oXL = new ActiveXObject("Excel.Application");
+	        var oWB = oXL.Workbooks.Add();
+	        var oSheet = oWB.ActiveSheet;
+	        //水平对齐方式(貌似-4108为水平居中)
+	        oSheet.Range( oSheet.Cells(1,1),oSheet.Cells(1000,20)).HorizontalAlignment =-4108;
+	        //垂直对齐方式
+	        oSheet.Range( oSheet.Cells(1,1),oSheet.Cells(1000,20)).VerticalAlignment  =-4108;
+	        var Lenr = curTbl.rows.length;
+	        for (i = 0; i < Lenr; i++)
+	        {        var Lenc = curTbl.rows(i).cells.length;
+	            for (j = 0; j < Lenc; j++)
+	            {
+	                oSheet.Cells(i + 1, j + 1).value = curTbl.rows(i).cells(j).innerText;
+	
+	            }
+	            oSheet.Rows(i+1).RowHeight=30;//
+	            oSheet.Rows(i+1).WrapText  = true;  //自动换行设置
+	        }
+	        oSheet.PageSetup.Zoom = false;//压缩为一页
+	        oXL.Visible = true;
+	
+	        try {
+	            var fname = oXL.Application.GetSaveAsFilename("栏目及内容列表.xls", "Excel Spreadsheets (*.xls), *.xls");
+	        } catch (e) {
+	            print("Nested catch caught " + e);
+	        } finally {
+	            oWB.SaveAs(fname);
+	            oWB.Close(savechanges = false);
+	            oXL.Quit();
+	            oXL = null;
+	            idTmr = window.setInterval("Cleanup();", 1);
+	        }
+		}
+		
+	</script>
+</html>

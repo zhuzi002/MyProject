@@ -1,0 +1,1131 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta name="page-view-size" content="1280*720" />
+    <meta charset="UTF-8">
+    <title>首页 | 芒果TV-高清</title>
+    <script>
+        //页面加载时间和持续时间
+        var resptime = {
+            sRequ  : 0,		//请求开始时间(页面开始渲染之前时间)
+            eRequ : 0,		//请求结束时间 (页面渲染完成时间)
+            ePage : 0		//跳转或回车页面时间
+        }
+        resptime.sRequ = +new Date();		//记录请求开始时间
+    </script>
+    <style type="text/css">
+        /* S= CSS Reset
+        ----------------------------------------------- */
+        body, table, caption, tbody, tfoot, thead, tr, th, td, ul, li, p, h1 { margin:0px; padding:0px; border:0px; }
+        body { font-size: 24px; font-family: Microsoft YaHei,sans-serif; line-height: 100%; }
+        ul, ol { list-style: none; }
+        table { border-collapse:collapse; border-spacing:0; }
+        a { text-decoration: none; }
+        img { border: 0; }
+        /* E= CSS Reset */
+
+        /* S= Global
+        ----------------------------------------------- */
+        body, .wrapper, .pagebg {
+	height: 720px;
+	width: 1280px;
+	overflow: hidden;
+}
+body {
+	color: #ffffff;
+	position: relative;
+}
+.wrapper, .pagebg {
+	left: 0;
+	position:absolute;
+	top: 0;
+}
+.pagebg img {
+	display: block; /* clear some space 对于html5中背景图比原高度多出3PX的问题*/
+}
+.item, .link, .txt-wrap, .txt, .btn, .icon, .pic, .pic-shade, .cover, .num {
+	position:absolute;
+}
+.txtHidden {
+	white-space:nowrap; 
+	overflow:hidden; 
+}
+.clearfix:after {
+    clear:both;
+    content: '';
+    display:block;
+    height:0;
+}
+.clearfix { zoom:1;}
+/*
+文字过短需居中时 width < 外部容器单位宽度 时 span class="txtSlideWrap txtNoSlide"
+文字过长需滚动时 width > 外部容器单位宽度 时 span class="txtSlideWrap"
+*/
+span.txtSlideWrap,
+span.txtSlideWrap div,
+span.txtNoSlide div {
+    padding: 0!important;
+    margin: 0!important;
+}
+span.txtSlideWrap {
+    display: block;
+    height: 100%;
+    width: 100%!important;
+    overflow: hidden;
+    position: relative;
+}
+span.txtSlideWrap div {
+    position: absolute;
+    top: 0;
+    white-space: nowrap;
+}
+span.txtNoSlide div {
+    width: 100%;
+}
+.pigbg{
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+/* E= Global */
+
+/* S= head ch ----------------------------------------------- */
+.logo {
+	left: 89px;
+	position:absolute;
+	top: 30px;
+}
+.time {
+	color:#a7a7a9;
+	font-family:Microsoft YaHei;
+	font-size:32px;
+	left: 1018px;
+	position:absolute;
+	top: 57px;
+	text-align:right;
+	width:200px;
+}
+/* E= head ch */
+
+/* S= index ch ----------------------------------------------- */
+.ch-notice {
+    position:absolute;
+    left: 330px;
+    top: 36px;
+    width:420px;
+    height:46px;
+    overflow:hidden;
+    white-space: nowrap;
+}
+.ch-notice .txt {
+    position:absolute;
+    color:#aeaeae;
+    font-size:20px;
+    line-height:26px;
+    top:20px;
+}
+.ch-topBtn {
+	position:absolute;
+	left: 765px;
+	top: 39px;
+}
+.ch-topBtn .item {
+	height:42px;
+}
+.ch-topBtnA .item {
+	width:134px;
+}
+.ch-topBtnB .item {
+	width:98px;
+}
+.ch-topBtnC .item {
+	width:176px;
+}
+.ch-topBtn .item .icon {
+	left:7px;
+	top:4px;
+	width:32px;
+	height:35px;
+}
+.ch-topBtn .item .icon01 {
+	background:url(../images/ch-icon01.png) no-repeat;
+}
+.ch-topBtn .item_focus .icon01 {
+	background:url(../images/ch-icon01_focus.png) no-repeat;
+}
+.ch-topBtn .item .icon02 {
+	background:url(../images/ch-icon02.png) no-repeat;
+}
+.ch-topBtn .item_focus .icon02 {
+	background:url(../images/ch-icon02_focus.png) no-repeat;
+}
+.ch-topBtn .item .icon03 {
+	background:url(../images/ch-icon03.png) no-repeat;
+}
+.ch-topBtn .item_focus .icon03 {
+	background:url(../images/ch-icon03_focus.png) no-repeat;
+}
+.ch-topBtn .item .txt {
+	color:#908e9b;
+	font-size:20px;
+	left:42px;
+	width:90px;
+	height:42px;
+	line-height:42px;
+}
+.ch-topBtn .item_focus .txt {
+	color:#ffffff;
+}
+.ch-topBtnA .item_focus {
+	background:url(../images/ch-btn04_focus.png) no-repeat;
+}
+.ch-topBtnB .item_focus {
+	background:url(../images/ch-btn04-1_focus.png) no-repeat;
+}
+.ch-topBtnC .item_focus {
+	background:url(../images/ch-btn04-2_focus.png) no-repeat;
+}
+.ch-topBtnC .item .txt {
+	width:130px;
+}
+.ch-indexPoster {
+	position:absolute;
+	left:0;
+	top: 0;
+}
+.ch-indexPoster .item {
+	z-index:3;
+}
+.ch-indexPoster .pic {
+	left:3px;
+	top:3px;
+}
+.ch-indexPoster .item_focus,
+.ch-indexPoster .item_focus .link {
+	z-index:5;
+}
+.ch-indexPoster .type-a {
+	position:absolute;
+	left:80px;
+	top: 100px;
+}
+.ch-indexPoster .type-a .pic {
+	left:7px;
+	top: 7px;
+}
+.ch-indexPoster .type-a .pic,
+.ch-indexPoster .type-a .pic img {
+	width:149px;
+	height:149px;
+}
+.ch-indexPoster .type-a .item_focus .link {
+	background:url(../images/shenzhen/ch-poster01_focus.png) no-repeat;
+	width:164px;
+	height:164px;
+	/*width:155px;
+	height:155px;*/
+}
+.ch-indexPoster .type-a .item_focus .pic,
+.ch-indexPoster .type-a .item_focus .pic img {
+	width:164px;
+	height:164px;
+}
+.ch-indexPoster .type-b {
+    position:absolute;
+    left: 246px;
+    top:107px;
+}
+.ch-indexPoster .type-b .item .cover {
+    background:url(../images/ch-video-cover.png) no-repeat;
+    left:3px;
+    top:3px;
+    width:465px;
+    height:268px;
+    z-index:4;
+}
+.ch-indexPoster .type-b .item .icon {
+    left:198px;
+    top:99px;
+    z-index:4;
+}
+.ch-indexPoster .type-b .item .pic {
+    z-index:3;
+}
+.ch-indexPoster .type-b .pic,
+.ch-indexPoster .type-b .pic img {
+    width:465px;
+    height:268px;
+}
+.ch-indexPoster .type-b .item .txt {
+    color:#e7e5ee;
+    font-size:22px;
+    left:15px;
+    top:278px;
+    width:440px;
+    height:26px;
+    line-height:26px;
+    overflow:hidden;
+}
+.ch-indexPoster .type-b .item_focus .link {
+    background:url(../images/ch-poster02_focus.png) no-repeat;
+    width:471px;
+    height:311px;
+    left:-1.5px;
+    top:-2px;
+    
+}
+.ch-indexPoster .type-c {
+	position:absolute;
+	left: 718px;
+	top:103px;
+}
+.ch-indexPoster .type-c .pic {
+	left: 5px;
+	top:4px;
+}
+.ch-indexPoster .type-c .pic,
+.ch-indexPoster .type-c .pic img {
+	width:227px;
+	height:148px;
+}
+.ch-indexPoster .type-c .txt-wrap {
+	background:url(../images/ch-poster03-txt.png) no-repeat;
+	width:227px;
+	height:60px;
+	left: 5px;
+	top:92px;
+}
+.ch-indexPoster .type-c .item .txt {
+	font-size:20px;
+	left:10px;
+	top:30px;
+	width:207px;
+	height:24px;
+	line-height:24px;
+	overflow:hidden;
+}
+.ch-indexPoster .type-c .item_focus .link {
+	background:url(../images/shenzhen/ch-poster03_focus.png) no-repeat;
+	width:242px;
+	height:158px;
+	/*width:233px;
+	height:154px;*/
+}
+.ch-indexPoster .type-c .item_focus .pic,
+.ch-indexPoster .type-c .item_focus .pic img {
+	width:242px;
+	height:158px;
+}
+.ch-indexPoster .type-c .item_focus .txt-wrap {
+	background:url(../images/shenzhen/ch-poster03-txt_focus.png) no-repeat;
+	left:3px;
+	width:236px;
+	top:95px;
+}
+.ch-indexPoster .type-d {
+	position:absolute;
+	left: 235px;
+	top:419px;
+}
+.ch-indexPoster .type-d .pic {
+	left:12px;
+	top:4px;
+}
+.ch-indexPoster .type-d .pic,
+.ch-indexPoster .type-d .pic img {
+	width:464px;
+	height:148px;
+}
+.ch-indexPoster .type-d .txt-wrap {
+	background:url(../images/ch-poster04-txt.png) no-repeat;
+	width:464px;
+	height:48px;
+	left: 12px;
+	top:104px;
+}
+.ch-indexPoster .type-d .item .txt {
+	color:#f9f9f9;
+	height:26px;
+	line-height:26px;
+	overflow:hidden;
+}
+.ch-indexPoster .type-d .item .txt01 {
+	color:#d8d8d8;
+	font-size:25px;
+	left:10px;
+	top:12px;
+	width:350px;
+}
+.ch-indexPoster .type-d .item .txt02 {
+	color:#a5a5a5;
+	font-size:18px;
+	text-align:right;
+	left:382px;
+	top:14px;
+	width:70px;
+}
+.ch-indexPoster .type-d .item_focus .link {
+	background:url(../images/shenzhen/ch-poster04_focus.png) no-repeat;
+	width:495px;
+	height:158px;
+	/*width:470px;
+	height:154px;*/
+}
+.ch-indexPoster .type-d .item_focus .pic,
+.ch-indexPoster .type-d .item_focus .pic img {
+	width:495px;
+	height:158px;
+}
+.ch-indexPoster .type-d .item_focus .txt-wrap {
+	background:url(../images/shenzhen/ch-poster04-txt_focus.png) no-repeat;
+	left: 3px;
+	width:489px;
+	top:107px;
+}
+.ch-indexPoster .type-d .item_focus .item .txt01 {
+	left:10px;
+	top:12px;
+	width:350px;
+}
+.ch-indexPoster .type-d .item_focus .item .txt02 {
+	left:382px;
+	top:14px;
+	width:70px;
+}
+.ch-indexPoster .item_focus .pic {
+	left:0;
+	top:0;
+}
+.ch-menu {
+	position:absolute;
+	left: 67px;
+	top: 639px;
+}
+.ch-menu .item {
+	width:140px;
+	height:44px;
+}
+.ch-menu .txt {
+	color:#676476;
+	font-size:26px;
+	text-align:center;
+	width:140px;
+	top:1px;
+}
+.ch-menu .item_focus {
+	background:url(../images/ch-menu_focus.png) no-repeat;
+}
+.ch-menu .item_focus .txt {
+	color:#ffa200;
+	font-size:28px;
+}
+.ch-operate {
+	position:absolute;
+	left: 313px;
+	top: 657px;
+}
+.ch-operate .item {
+	width:179px;
+	height:63px;
+}
+.ch-operate .icon {
+	left: 45px;
+	top: 16px;
+	width:36px;
+	height:36px;
+}
+.ch-operate .txt {
+	color:#a0a1a3;
+	font-weight:bold;
+	text-align:center;
+	line-height:56px;
+	left:6px;
+	top: 5px;
+	width:164px;
+	height:56px;
+}
+.ch-operate .txtSearch {
+	left:72px;
+	width:74px;
+}
+.ch-operate .item_focus {
+	background:url(../images/ch-operate_focus.png) no-repeat;
+}
+.ch-operate .item_focus .txt {
+	color:#e0e7ef;
+	font-weight:normal;
+}
+/* E= index ch */
+</style>
+</head>
+
+<body bgcolor="transparent">
+<!-- S pagebg -->
+<div class="pagebg">
+    <div class="pic"><img src="../images/ch-bg-index01.jpg" width="1280" height="110" /></div>
+    <div class="pic" style="top:110px;"><img src="../images/ch-bg-index02.jpg" width="249" height="268" /></div>
+    <div class="pic" style="left:714px; top:110px;"><img src="../images/ch-bg-index03.jpg" width="566" height="268" /></div>
+    <div class="pic" style=" top:378px;"><img src="../images/ch-bg-index04.jpg" width="1280" height="342" /></div>
+</div>
+
+<!-- E pagebg -->
+
+<!-- S content -->
+<div class="wrapper">
+	<div id="test1" style="left: 20px; top: 20px; width: 800px; height: 300px; position: absolute; color: #ff0000; word-break:break-all;">ZX</div>
+
+    <!-- S head -->
+    <div class="logo"><img src="../images/ch-logo-mango.png" alt="芒果TV" /></div>
+    
+    <div class="ch-notice" id="nav_noticeBox" style="top:36px;height:46px;">
+        <div class="txt" style="left:0px; top:12px;display: block;" id="nav_notice01" title="1"></div>
+        <div class="txt" style="left:0px; top:47px; display: block;" id="nav_notice02" title="2"></div>
+    </div>
+    <!--<div class="ch-topBtn ch-topBtnC">
+        <div class="item item_focus">
+            <div class="icon icon03"></div>
+            <div class="txt">特惠包月15元</div>
+        </div>
+    </div>-->
+    <div class="ch-topBtn ch-topBtnA" style="left:807px;">
+        <!--焦点为
+                class="item item_focus"
+            -->
+
+        <div class="item" id="nav1_0" title="introduce-hebei.html?na=gs">
+            <div class="icon icon05"></div>
+            <div class="txt" id="nav1_0_txt">产品介绍</div>
+        </div>
+        <div class="item" style="left:130px;" id="nav1_1" title="ch-list.html?na=gs">
+            <div class="icon icon04"></div>
+            <div class="txt"  id="nav1_1_txt">免费体验</div>
+        </div>
+        <div class="item" style="left:260px;" id="nav1_2" title="piece-collect.html?na=gs">
+            <div class="icon icon01"></div>
+            <div class="txt"  id="nav1_2_txt">我的片单</div>
+        </div>
+    </div>
+    <!--<div class="time">12:55</div>-->
+    <!-- E head -->
+
+    <!-- S 推荐区 -->
+    <div class="ch-indexPoster">
+        <div class="type-a">
+            <!--焦点为
+                class="item item_focus"
+            -->
+            <div class="item" id="nav2_0">
+                <div class="link"></div>
+                <div class="pic"><img id="nav2_0_img" src="" /></div>
+            </div>
+            <div class="item" id="nav2_1" style="top:157px;">
+                <div class="link"></div>
+                <div class="pic"><img id="nav2_1_img" src="" /></div>
+            </div>
+            <div class="item" id="nav2_2" style="top:314px;">
+                <div class="link"></div>
+                <div class="pic"><img id="nav2_2_img" src="" /></div>
+            </div>
+        </div>
+
+        <div class="type-b">
+            <!--焦点为
+                class="item item_focus"
+            -->
+            <div class="item" id="nav2_3">
+                <div class="link"></div>
+                <div class="cover"></div>
+                <div class="icon"><img id="videoIcon" style="display:block;" src="../images/ch-icon-play.png" /></div>
+                <div class="pic">
+                	<!--<iframe id="nav2_3_img" name="if_smallscreen" 
+                		style="position: absolute; top: 0px;left: 0px; display: block;"
+                    	width="465px" height="268px" frameborder="0" src="" allowtransparency="true">
+                	</iframe>-->
+                	<img id="nav2_3_img" src="" />
+                	<iframe id="smallvod" name="if_smallscreen" 
+                		style="position: absolute; top: 0px;left: 0px; display: block;visibility: hidden;"
+                		width="465" height="268"  src="" frameborder="no" scrolling="no" >
+                	</iframe>
+                </div>
+                <div class="txt" id="nav2_3_txt"></div>
+            </div>
+        </div>
+
+        <div class="type-c">
+            <!--焦点为
+                class="item item_focus"
+            -->
+            <!--第一横排-->
+            <div class="item" id="nav2_4">
+                <div class="link"></div>
+                <div class="pic"><img id="nav2_4_img" src="" /></div>
+                <!--<div class="txt-wrap" >
+                    <div class="txt" id="nav2_4_move">
+                        <span id="nav2_4_txt"></span>
+                        <span id="nav2_4_copy"></span>
+                    </div>
+                </div>-->
+            </div>
+            <div class="item" id="nav2_5" style="left:236px;">
+                <div class="link"></div>
+                <div class="pic"><img id="nav2_5_img" src="" /></div>
+                <!--<div class="txt-wrap"  >
+                    <div class="txt" id="nav2_5_move">
+                        <span id="nav2_5_txt"></span>
+                        <span id="nav2_5_copy"></span>
+                    </div>
+                </div>-->
+            </div>
+            <!--第二横排-->
+            <div class="item" id="nav2_6" style="top:156px;">
+                <div class="link"></div>
+                <div class="pic"><img id="nav2_6_img" src="" /></div>
+                <!--<div class="txt-wrap" >
+                    <div class="txt"  id="nav2_6_move">
+                        <span id="nav2_6_txt"></span>
+                        <span id="nav2_6_copy"></span>
+                    </div>
+                </div>-->
+            </div>
+            <div class="item" id="nav2_7" style="left:236px; top:156px;">
+                <div class="link"></div>
+                <div class="pic"><img id="nav2_7_img" src="" /></div>
+                <!--<div class="txt-wrap"  >
+                    <div class="txt" id="nav2_7_move">
+                        <span id="nav2_7_txt"></span>
+                        <span id="nav2_7_copy"></span>
+                    </div>
+                </div>-->
+            </div>
+        </div>
+
+        <div class="type-d">
+            <!--焦点为
+                class="item item_focus"
+            -->
+            <div class="item" id="nav2_8">
+                <div class="link"></div>
+                <div class="pic"><img id="nav2_8_img" src="" /></div>
+                <!--<div class="txt-wrap">
+                    <div class="txt txt01" id="nav2_8_txt01"></div>
+                    <div class="txt txt02" id="nav2_8_txt02" style="display: none"></div>
+                </div>-->
+            </div>
+            <div class="item" id="nav2_9" style="left:476px;">
+                <div class="link"></div>
+                <div class="pic"><img id="nav2_9_img" src="" /></div>
+                <!--<div class="txt-wrap">
+                    <div class="txt txt01" id="nav2_9_txt01"></div>
+                    <div class="txt txt02" id="nav2_9_txt02"></div>
+                </div>-->
+            </div>
+        </div>
+    </div>
+    <!-- E 推荐区 -->
+
+    <!-- S menu 频道栏目 -->
+    <div class="ch-menu">
+        <!--焦点为
+            class="item item_focus"
+        -->
+        <div class="item" id="nav3_0" >
+            <div class="txt" id="nav3_0_txt">王牌综艺</div>
+        </div>
+        <div class="item" id="nav3_1" style="left:170px;" >
+            <div class="txt" id="nav3_1_txt">电视剧</div>
+        </div>
+        <div class="item" id="nav3_2" style="left:327px;" >
+            <div class="txt" id="nav3_2_txt">电影</div>
+        </div>
+        <div class="item" id="nav3_3" style="left:460px;" >
+            <div class="txt" id="nav3_3_txt">少儿</div>
+        </div>
+        <div class="item" id="nav3_4" style="left:607px;" >
+            <div class="txt" id="nav3_4_txt">纪录片</div>
+        </div>
+        <div class="item" id="nav3_5" style="left:780px;" title="contentId=62133">
+            <div class="txt" id="nav3_5_txt">浪花一朵朵</div>
+        </div>
+        <div class="item" id="nav3_6" style="left:977px;" title="parentId=5326=catalogId=5454">
+            <div class="txt" id="nav3_6_txt">我是未来</div>
+        </div>
+    </div>
+    <!-- E menu 频道栏目 -->
+
+</div>
+<!-- E content -->
+<script src="../js/xepg.min.js"></script>
+<script src="../js/commons.js"></script>
+<script>
+    var SP = XEpg.SP;
+    var params = XEpg.My.parseUrl();		//解析地址栏参数 接收的变量
+    var currentId = params.currentId || 'nav2_3';
+    var noticeTxt = '';
+    var categoryName = null;;
+    var menuObj = {};			//返回数据缓存
+    var contentObj = {};
+    
+    var menuId = [];
+    
+    var codeNum = 0;  //从第一个视频开始播放
+    var idList = []; //储存所有播放内容ID
+    //var codeList = [];//储存所有播放视频code
+    var videoNum = 1; //视频个数
+    var mp = null;//mp对象
+    var nowVolume = 50 ;  //当前音量
+    
+    var menu_ZX = [5326,5327,5328,5329,5330,5331,5332];
+    var menu_HW = [5269,5270,5261,5271,5272,5273,5274];
+    var menu_ID = [];
+    var cmsCode = '';
+    var pukkaPartner = '';  //平台类别
+    var mg_epginfo = '';
+	
+    //保存当前焦点页面信息放入cookie,
+    XEpg.Nav.key_back_opt = function(){
+    }
+    
+    //音量加
+    XEpg.Nav.key_volUp_event = function () {   
+        mp.setMuteFlag(0);  //0为有声， 1为静音
+		nowVolume = mp.getVolume();
+	    nowVolume += 5;
+	    if (nowVolume >= 100) {
+	        nowVolume = 100;
+	    }
+	    mp.setVolume(nowVolume);
+    }
+    
+    //音量减
+    XEpg.Nav.key_volDown_event = function () {   
+    	nowVolume = mp.getVolume();
+	    nowVolume -= 5;
+		if (nowVolume <= 0) {
+	        nowVolume = 0;
+	        mp.setMuteFlag(1);
+	    }
+	    mp.setVolume(nowVolume);	
+	}
+    
+    //静音
+    XEpg.Nav.key_volOver_event = function () {  
+    	var muteFlag = mp.getMuteFlag();
+		if (muteFlag == 1) {
+			mp.setMuteFlag(0);
+		} else {
+			mp.setMuteFlag(1);
+		}
+    }
+
+    window.onload = function () {
+    	
+        XEpg.My.init({"currentId":currentId});
+        XEpg.My.pageLoadShowFocus();  //显示焦点
+        init();   //初始化焦点方法
+        
+        getEpgInfo();  //从地址栏获取信息
+        
+        //发送日志
+    }
+    
+    //从地址蓝获取信息
+    function getEpgInfo(){
+		mg_epginfo = '&mgPartner=ZTE2X&mgUserID=bestv3gq';
+		menu_ID = menu_ZX;
+		spPro = 'portalcode=2017gszx&sptoken=CF4EAB0D8DF1E71CA84762F6BA009BD4&';
+		cmsCode = '84d1298dec4b45c09074c383f652e669';
+		
+		document.getElementById("nav3_0").title= 'menuID='+ menu_ID[0] +'&catalogName=王牌综艺'; 
+		document.getElementById("nav3_1").title= 'menuID='+ menu_ID[1] +'&catalogName=电视剧'; 
+		document.getElementById("nav3_2").title= 'menuID='+ menu_ID[2] +'&catalogName=电影'; 
+		document.getElementById("nav3_3").title= 'menuID='+ menu_ID[3] +'&catalogName=少儿'; 
+		document.getElementById("nav3_4").title= 'menuID='+ menu_ID[4] +'&catalogName=纪录片'; 
+	 
+        getArrowList();
+		 
+    }
+
+    //初始化页面元素焦点移动
+    function init () {
+
+        //顶部导航焦点移动
+        XEpg.$("nav1_0").click({"func":getDetailPre}).left({"id":"nav1_2"}).down({"id":"nav2_4"}).right({"id":"nav1_1"}).up({"id":"nav3_4"});
+        XEpg.$("nav1_1").click({"func":getDetailPre}).left({"id":"nav1_0"}).down({"id":"nav2_5"}).right({"id":"nav1_2"}).up({"id":"nav3_5"});
+        XEpg.$("nav1_2").click({"func":getDetailPre}).left({"id":"nav1_1"}).down({"id":"nav2_5"}).right({"id":"nav1_0"}).up({"id":"nav3_6"});
+
+        //推荐区焦点移动
+        XEpg.$("nav2_0").click({"func":getDetail}).down({"id":"nav2_1"}).right({"id":"nav2_3"}).up({"id":"nav1_0"}).left({"id":"nav2_5"});
+        XEpg.$("nav2_1").click({"func":getDetail}).down({"id":"nav2_2"}).right({"id":"nav2_3"}).up({"id":"nav2_0"}).left({"id":"nav2_7"});
+        XEpg.$("nav2_2").click({"func":getDetail}).down({"id":"nav3_0"}).right({"id":"nav2_8"}).up({"id":"nav2_1"}).left({"id":"nav2_9"});
+        XEpg.$("nav2_3").click({"func":getMovieDetail}).down({"id":"nav2_8"}).right({"id":"nav2_4"}).up({"id":"nav1_1"}).left({"id":"nav2_0"});
+        XEpg.$("nav2_4").click({"func":getDetail}).down({"id":"nav2_6"}).right({"id":"nav2_5"}).up({"id":"nav1_0"}).left({"id":"nav2_3"});
+        XEpg.$("nav2_5").click({"func":getDetail}).down({"id":"nav2_7"}).up({"id":"nav1_1"}).left({"id":"nav2_4"}).right({"id":"nav2_0"});
+        XEpg.$("nav2_6").click({"func":getDetail}).down({"id":"nav2_9"}).right({"id":"nav2_7"}).up({"id":"nav2_4"}).left({"id":"nav2_3"});
+        XEpg.$("nav2_7").click({"func":getDetail}).down({"id":"nav2_9"}).up({"id":"nav2_5"}).left({"id":"nav2_6"}).right({"id":"nav2_1"});
+        XEpg.$("nav2_8").click({"func":getDetail}).down({"id":"nav3_2"}).right({"id":"nav2_9"}).up({"id":"nav2_3"}).left({"id":"nav2_2"});
+        XEpg.$("nav2_9").click({"func":getDetail}).down({"id":"nav3_5"}).up({"id":"nav2_6"}).left({"id":"nav2_8"}).right({"id":"nav2_2"});
+
+        //频道栏目焦点移动
+        XEpg.$("nav3_0").click({"func":getDetailList}).up({"id":"nav2_2"}).right({"id":"nav3_1"}).left({"id":"nav3_6"}).down({"id":"nav2_0"});
+        XEpg.$("nav3_1").click({"func":getDetailList}).up({"id":"nav2_8"}).right({"id":"nav3_2"}).left({"id":"nav3_0"}).down({"id":"nav2_3"});
+        XEpg.$("nav3_2").click({"func":getDetailList}).up({"id":"nav2_8"}).right({"id":"nav3_3"}).left({"id":"nav3_1"}).down({"id":"nav2_3"});
+        XEpg.$("nav3_3").click({"func":getDetailList}).up({"id":"nav2_8"}).left({"id":"nav3_2"}).right({"id":"nav3_4"}).down({"id":"nav2_3"});
+        XEpg.$("nav3_4").click({"func":getDetailList}).up({"id":"nav2_9"}).left({"id":"nav3_3"}).right({"id":"nav3_5"}).down({"id":"nav1_0"});
+        XEpg.$("nav3_5").click({"func":getDetail}).up({"id":"nav2_9"}).left({"id":"nav3_4"}).right({"id":"nav3_6"}).down({"id":"nav1_1"});
+        XEpg.$("nav3_6").click({"func":getDetail}).up({"id":"nav2_9"}).left({"id":"nav3_5"}).right({"id":"nav3_0"}).down({"id":"nav1_2"});
+
+    }
+
+    //获取接口
+    function getArrowList () {
+    	XEpg.Util.ajaxGet('../ajax/getInterface.jsp?action=getCmsData&code=' + cmsCode,function(obj){
+            var data = XEpg.Util.parseJSON(obj);
+            var item = data.result;
+            var showParentId = 0;
+            var type = '';
+            
+            for(var i = 0; i < 11; i ++){   
+            	var index = i;
+            	var conItem = item[i];
+            	type = item[i].type;
+            	
+                (function(index){
+                	switch(type){  //推荐位 返回类型
+	            		case 'content':   //内容
+	            			document.getElementById('nav2_'+ (index - 1)).title = 'contentId=' + item[index].id;
+	            			document.getElementById('nav2_'+ (index - 1) + '_img').src = item[index].picurl;
+	            			contentObj[conItem['id']] = conItem;
+	            		break;
+	            		case 'category':  //栏目
+	            			showParentId = item[index].id;
+	            			if(index == 4){
+	            				//document.getElementById('nav2_'+ (index - 1) + '_img').src = item[i].picurl;
+	            				getVideoCode(showParentId);
+	            			}else{
+	            				
+	            				document.getElementById('nav2_'+ (index - 1) + '_img').src = item[index].picurl;
+	            				XEpg.Util.ajaxGet('../ajax/getInterface.jsp?action=getTagsData&'+ spPro +'type=1&catelogid=' + showParentId,function(obj){
+	            				
+		            				var data = XEpg.Util.parseJSON(obj);
+		            				var list = data.result;
+		            				document.getElementById('nav2_'+ (index - 1)).title = 'parentId=' +　list[0].parentid + '=catalogId=' + item[index].id;
+	            				})
+	            			}
+	            		break;
+	            		case 'text' :   //文字
+	            			noticeTxt= '公告：' + item[index].title;
+            				noticeScroll ();
+            		}
+                })(i);
+            }
+        })
+        
+        //getVideo();
+    }
+    
+	//获取窗口视频栏目下的所有内容ID
+    function getVideoCode(showParentId){
+    	XEpg.Util.ajaxGet('../ajax/getInterface.jsp?action=getIndexData&'+ spPro +'pagesize=5&tmtype=2&orderinfo=1&pageindex=1&catalogid=' + showParentId,function(data){
+	            				
+			var obj = XEpg.Util.parseJSON(data);
+			var list = obj.result;
+			videoNum = list.length
+			
+			for(var i = 0 ; i < videoNum ; i ++){
+				
+				idList.push(list[i]);
+			}
+			getDetailCode();
+		})
+    }
+    
+    //获取当前视频播放code
+    function getDetailCode (){
+    	
+    	var detailCode = idList[codeNum].id;
+    	var conentCode = null;
+    	
+    	XEpg.Util.ajaxGet('../ajax/getInterface.jsp?action=getDetailData&'+ spPro +'tmtype=2&contentid=' + detailCode ,function(data){
+						
+			var obj = XEpg.Util.parseJSON(data);
+			var listData = obj.result[0];
+			var subLen = listData.subcontents.length;
+			if(subLen){
+				conentCode = listData.subcontents[subLen - 1].contentcode;  //有子集
+			}else{
+				conentCode = listData.contentcode;  //单集
+			}
+			getVideo(conentCode);
+		})
+    }
+    
+    //窗口视频播放
+    function getVideo (conentCode) {
+    	
+    	var epgdomain = Authentication.CTCGetConfig("EPGDomain" );
+    	var last = epgdomain.lastIndexOf("/");
+		var host = epgdomain.substr( 0, last );
+		document.getElementById("smallvod").src = host + "/MediaService/SmallScreen?" +
+            "ContentID=" + conentCode + "&Left=0&Top=0&Width=465&Height=268&CycleFlag=0";
+                  
+        document.getElementById("videoIcon").style.display = "none";
+        setTimeout(isStop,1000);
+    }
+   
+    function isStop (){
+    	var iframe = document.getElementById("smallvod");
+        var epgdomain = Authentication.CTCGetConfig("EPGDomain");
+        var iframeContent = (iframe.contentWindow || iframe.contentDocument);
+
+        if (mgPartner == 'ZTE2X') {
+            try {
+                mp = iframeContent.mymediaplayer; // 中兴获取Mediaplayer 对象
+            } catch (e) {
+            }
+        } else {
+            try {
+               mp = iframeContent.mp; // 华为获取Mediaplayer 对象
+            } catch (e) {
+            }
+        }
+        
+       	var endTimer = parseInt(mp.getMediaDuration(),10) * 1000;  //播放总时长
+       	var stopTime = null;   //结束当前视屏 播放下一个视频
+       	var nowVolume = 50 ;  //当前音量
+   		
+       	
+       	/*if(endTime > 300000){
+   			stopTime = 300000;
+       	}else{
+       		stopTime = endTime;
+       	}
+       
+       	var Timer = setTimeout(function(){   //播放下一个视频
+       		destoryMP();
+       		if(codeNum === (videoNum - 1)){
+       			codeNum = 0;
+       		}else{
+       			codeNum += 1;
+       		}
+       		getDetailCode();
+       		clearTimeout(Timer);
+       	},stopTime)*/
+    }
+    
+    /*
+     * 释放终端，停止视频播放*/
+    function destoryMP() {
+        //document.getElementById("videoIcon").style.display = "block";
+        var instanceId = mp.getNativePlayerInstanceID();
+        mp.stop();
+        mp.releaseMediaPlayer(instanceId);
+    }
+
+    //视频窗口点击
+    function getMovieDetail () {
+		click.content();
+    }
+
+    //点击跳转详情页
+    function getDetail () {
+        var id = document.getElementById(XEpg.My.currentId).title;
+        var dataType = id.split("=")[0];
+        
+        switch(dataType){
+        	case 'contentId':
+        		click.content();
+        	break;
+        	case 'parentId':
+        		click.catalog();
+        	break;
+        	case 'special':
+        		click.special();
+        	break;
+        }
+    }
+    
+    var click = {
+    	content : function(){
+    		var contId = document.getElementById(XEpg.My.currentId).title.split("=")[1];
+    		var contType = '';
+    		var currTitle = contId;
+    		XEpg.Util.ajaxGet('../ajax/getInterface.jsp?action=getDetailData&'+ spPro +'tmtype=2&contentid=' + contId,function(data){
+    			
+    			var obj = XEpg.Util.parseJSON(data);
+    			var contenttype = obj.result[0].contenttype;
+    			contType = obj.result[0].categoryid;
+    			var recommendCode = obj.result[0].catalogid.split(",")[0] || obj.result[0].catalogid;
+    			if(contType === 21){
+    				XEpg.Util.gotoPage('detail-zongyi.html?contid=' + contId + '&contenttype=' + contenttype + mg_epginfo);
+    			}else{
+    				XEpg.Util.gotoPage('detail-num.html?contid=' + contId + '&contenttype=' + contenttype + '&recommendCode=' + recommendCode + mg_epginfo);
+    			}
+    		})
+    		
+    		//OK键数据上报
+	
+	        //跳转前,保存当前焦点、分页等页面信息放入cookie
+	        SP.saveCurrentPageInfo('pageIndex',{
+	            'currentId' : XEpg.My.currentId,
+	            'epg_info':params.epg_info
+	        });
+
+    	},
+    	catalog : function(){
+    		var catId = document.getElementById(XEpg.My.currentId).title.split("=")[1];
+    		var twoCatId = document.getElementById(XEpg.My.currentId).title.split("=")[3];
+    		var name = '';
+    
+			switch(catId){
+    			case '5326' :   //综艺
+    				XEpg.Util.gotoPage("variety-week.html?menuID=5326&catalogName=王牌综艺&twoCatId=" + twoCatId + mg_epginfo);
+    				name = '王牌综艺';
+    			break;
+    			case '5327' :    //电视剧
+    				XEpg.Util.gotoPage("movie-week.html?menuID=5327&catalogName=电视剧&twoCatId=" + twoCatId + mg_epginfo);
+    				name = '电视剧';
+    			break;
+    			case '5328' :    //电影
+    				XEpg.Util.gotoPage("movie.html?menuID=5328&catalogName=电影&twoCatId=" + twoCatId + mg_epginfo);
+    				name = '电影';
+    			break;
+    			case '5329' :    //少儿
+    				XEpg.Util.gotoPage("movie.html?menuID=5329&catalogName=少儿&twoCatId=" + twoCatId + mg_epginfo);
+    				name = '少儿';
+    			break;
+    			case '5330' :    //纪录片
+    				XEpg.Util.gotoPage("movie.html?menuID=5330&catalogName=纪录片&twoCatId=" + twoCatId + mg_epginfo);
+    				name = '纪录片';
+    			break;
+    			default :      //其他
+    				XEpg.Util.gotoPage("movie.html?menuID=5328&catalogName=电影&twoCatId=" + twoCatId + mg_epginfo);
+    				name = '其他';
+    		}
+    		
+    		//数据上报
+    		SP.LOGGER.clickEleEventMG(2,{
+                'code' : twoCatId,
+                'type' : SP.CATEGORY,
+                'name' : name,
+                '_pos' : 1
+            },catId);
+
+       	 	//退出事件数据上报
+        	SP.saveCurrentPageInfo('pageIndex',{'currentId' : XEpg.My.currentId,'epg_info':params.epg_info}); //记录当前焦点数据到cookie
+    	},
+    	special : function(){
+    		
+    	}
+    }
+
+    //跳免费推荐 我的片单 产品介绍
+    function  getDetailPre () {
+        var id = document.getElementById(XEpg.My.currentId).title ;
+        var name = document.getElementById(XEpg.My.currentId + '_txt').innerHTML;
+		
+        //OK键数据上报
+        SP.LOGGER.clickEleEventMG(2,{
+        	//'code' : currTitle,
+            'type' : SP.CATEGORY,
+            'name' : name,
+            '_pos' : 1
+        });
+        //页面结束事件
+        SP.saveCurrentPageInfo('pageIndex',{'currentId' : XEpg.My.currentId,'epg_info':params.epg_info}); //记录当前焦点数据到cookie
+        window.setTimeout(function(){
+            XEpg.Util.gotoPage(id + mg_epginfo);
+        },150);
+
+    }
+
+    //下侧栏目跳转
+    function getDetailList () {
+        var id = document.getElementById(XEpg.My.currentId).title;
+        var currTitle = id.substring(10,(id.indexOf('&',0)));
+        var name = document.getElementById(XEpg.My.currentId + '_txt').innerHTML;
+		var parId = id.split("=")[1];
+		
+        SP.LOGGER.clickEleEventMG(2,{
+            'code' : currTitle,
+            'type' : SP.CATEGORY,
+            'name' : name,
+            '_pos' : 1
+        },parId);
+
+        //退出事件数据上报
+        SP.saveCurrentPageInfo('pageIndex',{   //记录当前焦点数据到cookie
+        	'currentId' : XEpg.My.currentId,
+        	'epg_info':params.epg_info
+        }); 
+
+        window.setTimeout(function(){
+            if(name == "王牌综艺"){
+                XEpg.Util.gotoPage("variety-week.html?" + id + mg_epginfo);
+            }else if(name == "电视剧"){
+                XEpg.Util.gotoPage("movie-week.html?" + id + mg_epginfo);
+            }else if(name == "娱乐星闻"){
+                XEpg.Util.gotoPage("star-new.html?" + id + mg_epginfo);
+            }else if(name == "音乐"){
+                XEpg.Util.gotoPage("music.html?" + id + mg_epginfo);
+            }else{
+                XEpg.Util.gotoPage("movie.html?" + id + mg_epginfo);
+            }
+        },150);
+
+    }
+
+
+    var beginTimer = null;
+    var starTimer = null;
+    var textTimer = null;
+    function noticeScroll (){
+        var txtObj01 = document.getElementById('nav_notice01');
+        var txtObj02 = document.getElementById('nav_notice02');
+
+        if(noticeTxt.length > 22){                         // 当公告的文字字数大于 22 个时，需要滚动，小于 22个时，不滚动！
+            txtObj02.innerHTML = noticeTxt.substring(22);
+            txtObj01.innerHTML = noticeTxt.substring(0,22);
+            textTimer = setInterval(startNotice01,2500);
+        }else {
+            txtObj01.innerHTML = noticeTxt;
+        }
+    }
+
+
+    function startNotice01(){
+        var text1 = document.getElementById('nav_notice01').innerHTML;
+        var text2 = document.getElementById('nav_notice02').innerHTML;
+        var top = parseInt(document.getElementById('nav_notice01').style.top, 10);
+        var top2 = parseInt(document.getElementById('nav_notice02').style.top, 10);
+        var txtObj01 = document.getElementById('nav_notice01');
+        var txtObj02 = document.getElementById('nav_notice02');
+
+        starTimer = setInterval(function(){
+            if(top <= -25 && top2 <= 20){
+                txtObj02.style.top = '12px';
+                clearInterval(starTimer);
+                var str = text1;
+                txtObj01.style.display = 'none';
+                txtObj01.style.top = '12px';
+                txtObj01.innerHTML = text2;
+                txtObj01.style.display = 'block';
+                txtObj02.style.display = 'none';
+                txtObj02.style.top = '47px';
+                txtObj02.innerHTML = str;
+                txtObj02.style.display = 'block';
+                textTimer = setInterval(startNotice01,2500)
+            }else {
+                top -= 2;
+                document.getElementById('nav_notice01').style.top = top + 'px';
+                top2 -= 2;
+                if(top2 <= 12) top2 = 12;
+                document.getElementById('nav_notice02').style.top = top2 + 'px';
+            }
+        },30);
+        clearInterval(textTimer);
+    }
+
+</script>
+
+</body>
+</html>

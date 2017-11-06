@@ -1,0 +1,587 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta name="page-view-size" content="1280*720" />
+    <meta charset="UTF-8">
+    <title>综艺详情 | 芒果TV-高清</title>
+    <link rel="stylesheet" href="../css/style.css"/>
+</head>
+<body bgcolor="transparent">
+	<!-- S content -->
+<div class="wrapper">
+    <!-- 背景 -->
+    <div class="pigbg">
+    	<div class="pic"><img id="nav_backimg" src="../images/ch-detail-zongyi.png" height="720" width="1280" alt=""></div>
+    </div>
+	<div id="test1" style="left: 20px; top: 20px; width: 800px; height: 300px; position: absolute; color: #ff0000; word-break:break-all;"></div>
+
+    <!-- S head -->
+    <div class="yq-title02" style="left:34px;top:34px;font-size: 40px;" id="nav_title"></div>
+    <!-- E head -->
+    <!-- 视频 -->
+    <div class="yq-video">
+        <div class="item" id="nav1">
+            <div class="pic">
+            	<iframe id="smallvod1" name="if_smallscreen1" 
+            		style="position: absolute; top: 0px;left: 0px; display: block;visibility: hidden;"
+            		width="640" height="480"  src="" frameborder="no" scrolling="no" >
+            	</iframe>
+            	<!--<img id="nav1_img" src="../images/demopic/pic-640x480.jpg" height="480" width="640" alt="">-->
+        	</div>
+        </div>
+
+    </div>
+    <!-- 箭头 -->
+    <div class="yq-arrow" style="left:963px;top:91px;display: none;" id="nav2">
+        <div class="item" >
+            <div class="icon-arrowUp"></div>
+        </div>
+        <div class="item" id="nav3" style="top:564px">
+            <div class="icon-arrowDown"></div>
+        </div>
+    </div>
+    <!--S= 文字列表 -->
+    <div class="yq-textlist">
+        <!-- 移动修改scrollbox的top值 -->
+        <div class="scrollbox" style="top:0px" id="nav4">
+
+        </div>
+    </div>
+    <!--E= 文字列表 -->
+    <!-- 滚动条 -->
+    <div class="yq-scrollbar">
+        <div class="point" style="display: block;top:0px" id="nav5"><!--top最大值为183px;--></div>
+    </div>
+</div>
+<!-- E content -->
+<script src="../js/xepg.min.order.js"></script>
+<script src="../js/commons.js"></script>
+<script type="text/javascript">
+    var SP = XEpg.SP;
+    //var param = XEpg.My.parseUrl();   //解析地址栏参数 接收的变量
+    var numUrl = (window.location.href).split("&result")[0] || window.location.href;
+	var numUrl2 = decodeURIComponent(numUrl);
+	
+	var param = parseQueryString(numUrl2);  //URL解析成对象
+    var conentCode = param.contid || "";   // 内容ID
+    var currentId = param.rightSelect ||　"nav4_0";
+    var rightSelect = param.rightSelect || "nav4_0";   //定义一个变量储存右边驻留焦点
+    var leftSelect = "";           //驻留焦点页码与当前页码不同时，记录当前焦点位子
+    var pageSelect = param.pageSelect || 1 ;            //记录右侧驻留焦点所在页码
+    var subcontentsNum = "";   //右侧总期数
+    var pageNum = param.pageNum || 1 ;           //当前页
+    var pointNum = '';  //定义一个变量，用来判断父容器可移动区域分成几块  总页数
+    var contentObj = {};		//内容列表数据缓存
+    var videoCode = '';  //视频播放地址
+    var playNum = param.contentNum || 0; //当前播放集数
+    var dataList = [];          //储存数据
+    var itemList;
+    var ismaster = param.ismaster || 'oneGo';
+    var authCode = null;   //鉴权code
+    var ppvprice = 0;
+    var nowVolume = 50 ;  //当前音量
+    var mp = null;//mp对象
+    var spPro = '';   //portalcode + sptoken 参数
+	var mgPartner = param.mgPartner; //平台信息
+	var mgUserID = param.mgUserID;  //用户ID
+	var mgUserToken = param.mgUserToken;  //临时身份证明
+	var backUrl =  parseQueryString(numUrl).backUrl || '';
+	var mg_epginfo = '&mgPartner=' + mgPartner + '&mgUserID=' + mgUserID + '&mgUserToken=' + mgUserToken + '&backUrl=' + backUrl;
+
+	var stopTimer = null;
+	var isinit = true;  //是否自动翻页的
+
+    //监听返回事件，返回上一级页面
+    XEpg.Nav.key_back_opt = function(){
+        destoryMP();
+        if(ismaster == 'oneGo'){
+			XEpg.Navigation.gotoBackNavigationUrl();
+		}else{
+			XEpg.Util.gotoPage('index.html?epg=gs' + mg_epginfo);
+		}
+    };
+
+    window.onload = function() {
+    	if(!mgPartner){//如果没有平台信息就获取平台信息
+			ismaster = 'twoGo';
+			var from = unescape(numUrl);
+			if(from&&from.indexOf("<partner>")!=-1&&from.indexOf("</partner>")!=-1){
+				var partner = from.split("<partner>");
+				var partner1 = partner[1].split("</partner>");
+				mgPartner = partner1[0];  //获取平台类别
+			}
+			
+			if(from&&from.indexOf("<oss_user_id>")!=-1&&from.indexOf("</oss_user_id>")!=-1){   
+				var userId = from.split("<oss_user_id>");
+				var userId1 = userId[1].split("</oss_user_id>");
+				mgUserID = userId1[0];  //获取用户ID
+			}
+			
+			if(from&&from.indexOf("<userToken>")!=-1&&from.indexOf("</userToken>")!=-1){   
+				var userToken = from.split("<userToken>");
+				var userToken1 = userToken[1].split("</userToken>");
+				mgUserToken = userToken1[0];  //临时身份证明
+			}
+		}
+		mg_epginfo = '&mgPartner=' + mgPartner + '&mgUserID=' + mgUserID + '&mgUserToken=' + mgUserToken + '&backUrl=' + encodeURIComponent(backUrl);
+    	
+        if(mgPartner == 'ZTE2X'){  //中兴，根据平台信息获取
+			spPro = 'portalcode=2017gszx&sptoken=CF4EAB0D8DF1E71CA84762F6BA009BD4&';
+		}else{  //华为
+			spPro = 'portalcode=2017gshw&sptoken=96630FB882600EC4A3F0B610535FB2A7&';
+		}
+		
+		XEpg.My.init({"currentId":currentId});//初始化焦点位置
+		
+		if(playNum > 0){
+			pageSelect = Math.ceil(playNum / 6);
+			var rightSelect1 = (playNum % 6);
+			if(rightSelect1 == 0){
+				rightSelect = 'nav4_5';
+			}else{
+				rightSelect = 'nav4_' + (rightSelect1 - 1);
+			}
+			pageNum = pageSelect;
+		}
+		XEpg.My.currentId = rightSelect;
+        getArrowList();
+        init();
+    }
+
+    function init() {
+        XEpg.$("nav1").click({"func":isFree}).right({"func":gotoPage.right}).down({"func":gotoPage.right}).left({"func":gotoPage.right}).up({"func":gotoPage.right});
+
+        XEpg.$("nav4_0").click({"func":getDetail}).up({"func":gotoPage.up}).left({"func":gotoPage.left}).down({"func":gotoPage.down}).right({"func":gotoPage.left});
+        XEpg.$("nav4_1").click({"func":getDetail}).up({"func":gotoPage.up}).left({"func":gotoPage.left}).down({"func":gotoPage.down}).right({"func":gotoPage.left});
+        XEpg.$("nav4_2").click({"func":getDetail}).up({"func":gotoPage.up}).left({"func":gotoPage.left}).down({"func":gotoPage.down}).right({"func":gotoPage.left});
+        XEpg.$("nav4_3").click({"func":getDetail}).up({"func":gotoPage.up}).left({"func":gotoPage.left}).down({"func":gotoPage.down}).right({"func":gotoPage.left});
+        XEpg.$("nav4_4").click({"func":getDetail}).up({"func":gotoPage.up}).left({"func":gotoPage.left}).down({"func":gotoPage.down}).right({"func":gotoPage.left});
+        XEpg.$("nav4_5").click({"func":getDetail}).up({"func":gotoPage.up}).left({"func":gotoPage.left}).down({"func":gotoPage.down}).right({"func":gotoPage.left});
+
+    }
+
+    function getArrowList () {//上来就获取数据，然后加载数据,
+        XEpg.Util.ajaxGet("../ajax/getInterface.jsp?action=getDetailData&"+ spPro +"tmtype=2&contentid="+conentCode,function(obj){
+            var data = XEpg.Util.parseJSON(obj);
+			//获取数据，显示背景图，添加背景图部分
+			//document.getElementById("nav_backimg").src = name;  //左上角标题
+			console.log(data);
+            var item = data.result[0];
+            var name = item.name.split("HD]")[1] || item.name;
+			document.getElementById("nav_title").innerHTML = name;  //左上角标题
+			authCode = item.contentcode;
+			ppvprice = item.ppvprice || 0;
+            for(var i = 0 , len = item.subcontents.length; i < len ; i ++){
+            	itemList = item.subcontents[i];
+            	dataList.push(itemList);
+            }
+           getData();  
+        });
+  	}  
+  	
+    function getData () {
+        var html = [];
+        var topNum = '';    //定义一个变量，判断每次翻页时的top值
+        var len = '';
+        subcontentsNum = dataList.length;  //总个数
+        pointNum = Math.ceil(subcontentsNum/6);  //总页数
+        
+        //最右侧加载条
+        if(pointNum == 1){
+            document.getElementById("nav5").style.display = "none";
+        }else{
+            topNum = Math.floor((515-249)/(pointNum-1));
+            document.getElementById("nav5").style.top = (pageNum-1)*topNum+ "px";
+        }
+        
+        if (subcontentsNum < ( pageNum * 6)){
+        	len = subcontentsNum - ((pageNum-1)*6);
+        }else{
+        	len = 6;
+        }
+        
+ 		for(var i = 0 ; i < len; i++){
+ 			var j = (subcontentsNum - i - 1)-((pageNum-1)*6);
+ 			var description1 = dataList[j].description.split('@')[0] || '';
+ 			var description2 = dataList[j].description.split('：')[1] || dataList[j].description.split('@')[1] || dataList[j].description;
+            var description = description1 + ' ' +　description2;
+            html.push(
+                '<div class="item" id="nav4_'+i +'" style="top:'+i*87+'px" title="',dataList[j].contentcode,'">',
+                '<div class="txt" id="nav4_'+i+'_txt">' + description + '</div>',
+                '</div>'
+            )
+        }
+ 		document.getElementById("nav4").innerHTML = html.join('');
+        document.getElementById(rightSelect).className = "item item_select";
+		document.getElementById(XEpg.My.currentId).className = "item item_focus";
+
+        if(isinit){
+        	video.getVideoCode();//窗口视频播放
+        }
+	}
+
+    //右侧内容列表点击事件
+    function getDetail () {
+        if((pageSelect == pageNum)&&(rightSelect == XEpg.My.currentId)){
+            var currTitle = document.getElementById(XEpg.My.currentId).title;
+            //OK键数据上报
+            isFree();
+        }else{
+        	destoryMP();
+        	clearTimeout(stopTimer);
+            document.getElementById(rightSelect).className = "item";   //移除上一个焦点驻留
+            document.getElementById(XEpg.My.currentId).className = "item";
+            rightSelect = XEpg.My.currentId;   //将当前焦点ID赋给驻留焦点变量
+            pageSelect = pageNum;
+            document.getElementById(rightSelect).className = "item item_select";
+            document.getElementById(XEpg.My.currentId).className = "item item_focus";  //焦点显示
+            video.getVideoCode();
+        }
+
+        //换背景图
+//         var index = parseInt(XEpg.My.currentId.slice(5), 10);
+//         XEpg.Util.ajaxGet("../ajax/getInterface.jsp?action=getDetailData&tmtype=2&contentid="+conentCode,function(obj){
+////             var data = XEpg.Util.parseJSON(obj);
+////             var x = data.result[0];
+////             document.getElementById("nav1_img").sre = x.subcontents[index+((pageNum-1)*6)].midimg;
+//          })
+    }
+    
+    /*
+     * 释放终端，停止视频播放*/
+    function destoryMP() {
+        var instanceId = mp.getNativePlayerInstanceID();
+        mp.stop();
+        mp.releaseMediaPlayer(instanceId);
+    }
+    //是否免费
+    function isFree(){
+    	if(ppvprice == 0){
+			clickVideo(); //免费
+		}else{
+			authority(); //收费
+		}
+    }
+    
+    //鉴权
+    function authority(){
+    	var url = "../ajax/gsAuth.jsp?userToken=" + mgUserToken + "&userID=" + mgUserID + "&ContentID=" + authCode + "&productID=8001013020";
+		XEpg.Util.ajaxGet(url,function(data){
+			var obj = XEpg.Util.parseJSON(data);
+			var item = obj.result[0].result;
+			var authResult = parseInt(item , 10);
+			var authState = authResult.toString(16);
+			if(authState == 0){
+				clickVideo(); //鉴权通过
+			}else{
+				getOrder();
+			}
+		})
+    }
+    
+    function getOrder(){
+    	var backUrl = window.location.href.indexOf("?") > -1 ? window.location.href.substring(0, window.location.href.indexOf("?")) : window.location.href;
+		backUrl +='?epg=gs&contid=' + conentCode 
+			    + '&currentId=' + XEpg.My.currentId 
+			    + '&contenttype= 3' 
+			    + '&ismaster=' + ismaster
+			    + '&rightSelect=' +　rightSelect　
+			    + '&pageSelect=' +　pageSelect 
+			    + '&pageNum=' + pageNum
+			    + '&playNum=' + playNum
+			    + '&starttime=' + currentTime
+			    + mg_epginfo;
+		var url = "../ajax/gsOrder.jsp?userToken=" + mgUserToken 
+				+ "&userID=" + mgUserID 
+				+ "&ContentID=" + authCode 
+				+ "&returnurl=" + encodeURIComponent(backUrl) ;
+		XEpg.Util.gotoPage(url);
+    }
+        
+    var video = {
+    	smallPlay : function(videoCode){   //窗口视频播放
+    		if(mgPartner == 'ZTE2X'){  //中兴
+				var epgdomain = Authentication.CTCGetConfig("EPGDomain");
+		    	var last = epgdomain.lastIndexOf("/");
+				var host = epgdomain.substr( 0, last );
+				var srcHost = host + "/MediaService/SmallScreen?" +
+		            "ContentID="+videoCode+"&Left=118&Top=135&Width=530&Height=396&CycleFlag=0";
+		        document.getElementById("smallvod1").src = srcHost;
+		        document.getElementById("videoIcon").style.display = "none";
+			}else{  //华为
+				var epgdomain = Authentication.CTCGetConfig("EPGDomain");
+		        var srcHost = epgdomain.split("/EPG")[0] + "/EPG/MediaService/SmallScreen.jsp" +
+		            "?ContentID="+videoCode+"&Left=118&Top=135&Width=530&Height=396&CycleFlag=0";
+		        document.getElementById("smallvod1").src = srcHost;
+				document.getElementById("videoIcon").style.display = "none";
+			}
+	        setTimeout(video.isStop,2000);
+    	},
+    	isStop : function(){   //视频停止播放事件
+    		var iframe = document.getElementById("smallvod1");
+	        var epgdomain = Authentication.CTCGetConfig("EPGDomain");
+	        var iframeContent = (iframe.contentWindow || iframe.contentDocument);
+	        if (mgPartner == 'ZTE2X') {
+	            try {
+	                mp = iframeContent.mymediaplayer; // 中兴获取Mediaplayer 对象
+	            } catch (e) {
+	            }
+	        } else {
+	            try {
+	               mp = iframeContent.mp; // 华为获取Mediaplayer 对象
+	            } catch (e) {
+	            }
+	        }
+	        
+	        if(mp){
+	        	var endTimer = parseInt(mp.getMediaDuration(),10) * 1000;  //播放总时长
+		       	var currentTime = parseInt(mp.getCurrentPlayTime(),10) * 1000 ;//当前播放时间
+		       	var stopTime = 0;   //结束当前视屏 播放下一个视频
+		       	
+		       	if(endTimer > 180000){
+		   			stopTime = 180000;
+		       	}else{
+		       		stopTime = endTimer;
+		       	}
+		       	stopTimer = setTimeout(function(){   //播放下一个视频
+		       		destoryMP();
+		       		video.nextPlay();
+		       		clearTimeout(stopTimer);
+		       	},stopTime)
+	        }else{
+	        	setTimeout(video.isStop, 2000);
+	        }
+    	},
+    	nextPlay : function(){  //驻留焦点下移
+    		
+    		var index = parseInt(rightSelect.substring(5), 10); //当前焦点下标
+			var lastNum = subcontentsNum - ((pointNum-1)*6);  //最后一页个数
+			var index2 = parseInt(rightSelect.substring(3), 10);
+			document.getElementById(rightSelect).className = "item";
+	    	document.getElementById(XEpg.My.currentId).className = "item";
+			if(pointNum == 1){  //总页数为1页的时候
+				if(index == (lastNum - 1)){  //当前焦点处于当前页集数最后一个时
+					rightSelect = 'nav4_0';
+				}else{
+					rightSelect = 'nav4_' + (index + 1);
+				}
+				XEpg.My.currentId = rightSelect;
+			}else{
+				if(pageNum < pointNum){   //当前页小于总页数时，说明当前页有6集
+					if(index == 5){       //当前焦点点下标为5，向下 ，翻页
+						rightSelect = 'nav4_0';
+						pageNum ++ ;
+						pageSelect = pageNum;
+						isinit = true;
+						XEpg.My.currentId = 'nav4_0';
+						getData();
+					}else{ 
+						rightSelect = 'nav4_' + (index + 1);
+						XEpg.My.currentId = rightSelect;
+					}
+				}else{ //当前页为最后一页时
+					if(index == (lastNum - 1)){  //当前焦点为当前页最后一个时，翻页到第一页
+						rightSelect = 'nav4_0';
+						pageNum = 1 ;
+						pageSelect = pageNum;
+						isinit = true;
+						XEpg.My.currentId = 'nav4_0';
+						getData();
+					}else{ 
+						rightSelect = 'nav4_' + (index + 1);
+						XEpg.My.currentId = rightSelect;
+					}
+				}
+			}
+			
+			if(pageNum != pageSelect){
+				pageNum = pageSelect;
+				isinit = true;
+				getData();
+			}
+			
+			document.getElementById(rightSelect).className = "item item_select";
+			document.getElementById(XEpg.My.currentId).className = 'item item_focus';
+	        video.getVideoCode();
+    	},
+    	getVideoCode : function(){  //获取视频播放Code
+    		videoCode = document.getElementById(rightSelect).title;
+    		video.smallPlay(videoCode);
+    	}
+    }
+
+    //视频窗口点击事件
+    function clickVideo () {
+    	clearTimeout(stopTimer);
+    	var index = parseInt(rightSelect.substring(5), 10); //当前焦点下标
+    	var currentTime = mp.getCurrentPlayTime() ;
+        playNum = index  + (pageSelect * 6) - 5;
+        var backUrl = window.location.href.indexOf("?") > -1 ? window.location.href.substring(0, window.location.href.indexOf("?")) : window.location.href;
+		backUrl +='?epg=gs&contid=' + conentCode 
+			    + '&currentId=' + XEpg.My.currentId 
+			    + '&contenttype= 3' 
+			    + '&ismaster=' + ismaster
+			    + '&rightSelect=' +　rightSelect　
+			    + '&pageSelect=' +　pageSelect 
+			    + '&pageNum=' + pageNum
+			    + '&playNum=' + playNum
+			    + '&starttime=' + currentTime
+			    + mg_epginfo;
+		destoryMP();
+		XEpg.Util.gotoPage('play.html?returnUrl=' + encodeURIComponent(backUrl));
+    }
+
+    //焦点逻辑
+    var gotoPage = {
+        up:function () {
+        	var index = parseInt(XEpg.My.currentId.substring(5), 10); //当前焦点下标
+			var lastNum = subcontentsNum - ((pointNum-1)*6);  //最后一页个数
+			document.getElementById(XEpg.My.currentId).className = 'item';
+			if(index == 0){   //当前焦点下标为0时
+				if(pointNum > 1){  //总页数大于1时
+					if(pageNum == 1){  //当前页为第一页时
+						pageNum = pointNum;   //翻页到最后一页
+						isinit = false;
+						XEpg.My.currentId = 'nav4_' + (lastNum - 1);
+						getData();
+					}else{  //翻页到上一页
+						pageNum --;
+						isinit = false;
+						XEpg.My.currentId = 'nav4_5';
+						getData();
+					}
+					if(pageSelect === pageNum){
+			            document.getElementById(rightSelect).className = "item item_select";
+			        }else{
+		                document.getElementById(rightSelect).className = "item";
+			        }
+					
+				}else{ //总页数为1 ，移动到当前页最后一集
+					XEpg.My.currentId = 'nav4_' + (lastNum - 1);
+					document.getElementById(rightSelect).className = "item item_select";
+				}
+			}else{ //当前焦点下标大于1，向左移动焦点
+				document.getElementById(XEpg.My.currentId).className = 'item';
+				XEpg.My.currentId = 'nav4_' + (index - 1);
+				if(pageSelect == pageNum){
+                    document.getElementById(rightSelect).className = "item item_select";
+                }
+			}
+			document.getElementById(XEpg.My.currentId).className = 'item item_focus';
+        },
+        down:function () {
+
+            var index = parseInt(XEpg.My.currentId.substring(5), 10); //当前焦点下标
+			var lastNum = subcontentsNum - ((pointNum-1)*6);  //最后一页个数
+			document.getElementById(XEpg.My.currentId).className = 'item';
+			if(pointNum == 1){  //总页数为1页的时候
+				if(index == (lastNum - 1)){  //当前焦点处于当前页集数最后一个时
+					XEpg.My.currentId = 'nav4_0';
+				}else{
+					XEpg.My.currentId = 'nav4_' + (index + 1);
+				}
+				document.getElementById(rightSelect).className = "item item_select";
+			}else{
+				
+				if(pageNum < pointNum){   //当前页小于总页数时，说明当前页有6集
+					if(index == 5){       //当前焦点点下标为5，向下 ，翻页
+						pageNum ++ ;
+						isinit = false;
+						XEpg.My.currentId = 'nav4_0';
+						getData();
+					}else{  
+						XEpg.My.currentId = 'nav4_' + (index + 1);
+					}
+				}else{ //当前页为最后一页时
+					if(index == (lastNum - 1)){  //当前焦点为当前页最后一个时，翻页到第一页
+						pageNum = 1 ;
+						isinit = false;
+						XEpg.My.currentId = 'nav4_0';
+						getData();
+					}else{  //焦点右移
+						XEpg.My.currentId = 'nav4_' + (index + 1);
+					}
+				}
+				if(pageSelect == pageNum){
+		            document.getElementById(rightSelect).className = "item item_select";
+		        }else{
+	                document.getElementById(rightSelect).className = "item";
+		        }
+		        
+			}
+			document.getElementById(XEpg.My.currentId).className = 'item item_focus';
+        },
+        left:function () {
+            leftSelect = XEpg.My.currentId;
+            if(pageSelect === pageNum){
+                document.getElementById(XEpg.My.currentId).className = 'item';
+                document.getElementById(rightSelect).className = "item item_select";
+                XEpg.My.currentId = "nav1";
+                document.getElementById(XEpg.My.currentId).className = "item item_focus";
+            }else{
+                document.getElementById(XEpg.My.currentId).className = 'item';
+                XEpg.My.currentId = "nav1";
+                document.getElementById(XEpg.My.currentId).className = "item item_focus";
+            }
+
+
+        },
+        right:function () {
+            if(pageSelect === pageNum){
+                document.getElementById(XEpg.My.currentId).className = "item";
+                XEpg.My.currentId = rightSelect;
+                document.getElementById(XEpg.My.currentId).className = "item item_focus";
+            }else{
+                document.getElementById(XEpg.My.currentId).className = "item";
+                XEpg.My.currentId = leftSelect;
+                document.getElementById(XEpg.My.currentId).className = "item item_focus";
+            }
+        }
+    }
+   
+    //音量加
+    XEpg.Nav.key_volUp_event = function () {   
+        mp.setMuteFlag(0);  //0为有声， 1为静音
+		nowVolume = mp.getVolume();
+	    nowVolume += 5;
+	    if (nowVolume >= 100) {
+	        nowVolume = 100;
+	    }
+	    mp.setVolume(nowVolume);
+    }
+    
+    //音量减
+    XEpg.Nav.key_volDown_event = function () {   
+    	nowVolume = mp.getVolume();
+	    nowVolume -= 5;
+		if (nowVolume <= 0) {
+	        nowVolume = 0;
+	        mp.setMuteFlag(1);
+	    }
+	    mp.setVolume(nowVolume);
+	}
+    
+    //静音
+    XEpg.Nav.key_volOver_event = function () {  
+    	var muteFlag = mp.getMuteFlag();
+		if (muteFlag == 1) {
+			mp.setMuteFlag(0);
+		} else {
+			mp.setMuteFlag(1);
+		}
+    }
+	
+	
+	function parseQueryString(url) {
+		var json = {};
+		var arr = url.substr(url.indexOf('?') + 1).split('&');
+		arr.forEach(function(item) {
+			var tmp = item.split('=');
+			json[tmp[0]] = tmp[1];
+		})
+		return json;
+	}
+
+</script>
+</body>
+</html>

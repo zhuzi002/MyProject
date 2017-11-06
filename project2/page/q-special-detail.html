@@ -1,0 +1,504 @@
+<!DOCTYPE HTML>
+<html>
+
+	<head>
+		<meta name="page-view-size" content="1280*720" />
+		<meta charset="UTF-8">
+		<title>专题详情</title>
+		<style type="text/css">
+			/* S= CSS Reset
+----------------------------------------------- */
+			
+			body,
+			table,
+			caption,
+			tbody,
+			tfoot,
+			thead,
+			tr,
+			th,
+			td,
+			ul,
+			li,
+			p,
+			h1 {
+				margin: 0px;
+				padding: 0px;
+				border: 0px;
+			}
+			
+			body {
+				font-size: 24px;
+				font-family: Microsoft YaHei, sans-serif;
+			}
+			
+			ul,
+			ol {
+				list-style: none;
+			}
+			
+			table {
+				border-collapse: collapse;
+				border-spacing: 0;
+			}
+			
+			a {
+				text-decoration: none;
+			}
+			
+			img {
+				border: 0;
+			}
+			/* E= CSS Reset */
+			/* S= Global
+----------------------------------------------- */
+			
+			body,
+			.wrapper,
+			.pagebg {
+				height: 720px;
+				width: 1280px;
+				overflow: hidden;
+			}
+			
+			body {
+				/* ../images/demo/cs-specialBg.jpg */
+				background: url('') no-repeat;
+				color: #ffffff;
+				position: relative;
+			}
+			
+			.wrapper,
+			.pagebg {
+				left: 0;
+				position: absolute;
+				top: 0;
+			}
+			
+			.pagebg img {
+				display: block;
+				/* clear some space 对于html5中背景图比原高度多出3PX的问题*/
+			}
+			
+			.item,
+			.link,
+			.txt-wrap,
+			.txt,
+			.btn,
+			.icon,
+			.pic,
+			.pic-shade,
+			.cover,
+			.num {
+				position: absolute;
+			}
+			
+			.txtHidden {
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				overflow: hidden;
+			}
+			/* E= Global */
+			/* S= cs-special-list*/
+			
+			.cs-topTxt {
+				position: absolute;
+				top: 58px;
+				left: 80px;
+				width: 740px;
+				font-size: 66px;
+				line-height: 66px;
+			}
+			
+			.cs-conTxt {
+				position: absolute;
+				top: 187px;
+				left: 100px;
+				width: 702px;
+				height: 135px;
+				font-size: 21px;
+				color: #fff9ef;
+				line-height: 31px;
+			}
+			
+			.cs-special {
+				position: absolute;
+				top: 331px;
+				left: 29px;
+			}
+			
+			.cs-special .item {
+				width: 262px;
+				height: 351px;
+			}
+			
+			.cs-special .item .pic {
+				top: 46px;
+				left: 45px;
+			}
+			
+			.cs-special .item .pic,
+			.cs-special .item .pic img {
+				width: 173px;
+				height: 257px;
+			}
+			
+			.cs-special .item_focus .pic {
+				top: 40px;
+				left: 40px;
+			}
+			
+			.cs-special .item_focus .pic,
+			.cs-special .item_focus .pic img {
+				width: 182px;
+				height: 271px;
+			}
+			
+			.cs-special .item_focus {
+				background: url(../images/cs-special-focus.png) no-repeat;
+			}
+			
+			.cs-special .item .txt {
+				top: 318px;
+				left: 45px;
+				width: 173px;
+				height: 30px;
+				text-align: center;
+				font-size: 22px;
+				color: #fff9ef;
+				overflow: hidden;
+				white-space: nowrap;
+			}
+			/* E= cs-special-list*/
+		</style>
+	</head>
+
+	<body bgcolor="transparent" id='getbackground'>
+
+		<!-- S content -->
+		<div class="wrapper">
+			<!--<div class="cs-topTxt">魔幻史诗新篇章</div>
+<div class="cs-conTxt">希腊神话、北欧神话、凯尔特神话……当古老文明续写成魔幻史诗，我们看
+到宙斯之子坠入凡间，哈比族为收复故土而战，狮子、女巫、魔法衣柜开启
+冒险旅程，爱丽丝追赶兔子进入奇幻仙境，杰克船长上演海上传奇……黑暗
+之门开启，人兽大战势在必行！</div>-->
+			<!-- S arrrow -->
+			<div class="btn" style="left:24px; top:490px;" id="left_arrow"><img src="../images/w-arrow-left.png"></div>
+			<div class="btn" style="left:1220px; top:490px;" id="right_arrow"><img src="../images/w-arrow-r.png"></div>
+			<!-- E arrrow -->
+
+			<div class="cs-special" id="area_list">
+				<!--焦点为
+			class="item item_focus"
+			
+		-->
+				<!-- 	<div class="item item_focus">
+		<div class="pic"><img src="../images/demo/pic01-173X257.jpg" alt=""></div>
+		<div class="txt">魔兽预告片</div>
+	</div>
+	<div class="item" style="left:191px;">
+		<div class="pic"><img src="../images/demo/pic01-173X257.jpg" alt=""></div>
+		<div class="txt">魔兽预告片</div>
+	</div>
+	<div class="item" style="left:382px;">
+		<div class="pic"><img src="../images/demo/pic01-173X257.jpg" alt=""></div>
+		<div class="txt">魔兽预告片</div>
+	</div>
+	<div class="item" style="left:573px;">
+		<div class="pic"><img src="../images/demo/pic01-173X257.jpg" alt=""></div>
+		<div class="txt">魔兽预告片</div>
+	</div>
+	<div class="item" style="left:764px;">
+		<div class="pic"><img src="../images/demo/pic01-173X257.jpg" alt=""></div>
+		<div class="txt">魔兽预告片</div>
+	</div>
+	<div class="item" style="left:955px;">
+		<div class="pic"><img src="../images/demo/pic01-173X257.jpg" alt=""></div>
+		<div class="txt">魔兽预告片</div>
+	</div> -->
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../js/xepg.min.js"></script>
+	<script type="text/javascript" src="../js/com.min.js"></script>
+	<script type="text/javascript">
+		var g_params = XEpg.My.parseUrl(); //解析地址栏参数
+		var currentId = g_params.currentId || "list_0"; //焦点id获取
+		var categoryCode = g_params.categoryCode || ''; //获取栏目code
+
+		var isIndex = g_params.currentId || '0';
+
+		var g_nowIndex = 0; //当前标
+		var g_listTotle = 6; //所有标
+		var g_listName = 'list_'; //跳转前缀
+		var g_everyPage = 6; //每页个数
+		var g_nowleft = 0; //左侧距离
+		var g_name = '';
+		var g_ztCode = '';
+		var g_ztName = '';
+		window.onload = function() {
+			XEpg.My.init({
+				"currentId": currentId
+			});
+			XEpg.My.pageLoadShowFocus();
+			getBackRequset();
+		}
+
+		function $(id) {
+			return document.getElementById(id);
+		}
+
+		function getBackRequset() {
+			XEpg.Util.ajaxGet('../data/getArrowDetail.jsp?categoryCode=' + categoryCode, dealBackRequset);
+			g_ztCode = categoryCode;
+		}
+
+		function dealBackRequset(data) {
+			var obj = XEpg.Util.parseJSON(data);
+			var m_catedata = obj.getCategoryDetailResp;
+			var m_focusPicture = m_catedata.focusPicture;
+			g_name = m_catedata.name;
+			g_ztName = g_name;
+			$('getbackground').style.backgroundImage = 'url(' + m_focusPicture + ')';
+			getRequset();
+			if(isIndex == '0') {
+				sendLogDetil();
+			}
+		}
+
+		function getRequset() {
+			XEpg.Util.ajaxGet('../data/getContentList.jsp?categoryCode=' + categoryCode + '&firstIndex=0&maxResult=-1', dealRequest);
+		}
+
+		function dealRequest(data) {
+			var obj = XEpg.Util.parseJSON(data);
+			var m_catedata = obj.getContentListResp;
+			var m_data = m_catedata.contentInfos;
+			g_listTotle = m_catedata.recordSize;
+			var listContent = [];
+			if(!!m_data) {
+				for(var i = 0; i < g_listTotle; i++) {
+					listContent.push('<div class="item" id="list_' + i + '" style="left:' + (191 * i) + 'px;" title="' + m_data[i].elementType + '&' + m_data[i].code + '&' + m_data[i].programType + '">' +
+						'<div class="pic"><img id="list_' + i + '_img" src="' + m_data[i].poster + '" /></div>' +
+						'<div class="txt"  id="list_' + i + '_move">' +
+						'<span id="list_' + i + '_txt">' + m_data[i].name + '</span><br/>' +
+						'<span id="list_' + i + '_copy"></span>' +
+						'</div>' +
+						'</div>');
+				}
+				$('area_list').innerHTML = listContent.join("");
+				if(g_listTotle > 6) {
+					$("right_arrow").style.display = "block";
+					$("left_arrow").style.display = "none";
+				} else {
+					$("right_arrow").style.display = "none";
+					$("left_arrow").style.display = "none";
+				}
+				$(XEpg.My.currentId).className = 'item item_focus';
+				initDetilPage();
+				shitItemNow();
+			}
+		}
+
+		function shitItemNow() {
+			var m_index = parseInt(XEpg.My.currentId.substring(5), 10);
+			if(m_index > (g_everyPage - 2)) {
+				var m_leftsize = (m_index - (g_everyPage - 2)) * -191;
+				if(m_leftsize <= 0) {
+					$('area_list').style.left = m_leftsize + "px";
+					g_nowleft = m_leftsize;
+				}
+			}
+		}
+
+		function initDetilPage() {
+			for(var i = 0; i < g_listTotle; i++) {
+				XEpg.$('list_' + i).click({
+					"func": click.gotodetail
+				}).up({
+					"func": move.listLeft
+				}).down({
+					"func": move.listRight
+				}).left({
+					"func": move.listLeft
+				}).right({
+					"func": move.listRight
+				}).focus({
+					"func": textScroll
+				}).blur({
+					"func": clearTextStyle
+				});
+			}
+			textScroll();
+		}
+		var click = {
+			gotodetail: function() {
+				var m_elementType = $(XEpg.My.currentId).title.split('&')[0];
+				var m_contentCode = $(XEpg.My.currentId).title.split('&')[1];
+				var m_programType = $(XEpg.My.currentId).title.split('&')[2];
+				var m_backUrl = location.href;
+				m_backUrl = m_backUrl.indexOf("?") != -1 ? m_backUrl.split("?")[0] : m_backUrl;
+				m_backUrl += "?" + "currentId=" + XEpg.My.currentId +
+					"&categoryCode=" + categoryCode
+				XEpg.Util.addNavigationUrl(m_backUrl);
+				if(m_elementType == 'Program') {
+					XEpg.Util.gotoPage('he-particulars-list.html?contentCode=' + m_contentCode)
+				} else {
+					if(m_programType == '综艺' || m_programType == '纪实') {
+						XEpg.Util.gotoPage('he-zyxq.html?contentCode=' + m_contentCode)
+					} else {
+						XEpg.Util.gotoPage('he-dsjxq.html?contentCode=' + m_contentCode)
+					}
+				}
+			}
+		};
+		var move = {
+			listLeft: function() {
+				clearTextStyle();
+				var m_index = parseInt(XEpg.My.currentId.substring(5), 10);
+				$(XEpg.My.currentId).className = 'item';
+				if(m_index == 0) {
+					XEpg.My.currentId = g_listName + (g_listTotle - 1);
+					$(XEpg.My.currentId).className = 'item item_focus';
+					if(g_everyPage < g_listTotle) {
+						var m_rl = (g_listTotle - g_everyPage) * -191;
+						if(m_rl <= 0) {
+							$('area_list').style.left = m_rl + "px";
+							g_nowleft = m_rl;
+						}
+					}
+				} else {
+					XEpg.My.currentId = g_listName + (m_index - 1);
+					$(XEpg.My.currentId).className = 'item item_focus';
+				}
+				if(m_index > 0 && m_index < (g_listTotle - (g_everyPage - 1))) {
+					var leftindex = m_index - g_everyPage;
+					var m_leftsize = g_nowleft + 191;
+					if(m_leftsize <= ((m_index - 1) * -191)) {
+						if(m_leftsize <= 0) {
+							$('area_list').style.left = m_leftsize + "px";
+							g_nowleft = m_leftsize;
+						}
+					}
+				}
+				if(g_listTotle > g_everyPage) {
+					showLeftRight();
+				}
+				textScroll();
+			},
+			listRight: function() {
+				clearTextStyle();
+				var m_index = parseInt(XEpg.My.currentId.substring(5), 10);
+				$(XEpg.My.currentId).className = 'item';
+				if(m_index == (g_listTotle - 1)) {
+					XEpg.My.currentId = g_listName + 0;
+					$(XEpg.My.currentId).className = 'item item_focus';
+					$('area_list').style.left = "0px";
+					g_nowleft = 0;
+				} else {
+					XEpg.My.currentId = g_listName + (m_index + 1);
+					$(XEpg.My.currentId).className = 'item item_focus';
+				}
+				if(m_index >= (g_everyPage - 1) && m_index < (g_listTotle - 1)) {
+					var leftindex = m_index - (g_everyPage - 1);
+					var m_left = g_nowleft;
+					var m_leftIndex = m_left / 191;
+					if(m_leftIndex == (-leftindex)) {
+						var m_leftsize = (leftindex + 1) * -191;
+						if(m_leftsize <= 0) {
+							$('area_list').style.left = m_leftsize + "px";
+							g_nowleft = m_leftsize;
+						}
+					}
+				}
+				if(g_listTotle > g_everyPage) {
+					showLeftRight();
+				}
+				textScroll();
+			}
+		};
+
+		function showLeftRight() {
+			var m_leftdistanceIndex = g_nowleft / 191;
+			if(m_leftdistanceIndex == 0) {
+				$("left_arrow").style.display = "none";
+			} else {
+				$("left_arrow").style.display = "block";
+			}
+
+			if(m_leftdistanceIndex == (g_everyPage - g_listTotle) && g_listTotle > g_everyPage) {
+				$("right_arrow").style.display = "none";
+			} else {
+				$("right_arrow").style.display = "block";
+			}
+		}
+		var moveObj = null,
+			scrollTimer = null,
+			txtObj = null;
+
+		function textScroll() {
+			var m_conId = 'list_';
+			document.getElementById(XEpg.My.currentId).className = 'item item_focus';
+			var m_index1 = parseInt(XEpg.My.currentId.substring(5), 10);
+			moveObj = document.getElementById(m_conId + m_index1 + '_move');
+			txtObj = document.getElementById(m_conId + m_index1 + '_txt');
+			if(moveObj.scrollWidth > moveObj.offsetWidth) {
+				document.getElementById(m_conId + m_index1 + '_copy').innerHTML = '　    ' + txtObj.innerHTML;
+				startScroll(); //父元素向左循环移动(设置父元素scrollleft)
+			}
+		}
+
+		function startScroll() {
+			if(moveObj.scrollLeft >= (txtObj.offsetWidth + 23)) {
+				moveObj.scrollLeft = 0;
+			} else {
+				moveObj.scrollLeft += 2;
+			}
+			scrollTimer = setTimeout(startScroll, 50);
+		}
+
+		function clearTextStyle() {
+			var m_conId = 'list_';
+			clearTimeout(scrollTimer); //清除定时器
+			document.getElementById(XEpg.My.currentId).className = 'item';
+			var m_index1 = parseInt(XEpg.My.currentId.substring(5), 10);
+			var copyEle = document.getElementById(m_conId + m_index1 + '_copy');
+			if(copyEle) {
+				//清空复制的滚动文字
+				copyEle.innerHTML = '';
+			}
+			if(moveObj) {
+				//清空scrollLeft
+				moveObj.scrollLeft = 0;
+			}
+		}
+		//发送日志
+		function sendLogDetil() {
+
+			if(SP.UserID) {
+				var stb = "";
+				try {
+					if(typeof(Authentication) != "undefined") {
+						stb = Authentication.CTCGetConfig("STBType");
+					}
+				} catch(e) {}
+
+				var epgPlatformType = SP.iptv_flag == 'hw' ? '0' : '1';
+
+				var reportUrl = "../data/addVisitLog.jsp?" +
+					"&userID=" + SP.UserID +
+					"&stb=" + stb +
+					"&productCode=" + g_ztCode +
+					"&productName=" + encodeURIComponent(g_ztName) +
+					"&cpID=1007" +
+					"&type=3" +
+					"&epgPlatformType=" + epgPlatformType;
+				XEpg.Util.ajaxGet(reportUrl);
+			}
+		}
+		XEpg.Nav.key_back_event = function() {
+			XEpg.Nav.key_back_opt();
+		};
+	</script>
+
+</html>

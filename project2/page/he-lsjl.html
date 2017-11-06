@@ -1,0 +1,537 @@
+<!DOCTYPE HTML>
+<html>
+
+	<head>
+		<meta name="page-view-size" content="1280*720" />
+		<meta charset="UTF-8">
+		<title>模板EPG</title>
+		<link rel="stylesheet" href="../css/style.css" />
+		<style type="text/css"></style>
+	</head>
+
+	<body bgcolor="transparent">
+
+		<div class="pagebg">
+			<div class="pic"><img src="../images/lsjlBg.jpg" width="1280" height="720" alt=""></div>
+		</div>
+
+		<div class="he-lsjl">
+			<!-- logo -->
+			<div class="lsjl-logo"><img src="../images/he-lsjl_logo.png"></div>
+
+			<div class="scrollBox" style=" width:1245px; left: 0px;" id="area_scrollbox">
+				<!--
+        	控制内容左右滑屏 则改变left值(left初始值为0)实现;
+                        即  left：-
+        -->
+
+				<!-- lsjl -->
+
+				<div class="he-qh" id="area_list">
+					<!-- <div class="item item_focus">
+				<div class="pic"><img src="../images/demo/pic-265x372.jpg"></div>
+				<div class="pic-warp">
+					<div class="txt">神奇动物在哪里</div>
+				</div>
+				<div class="he-jd">
+					<div class="link"></div>
+					<div class="jdt"><img src="../images/he-ls_jd01-focus.png"></div>
+				</div>
+			</div>
+			<div class="item" style="left: 290px;">
+				<div class="pic"><img src="../images/demo/pic01-265x372.jpg"></div>
+				<div class="pic-warp">
+					<div class="txt">莎利机长</div>
+				</div>
+				<div class="he-jd">
+					<div class="link"></div>
+					<div class="jdt"><img src="../images/he-ls_jd01-focus.png"></div>
+				</div>
+			</div>
+			<div class="item" style="left: 580px;">
+				<div class="pic"><img src="../images/demo/pic-265x372.jpg"></div>
+				<div class="pic-warp">
+					<div class="txt">血战钢锯岭</div>
+				</div>
+				<div class="he-jd">
+					<div class="link"></div>
+					<div class="jdt"><img src="../images/he-ls_jd-focus.png"></div>
+				</div>
+			</div>
+			<div class="item" style="left: 870px;">
+				<div class="pic"><img src="../images/demo/pic01-265x372.jpg"></div>
+				<div class="pic-warp">
+					<div class="txt">疯狂外星人</div>
+				</div>
+				<div class="he-jd">
+					<div class="link"></div>
+					<div class="jdt"><img src="../images/he-ls_jd01-focus.png"></div>
+				</div>
+			</div>
+			<div class="item" style="left: 1160px;">
+				<div class="pic"><img src="../images/demo/pic-265x372.jpg"></div>
+				<div class="pic-warp">
+					<div class="txt">霍比特人</div>
+				</div>
+				<div class="he-jd">
+					<div class="link"></div>
+					<div class="jdt"><img src="../images/he-ls_jd-focus.png"></div>
+				</div>
+			</div> -->
+
+				</div>
+				<div class="he-delBtn" id="area_deletebtn">
+					<!--S 删除默认时为隐藏，显示display:block;-->
+					<!-- <div class="box"  style="display: block;">
+  				<div class="item item_focus">
+  					<div class="icon">
+  						<img src="../images/ls-icon.png">
+  					</div>
+  				</div>
+  			</div>
+  			<div class="box" style="left: 290px;">
+  				<div class="item">
+  					<div class="icon">
+  						<img src="../images/ls-icon.png">
+  					</div>
+  				</div>
+  			</div>
+  			<div class="box" style="left: 580px;">
+  				<div class="item">
+  					<div class="icon">
+  						<img src="../images/ls-icon.png">
+  					</div>
+  				</div>
+  			</div>
+  			<div class="box" style="left: 870px;">
+  				<div class="item">
+  					<div class="icon">
+  						<img src="../images/ls-icon.png">
+  					</div>
+  				</div>
+  			</div>
+  			<div class="box" style="left: 1160px;">
+  				<div class="item">
+  					<div class="icon">
+  						<img src="../images/ls-icon.png">
+  					</div>
+  				</div>
+  			</div> -->
+				</div>
+			</div>
+		</div>
+		<!-- E content -->
+		<div id="historyMask" style="display: none;width:1280px;height:720px;position: absolute;z-index:1000;left:0px;top:0px;font-size: 38px;color: #fff;background:url('../images/cs-maskBg03.png');text-align: center;line-height: 720px;">
+			历史记录为空，请点击[返回]
+		</div>
+	</body>
+	<script type="text/javascript" src="../js/xepg.min.js"></script>
+	<script type="text/javascript" src="../js/com.min.js"></script>
+	<script type="text/javascript">
+		var g_params = XEpg.My.parseUrl(); //解析地址栏参数
+		var currentId = g_params.currentId || "list_0"; //焦点id获取
+		var zoneCode = '8FB4A57B0DC043BC89D859A9C1CF6BDF'; //专区编码
+		var userID = SP.UserID || '38988007';
+		var doType = g_params.doType || 'History'; //
+
+		var maxResult = 30; //每次取数条目数
+		var g_everyIndex = 4; //每页内容
+		var g_allIndex = 0; //当前取出的数据长度
+		var fristIndex = 0;
+		var g_listName = 'list_'; //
+		var g_leftsize = g_params.leftsize || 0;
+
+		var g_delboxName = 'delebox_'; //
+		var g_delName = 'dele_'; //
+		var g_pic = '';
+
+		window.onload = function() {
+			XEpg.My.init({
+				"currentId": currentId
+			});
+			XEpg.My.pageLoadShowFocus();
+			getHistoryList();
+		}
+
+		function $(id) {
+			return document.getElementById(id);
+		}
+
+		function getHistoryList() {
+			if(doType == 'History') {
+				XEpg.Util.ajaxGet('../data/getPlayRecordList.jsp?zoneCode=' + zoneCode + '&userID=' + userID + '&firstIndex=' + fristIndex + '&maxResult=' + maxResult, dealHistoryList);
+			}
+
+		}
+
+		function dealHistoryList(data) {
+			var obj = XEpg.Util.parseJSON(data);
+			var m_data = null;
+			if(doType == 'History') {
+				m_data = obj.getZonePlayRecordListResp.zonePlayRecordInfos;
+			}
+			var m_listContent = [];
+			var m_delContent = [];
+
+			if(!!m_data) {
+				g_allIndex = m_data.length;
+				for(var i = 0; i < g_allIndex; i++) {
+					var radom = Math.floor(Math.random() * 10) / 10;
+					var m_nowtime = 1;
+					if(m_data[i].totalPlayTime) {
+						m_nowtime = (m_data[i].playTime / m_data[i].totalPlayTime).toFixed(2);
+						m_nowtime = m_nowtime < 0.05 ? 0.1 : m_nowtime;
+					} else {
+						m_nowtime = radom;
+					}
+
+					var m_pic = m_data[i].poster || '';
+					m_listContent.push('<div class="item" picurl="' + encodeURIComponent(m_pic) + '" seriescode="' + m_data[i].seriesCode + '" medianame="' + m_data[i].programName + '" ismovie="' + m_data[i].seriesFlag + '" playtime="' + m_data[i].playTime + '" title="' + m_data[i].programCode + '" style="left: ' + (290 * i) + 'px;" id="list_' + i + '">' +
+						'<div class="pic"><img src="' + m_pic + '"></div>' +
+						'<div class="pic-warp">' +
+						'<div class="txt" id="list_' + i + '_move">' +
+						'<span id="list_' + i + '_txt">' + m_data[i].programName +
+						'</span><span id="list_' + i + '_copy"></span></div></div>' +
+						'<div class="he-jd">' +
+						'<div class="link"></div>' +
+						'<div class="jdt"><img width="' + (m_nowtime * 346) + 'px" height="8px" src="../images/he-ls_jd01-focus.png"></div>' +
+						'</div>' +
+						'</div>');
+					m_delContent.push('<div class="box" id="delebox_' + i + '" style="left: ' + (290 * i) + 'px;">' +
+						'<div class="item" title="' + m_data[i].programCode + '" id="dele_' + i + '">' +
+						'<div class="icon">' +
+						'<img src="../images/ls-icon.png">' +
+						'</div></div></div>');
+				}
+				//area_deletebtn//area_list
+
+			} else {
+				$('historyMask').style.display = 'block';
+			}
+			$('area_list').innerHTML = m_listContent.join("");
+			$('area_deletebtn').innerHTML = m_delContent.join("");
+			if(!$(XEpg.My.currentId)) {
+				XEpg.My.currentId = g_listName + (g_allIndex - 1);
+			}
+			$(XEpg.My.currentId).className = 'item item_focus';
+			var deleindex = parseInt(XEpg.My.currentId.substring(5), 10);
+			showDelbtn(deleindex);
+			shitItemNow();
+			initCollHisPage();
+
+		}
+
+		function shitItemNow() {
+			var m_index = parseInt(XEpg.My.currentId.substring(5), 10);
+			var m_left = (m_index - (g_everyIndex - 2)) * 290;
+			if(m_left >= 0) {
+				$('area_scrollbox').style.left = (-m_left) + "px";
+				g_leftsize = m_left;
+			}
+		}
+
+		function initCollHisPage() {
+			for(var i = 0; i < g_allIndex; i++) {
+				XEpg.$('list_' + i).click({
+						'func': click.gotoDetilPage
+					})
+					.left({
+						'func': move.collhisLeft
+					})
+					.right({
+						'func': move.collhisRight
+					})
+					.down({
+						'func': move.collhisDown
+					})
+					.up({
+						'func': move.collhisDown
+					})
+					.focus({
+						'func': textScroll
+					})
+					.blur({
+						'func': clearTextStyle
+					});
+				XEpg.$('dele_' + i).click({
+						'func': click.deletedCollHis
+					})
+					.left({
+						'func': move.delLeft
+					})
+					.right({
+						'func': move.delRight
+					})
+					.down({
+						'func': move.delUp
+					})
+					.up({
+						'func': move.delUp
+					});
+			}
+			textScroll();
+		}
+
+		function deletdCollHis(programCode) {
+			if(doType == 'History') {
+				XEpg.Util.ajaxGet('../data/removePlayRecord.jsp?zoneCode=' + zoneCode + '&userID=' + userID + '&programCode=' + programCode, dealdeletdCollHis);
+			}
+
+		}
+
+		function dealdeletdCollHis(data) {
+			getHistoryList();
+		}
+		var click = {
+			gotoDetilPage: function() {
+				var contentCode = $(XEpg.My.currentId).title;
+				var programID = XEpg.$(XEpg.My.currentId).attr('seriescode');
+				var m_pic = XEpg.$(XEpg.My.currentId).attr('picurl');
+				var meidaName = XEpg.$(XEpg.My.currentId).attr('medianame');
+				var isMovie = XEpg.$(XEpg.My.currentId).attr('ismovie');
+				var playTime = XEpg.$(XEpg.My.currentId).attr('playtime');
+				isMovie = isMovie == 0 ? 'movie' : 'series';
+				var backUrl = location.href;
+				backUrl = backUrl.indexOf("?") != -1 ? backUrl.split("?")[0] : backUrl;
+				backUrl += "?" + "currentId=" + XEpg.My.currentId;
+				var r = parseInt(((Math.random() * (4 - 1 + 1)) + 1), 10);
+				XEpg.Util.ajaxGet('../data/getContentDetail.jsp?contentCode=' + contentCode + '&productCode=HQHY', function(data) {
+					var data = XEpg.Util.parseJSON(data);
+					data = data.getContentDetailResp || {};
+					var actor = data.actor;
+					var isOrder = 'N';
+					var m_price = data.price;
+					var orderType = m_price > 15 ? 4 : 3;
+					if(m_price == 0) {
+						isOrder = 'Y';
+					} else {
+						isOrder = 'N';
+					}
+					if(m_price > 15) {
+						m_price = m_price / 10;
+					}
+					XEpg.Util.gotoPage('4kgarden_play.html?programID=' + programID +
+						'&contentCode=' + contentCode +
+						'&actor=' + encodeURIComponent(actor) +
+						'&mediaName=' + encodeURIComponent(meidaName) +
+						'&isMovie=' + isMovie +
+						'&playTime=' + playTime +
+						'&categoryCode=' + SP.indexParentCodeArray['grid' + r].code +
+						'&isOrder=' + isOrder +
+						'&orderType=' + orderType +
+						'&ppvOrderMoney=' + m_price +
+						'&poster=' + m_pic +
+						'&backUrl=' + encodeURIComponent(backUrl));
+				});
+			},
+			deletedCollHis: function() {
+				var m_newindex = parseInt(XEpg.My.currentId.substring(5), 10);
+				var programCode = $(XEpg.My.currentId).title;
+				if(m_newindex == (g_allIndex - 1)) {
+					XEpg.My.currentId = g_listName + (g_allIndex - 2);
+				} else {
+					XEpg.My.currentId = g_listName + m_newindex;
+				}
+
+				deletdCollHis(programCode);
+			}
+		}
+
+		var move = {
+			collhisDown: function() {
+				clearTextStyle();
+				var m_index = parseInt(XEpg.My.currentId.substring(5), 10);
+				$(XEpg.My.currentId).className = 'item';
+				XEpg.My.currentId = g_delName + m_index;
+				$(XEpg.My.currentId).className = 'item item_focus';
+			},
+			collhisLeft: function() {
+				var m_index = parseInt(XEpg.My.currentId.substring(5), 10);
+				clearTextStyle();
+				hideDelbtn(m_index);
+				if(m_index > 0) {
+					$(XEpg.My.currentId).className = 'item';
+					XEpg.My.currentId = g_listName + (m_index - 1);
+					$(XEpg.My.currentId).className = 'item item_focus';
+					//g_leftsize//area_scrollbox
+					var leftindex = g_leftsize / 290;
+					if(m_index == leftindex) {
+						var m_left = g_leftsize - 290;
+						if(m_left >= 0) {
+							$('area_scrollbox').style.left = (-m_left) + "px";
+							g_leftsize = m_left;
+						}
+
+					}
+				} else {
+					$(XEpg.My.currentId).className = 'item';
+					XEpg.My.currentId = g_listName + (g_allIndex - 1);
+					$(XEpg.My.currentId).className = 'item item_focus';
+					var m_left = (g_allIndex - g_everyIndex) * 290;
+					if(m_left >= 0) {
+						$('area_scrollbox').style.left = (-m_left) + "px";
+						g_leftsize = m_left;
+					}
+				}
+				var m_newindex = parseInt(XEpg.My.currentId.substring(5), 10);
+				showDelbtn(m_newindex);
+				textScroll();
+			},
+			collhisRight: function() {
+				var m_index = parseInt(XEpg.My.currentId.substring(5), 10);
+				clearTextStyle();
+				hideDelbtn(m_index);
+				if(m_index < (g_allIndex - 1)) {
+
+					$(XEpg.My.currentId).className = 'item';
+					XEpg.My.currentId = g_listName + (m_index + 1);
+					$(XEpg.My.currentId).className = 'item item_focus';
+					//g_leftsize//area_scrollbox
+					var leftindex = g_allIndex - (g_leftsize / 290);
+					if(m_index > (g_everyIndex - 2)) {
+						var m_left = g_leftsize + 290;
+						var m_maxleft = (g_allIndex - g_everyIndex) * 290;
+						if(m_left <= m_maxleft) {
+							$('area_scrollbox').style.left = (-m_left) + "px";
+							g_leftsize = m_left;
+						}
+
+					}
+				} else {
+					$(XEpg.My.currentId).className = 'item';
+					XEpg.My.currentId = 'list_0';
+					$(XEpg.My.currentId).className = 'item item_focus';
+					$('area_scrollbox').style.left = "0px";
+					g_leftsize = 0;
+				}
+				var m_newindex = parseInt(XEpg.My.currentId.substring(5), 10);
+				showDelbtn(m_newindex);
+				textScroll();
+			},
+			delUp: function() {
+				var m_index = parseInt(XEpg.My.currentId.substring(5), 10);
+				$(XEpg.My.currentId).className = 'item';
+				XEpg.My.currentId = g_listName + m_index;
+				$(XEpg.My.currentId).className = 'item item_focus';
+				textScroll();
+			},
+			delLeft: function() {
+				var m_index = parseInt(XEpg.My.currentId.substring(5), 10);
+				clearTextStyle();
+				hideDelbtn(m_index);
+				if(m_index > 0) {
+					$(XEpg.My.currentId).className = 'item';
+					XEpg.My.currentId = g_listName + (m_index - 1);
+					$(XEpg.My.currentId).className = 'item item_focus';
+					//g_leftsize//area_scrollbox
+					var leftindex = g_leftsize / 290;
+					if(m_index == leftindex) {
+						var m_left = g_leftsize - 290;
+						if(m_left >= 0) {
+							$('area_scrollbox').style.left = (-m_left) + "px";
+							g_leftsize = m_left;
+						}
+
+					}
+				} else {
+					$(XEpg.My.currentId).className = 'item';
+					XEpg.My.currentId = g_listName + (g_allIndex - 1);
+					$(XEpg.My.currentId).className = 'item item_focus';
+					var m_left = (g_allIndex - g_everyIndex) * 290;
+					if(m_left >= 0) {
+						$('area_scrollbox').style.left = (-m_left) + "px";
+						g_leftsize = m_left;
+					}
+				}
+				var m_newindex = parseInt(XEpg.My.currentId.substring(5), 10);
+				showDelbtn(m_newindex);
+				textScroll();
+			},
+			delRight: function() {
+				var m_index = parseInt(XEpg.My.currentId.substring(5), 10);
+				clearTextStyle();
+				hideDelbtn(m_index);
+				if(m_index < (g_allIndex - 1)) {
+
+					$(XEpg.My.currentId).className = 'item';
+					XEpg.My.currentId = g_listName + (m_index + 1);
+					$(XEpg.My.currentId).className = 'item item_focus';
+					//g_leftsize//area_scrollbox
+					var leftindex = g_allIndex - (g_leftsize / 290);
+					if(m_index > (g_everyIndex - 2)) {
+						var m_left = g_leftsize + 290;
+						var m_maxleft = (g_allIndex - g_everyIndex) * 290;
+						if(m_left <= m_maxleft) {
+							$('area_scrollbox').style.left = (-m_left) + "px";
+							g_leftsize = m_left;
+						}
+					}
+				} else {
+					$(XEpg.My.currentId).className = 'item';
+					XEpg.My.currentId = 'list_0';
+					$(XEpg.My.currentId).className = 'item item_focus';
+					$('area_scrollbox').style.left = "0px";
+					g_leftsize = 0;
+				}
+				var m_newindex = parseInt(XEpg.My.currentId.substring(5), 10);
+				showDelbtn(m_newindex);
+				textScroll();
+			}
+		}
+
+		function showDelbtn(index) {
+			var btnboxid = g_delboxName + index;
+			$(btnboxid).style.display = 'block';
+		}
+
+		function hideDelbtn(index) {
+			var btnboxid = g_delboxName + index;
+			$(btnboxid).style.display = 'none';
+		}
+		var moveObj = null,
+			scrollTimer = null,
+			txtObj = null;
+
+		function textScroll() {
+			var m_conId = 'list_';
+			document.getElementById(XEpg.My.currentId).className = 'item item_focus';
+			var m_index1 = parseInt(XEpg.My.currentId.substring(5), 10);
+			moveObj = document.getElementById(m_conId + m_index1 + '_move');
+			txtObj = document.getElementById(m_conId + m_index1 + '_txt');
+			if(moveObj.scrollWidth > moveObj.offsetWidth) {
+				document.getElementById(m_conId + m_index1 + '_copy').innerHTML = '　    ' + txtObj.innerHTML;
+				startScroll(); //父元素向左循环移动(设置父元素scrollleft)
+			}
+		}
+
+		function startScroll() {
+			if(moveObj.scrollLeft >= (txtObj.offsetWidth + 23)) {
+				moveObj.scrollLeft = 0;
+			} else {
+				moveObj.scrollLeft += 2;
+			}
+			scrollTimer = setTimeout(startScroll, 50);
+		}
+
+		function clearTextStyle() {
+			var m_conId = 'list_';
+			clearTimeout(scrollTimer); //清除定时器
+			document.getElementById(XEpg.My.currentId).className = 'item';
+			var m_index1 = parseInt(XEpg.My.currentId.substring(5), 10);
+			var copyEle = document.getElementById(m_conId + m_index1 + '_copy');
+			if(copyEle) {
+				//清空复制的滚动文字
+				copyEle.innerHTML = '';
+			}
+			if(moveObj) {
+				//清空scrollLeft
+				moveObj.scrollLeft = 0;
+			}
+		}
+
+		XEpg.Nav.key_back_event = function() {
+			XEpg.Nav.key_back_opt();
+		}
+	</script>
+
+</html>

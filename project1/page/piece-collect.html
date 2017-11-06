@@ -1,0 +1,435 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta name="page-view-size" content="1280*720" />
+<meta charset="UTF-8">
+<title>片单-我的收藏 | 芒果TV-高清</title>
+<link rel="stylesheet" href="../css/style.css"/>
+<style type="text/css">
+body {
+	background:url(../images/bg02.jpg) no-repeat;
+}
+</style>
+</head>
+<body bgcolor="transparent">
+
+<!-- S content -->
+<div class="wrapper">
+	<div id="test1" style="left: 20px; top: 20px; width: 800px; height: 300px; position: absolute; color: #ff0000; word-break:break-all;"></div>
+
+	<!-- S head -->
+	<div class="yq-title">我的片单</div>
+	<!-- E head -->	
+
+	<!-- S 左侧导航 -->
+  	<div class="yq-mune">
+		<div class="scrollbox" style="top:0px">
+			<!-- 
+            	焦点 class="item item_focus"
+				驻留 class="item item_select" -->
+			<div class="item" id="nav1_0">
+				<div class="txt">我的收藏</div>
+			</div>
+<!--			<div class="item" style="top:56px" id="nav1_1">
+				<div class="txt">播放记录</div>
+			</div>-->
+		</div>
+	</div>
+    <div class="ch-logo-mango"><img src="../images/ch-logo-mango.png" alt="芒果TV" width="130" height="40" /></div>
+    <!-- E 左侧导航 -->
+   
+    
+    <!-- S list -->
+    <div class="ch-listTxt" style="top:99px;">
+        <div class="txt txt01">名称</div>
+        <!--<div class="txt txt01" style="left:578px;">时间</div>-->
+        <!--<div class="txt txt03">操作</div>--> 
+    </div>
+    <div class="ch-pages-num" id="nav_page"></div>
+    <div class="ch-listTxt" style="top:163px;" id="nav1"> 
+        <!--焦点为
+			class="item item_focus"
+		-->
+        
+    </div>
+    <!-- E list --> 
+    
+    <!-- S pages --> 
+    <!--<div class="ch-pages">
+    	<div class="item item_focus">上一页</div>
+        <div class="txt txt-num"><span>1</span> / 12</div>
+        <div class="item" style="left:249px;">下一页</div>
+    </div>-->
+    <div class="yq-arrow" style="top:70px;" id="nav2">
+        <div class="item item_focus" id="nav2_0">
+            <div class="icon-arrowUp"></div>
+        </div>
+        <div class="item item_focus" style="top:572px" id="nav2_1">
+            <div class="icon-arrowDown"></div>
+        </div>
+    </div>
+    <!-- E pages --> 
+    
+</div>
+<!-- E content -->
+
+<script src="../js/xepg.min.js"></script>
+<script src="../js/navigationUrl.js"></script>
+<script src="../js/commons.js"></script>
+<script>
+    var SP = XEpg.SP;
+    var param = XEpg.My.parseUrl();
+    var currentId = param.currentId;  //当前焦点显示
+    var nav1Select = param.nav1Select ||　'nav1_0';
+    var nav2Select = param.nav2Select　|| 'nav2_0';
+    var localhost = "http://localhost:8080";
+    var userName = 'USER001';
+    var stbid = 'STB001';
+    var pageIndex = param.pageindex || 1;  //当前页
+    
+    var pageNum = null;//当前页个数
+    var pageTotal = null; //总页数
+    var numState = false;  //初始化判断
+    
+    var isNav2Del = false;
+    var isDelClick = false;
+    var isNull = false;
+    var delIndex = 0;
+    var contentObj = {};		//返回页面内容数据缓存
+    
+    var stbid = '';  //盒子型号
+    var spPro = '';   //portalcode + sptoken 参数
+	var mgPartner = param.mgPartner; //平台信息
+	var mgUserID = param.mgUserID;  //用户ID
+	var mgUserToken = param.mgUserToken;  //临时身份证明
+	var mg_epginfo = '&mgPartner=' + mgPartner + '&mgUserID=' + mgUserID + '&mgUserToken=' + mgUserToken;
+    
+    //监听返回事件，返回上一级页面
+    XEpg.Nav.key_back_opt = function(){
+        setTimeout(function(){
+            XEpg.Navigation.gotoBackNavigationUrl('pageIndex');
+        },150);
+    };
+
+    window. onload = function () {
+        if(mgPartner == 'ZTE2X'){  //中兴
+			spPro = 'portalcode=2017gszx&sptoken=CF4EAB0D8DF1E71CA84762F6BA009BD4&';
+		}else{  //华为
+			spPro = 'portalcode=2017gshw&sptoken=96630FB882600EC4A3F0B610535FB2A7&';
+		}
+		
+		stbid = Authentication.CTCGetConfig("STBType");
+        XEpg.My.init({'currentId':currentId});
+        document.getElementById(nav1Select).className = "item item_select"
+		
+		getArrowList();
+        
+    }
+    
+    function getArrowList(){
+    	if(nav1Select === 'nav1_0'){
+    		XEpg.Util.ajaxGet('../ajax/getCollInterface.jsp?action=getlistcoll&username=' + mgUserID + '&stbid=' + stbid + '&pagesize=9&pageindex=' + pageIndex , getData);
+
+    	}else{
+    		XEpg.Util.ajaxGet('../ajax/getCollInterface.jsp?action=findPlayrecord&username=' + mgUserID + '&stbid=' + stbid + '&pagesize=9&pageindex=' + pageIndex , getData);
+
+    	}
+    }
+    
+    function getData(data){
+    	var obj = XEpg.Util.parseJSON(data);
+		var item = obj.result;
+		var showData = [];   //储存所有数据
+		pageNum = obj.presentcount;
+		pageTotal = Math.ceil(obj.totalcount / 9) || 0;
+		if(obj.totalcount < 10){
+			pageIndex = 1;
+			$('nav2').style.display = 'none';
+		}
+		for(var i = 0 ; i < pageNum ; i ++){
+			var itemData = obj.result[i];
+			var name = item[i].contentname.split('HD]')[1] || item[i].contentname
+			var contenttype = item[i].contenttype;
+			
+			showData.push(
+				'<div class="row" style="top:' + (52 * i) + 'px;">',
+		            '<div class="title">',
+		                '<div class="item" id="nav2_'+ i +'" title="detail-num.html?contid='+ item[i].contentid +'&contenttype='+ contenttype + '">',
+		                    '<div class="txt" id="nav2_'+ i +'_txt">'+ name +'</div>',
+		                '</div>',
+		            '</div>',
+		            '<div class="btn btn-del" >',
+		                '<div class="item" id="nav2_'+ i +'_del"  title=" '+ item[i].contentcode +' ">删除</div>',
+		            '</div>',
+		        '</div>'
+			)
+			contentObj[item['contentid']] = item; 	//数据上报获取内容使用
+		}
+		$('nav1').innerHTML = showData.join("");
+		
+		if(obj.resultcode === '-1'  || obj.totalCount === 0){
+			isNull = true;
+			XEpg.My.currentId = nav1Select;
+			pageIndex = 0;
+		}else{
+			isNull = false;
+			if(currentId && !numState){
+    			XEpg.My.currentId = param.currentId;
+    			numState = true;
+       	 	}else{
+       	 		if(isNav2Del && isDelClick){
+       	 			XEpg.My.currentId = 'nav2_' + delIndex + '_del';
+       	 			if(!$(XEpg.My.currentId)){
+       	 				XEpg.My.currentId = 'nav2_' + (delIndex - 1) + '_del';
+       	 			}
+       	 		}else if(isNav2Del && !isDelClick){
+       	 			XEpg.My.currentId = 'nav2_0_del';
+       	 		}else{
+       	 			XEpg.My.currentId = 'nav2_0';
+       	 		}
+       		 }
+		}
+		
+        $(XEpg.My.currentId).className = 'item item_focus';
+		
+		$('nav_page').innerHTML = '<span>'+ pageIndex +'</span>/' + pageTotal; 
+		
+		initList ();
+    }
+
+    function initList () {
+    	
+    	XEpg.$("nav1_0").click({"func":nav1.getClick}).down({"func":nav1.right}).right({"func":nav1.right}).left({"func":nav1.left}).up({"func":nav1.left});
+        XEpg.$("nav1_1").click({"func":nav1.getClick}).up({"func":nav1.down}).right({"func":nav1.right}).down({"func":nav1.down}).left({"func":nav1.left});
+
+    	
+    	for(var i = 0 ; i < pageNum ; i ++){
+    		XEpg.$('nav2_' + i).click({'func' : nav2.click})
+    			.left({'func' : nav2.left})
+    			.right({'func' : nav2.right})
+    			.up({'func' : nav2.up})
+    			.down({'func' : nav2.down});
+    	}
+    	
+    	for(var i = 0 ; i < pageNum ; i ++){
+    		XEpg.$('nav2_' + i + '_del').click({'func' : nav2Del.click})
+    			.left({'func' : nav2Del.left})
+    			.right({'func' : nav2Del.right})
+    			.up({'func' : nav2.up})
+    			.down({'func' : nav2.down});
+    	}
+
+    }
+
+    var nav1 = {
+        getClick:function () {
+        	numState = true;
+            $(nav1Select).className = "item";   //移除上一个焦点驻留
+            nav1Select = XEpg.My.currentId;   //将当前焦点ID赋给驻留焦点变量
+
+            $(XEpg.My.currentId).className = "item item_select";  //焦点显示
+            XEpg.My.currentId = "nav2_0";
+            $(XEpg.My.currentId).className = "item item_focus";
+            pageIndex = 1;
+            
+            if(nav1Select === 'nav1_0'){
+    			XEpg.Util.ajaxGet('../ajax/getCollInterface.jsp?action=getlistcoll&username=' + mgUserID + '&stbid=' + stbid + '&pagesize=9&pageindex=' + pageIndex , getData);
+
+	    	}else{
+	    		XEpg.Util.ajaxGet('../ajax/getCollInterface.jsp?action=findPlayrecord&username=' + mgUserID + '&stbid=' + stbid + '&pagesize=9&pageindex=' + pageIndex , getData);
+	
+	    	}	 
+        },
+        down:function () {
+            var index = parseInt(XEpg.My.currentId.substring(5),10);
+           
+        	$(XEpg.My.currentId).className = "item";
+            $(nav1Select).className = "item item_select";
+            if(index === 1){
+            	index = 0;
+            }else{
+            	index = 1;
+            };
+            XEpg.My.currentId = "nav1_" + index ;
+            $(XEpg.My.currentId).className = "item item_focus";
+        },
+        right:function () {
+        	 if(isNull){
+            	return;
+            }else{
+	            $(XEpg.My.currentId).className = "item";
+	            $(nav1Select).className = "item item_select";
+	            XEpg.My.currentId = nav2Select;
+	            isNav2Del = false;
+	            $(XEpg.My.currentId).className = "item item_focus";
+            }
+        },
+        left:function () {
+        	 if(isNull){
+            	return;
+            }else{
+	        	$(XEpg.My.currentId).className = "item";
+	            $(nav1Select).className = "item item_select";
+	            XEpg.My.currentId = nav2Select + '_del';
+	            isNav2Del = true;
+	            $(XEpg.My.currentId).className = "item item_focus";
+           }
+        }
+    }
+
+    var nav2 = {
+        click: function () {
+			var url = $(XEpg.My.currentId).title;
+			var item,parentid,currTitle = url.substring(11,(url.indexOf('&',0)));
+
+			//跳转前,保存当前焦点、分页等页面信息放入cookie
+			XEpg.SP.saveCurrentPageInfo('pageCol',{
+				'currentId' : XEpg.My.currentId ,
+				'nav1Select' : nav1Select,
+				'nav2Select' : nav2Select,
+				'pageindex' : pageIndex,
+				'epg_info':mg_epginfo
+			});
+    		XEpg.Util.gotoPage(url + mg_epginfo);
+        },
+        left:function () {
+        	$(XEpg.My.currentId).className = "item";
+        	nav2Select = XEpg.My.currentId;
+        	XEpg.My.currentId = nav1Select;
+        	isNav2Del = false;
+        	$(XEpg.My.currentId).className = "item item_focus";
+        },
+        right:function () {
+        	var index = parseInt(XEpg.My.currentId.substring(5),10);
+        	$(XEpg.My.currentId).className = "item";
+        	XEpg.My.currentId = 'nav2_' + index + '_del';
+        	isNav2Del = true;
+        	$(XEpg.My.currentId).className = "item item_focus";
+        },
+        down:function () {
+            var index = parseInt(XEpg.My.currentId.substring(5),10);
+            $(XEpg.My.currentId).className = "item";
+            
+            if(pageTotal > 1){
+            	if(index === (pageNum - 1)){
+	            	if(pageIndex === pageTotal){
+	            		pageIndex = 1;
+	            	}else{
+	            		pageIndex ++;
+	            	}
+	            	getArrowList();
+	            }else{
+	            	if(isNav2Del){
+	            		XEpg.My.currentId = 'nav2_' + (index + 1) + '_del';
+	            	}else{
+	            		XEpg.My.currentId = 'nav2_' + (index + 1);
+	            	}
+	            	$(XEpg.My.currentId).className = "item item_focus";
+	            }
+            }else{
+            	if(index === (pageNum - 1)){
+            		if(isNav2Del){
+	            		XEpg.My.currentId = 'nav2_0_del';
+	            	}else{
+	            		XEpg.My.currentId = 'nav2_0';
+	            	}
+            	}else{
+            		if(isNav2Del){
+	            		XEpg.My.currentId = 'nav2_' + (index + 1) + '_del';
+	            	}else{
+	            		XEpg.My.currentId = 'nav2_' + (index + 1);
+	            	}
+            	}
+            	$(XEpg.My.currentId).className = "item item_focus";
+            }
+            
+            
+        },
+        up:function () {
+            var index = parseInt(XEpg.My.currentId.substring(5),10);
+            $(XEpg.My.currentId).className = "item";
+            if(index === 0){
+            	if(pageTotal > 1){
+            		if(pageIndex === 1){
+            			pageIndex = pageTotal;
+	            	}else{
+	            		pageIndex --;
+	            	}
+	            	getArrowList();
+            	}else{
+            		if(isNav2Del){
+            			XEpg.My.currentId = 'nav2_' + (pageNum - 1) + '_del';
+	            	}else{
+	            		XEpg.My.currentId = 'nav2_' + (pageNum - 1);
+	            	}
+	            	$(XEpg.My.currentId).className = "item item_focus";
+            	}
+            	
+            }else{
+            	if(isNav2Del){
+            		XEpg.My.currentId = 'nav2_' + (index - 1) + '_del';
+            	}else{
+            		XEpg.My.currentId = 'nav2_' + (index - 1);
+            	}
+            	$(XEpg.My.currentId).className = "item item_focus";
+            }
+        }
+    }
+
+    var nav2Del = {
+    	click : function(){
+    		var contentCode = (document.getElementById(XEpg.My.currentId).title).trim();
+    		console.log(contentCode);
+    		isDelClick = true;
+    		delIndex = parseInt(XEpg.My.currentId.substring(5),10);
+    		if(nav1Select === 'nav1_0'){
+    			XEpg.Util.ajaxGet('../ajax/getCollInterface.jsp?action=delectcoll&username=' + mgUserID + '&stbid=' + stbid + '&contentcode=' + contentCode , function(data){
+					
+					var obj = XEpg.Util.parseJSON(data);
+					var showResult = obj.resultcode;
+						if(showResult === '1'){
+							getArrowList();
+						}else{
+							return;
+						}
+				})
+	    	}else{
+	    		XEpg.Util.ajaxGet('../ajax/getCollInterface.jsp?action=deletePlayrecord&username=' + mgUserID + '&stbid=' + stbid + '&contentcode=' + contentCode, function(data){
+					
+					var obj = XEpg.Util.parseJSON(data);
+					var showResult = obj.resultcode;
+						if(showResult === '1'){
+							getArrowList();
+						}else{
+							return;
+						}
+				})
+	    	}
+    		
+    	},
+    	left : function(){
+    		var index = parseInt(XEpg.My.currentId.substring(5),10);
+    		$(XEpg.My.currentId).className = "item";
+        	XEpg.My.currentId = 'nav2_' + index;
+        	isNav2Del = false;
+        	$(XEpg.My.currentId).className = "item item_focus";
+    	},
+    	right : function(){
+    		var index = parseInt(XEpg.My.currentId.substring(5),10);
+    		$(XEpg.My.currentId).className = "item";
+        	nav2Select = 'nav2_' + index;
+        	isNav2Del = false;
+        	XEpg.My.currentId = nav1Select;
+        	$(XEpg.My.currentId).className = "item item_focus";
+    	}
+    }
+    
+	function $(id){
+		return document.getElementById(id);
+	}
+
+
+</script>
+
+</body>
+</html>

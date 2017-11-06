@@ -1,0 +1,695 @@
+<!DOCTYPE HTML>
+<html>
+
+	<head>
+		<meta name="page-view-size" content="1280*720" />
+		<meta charset="UTF-8">
+		<title>专题列表</title>
+		<style type="text/css">
+			/* S= CSS Reset
+----------------------------------------------- */
+			
+			body,
+			table,
+			caption,
+			tbody,
+			tfoot,
+			thead,
+			tr,
+			th,
+			td,
+			ul,
+			li,
+			p,
+			h1 {
+				margin: 0px;
+				padding: 0px;
+				border: 0px;
+			}
+			
+			body {
+				font-size: 24px;
+				font-family: Microsoft YaHei, sans-serif;
+			}
+			
+			ul,
+			ol {
+				list-style: none;
+			}
+			
+			table {
+				border-collapse: collapse;
+				border-spacing: 0;
+			}
+			
+			a {
+				text-decoration: none;
+			}
+			
+			img {
+				border: 0;
+			}
+			/* E= CSS Reset */
+			/* S= Global
+----------------------------------------------- */
+			
+			body,
+			.wrapper,
+			.pagebg {
+				height: 720px;
+				width: 1280px;
+				overflow: hidden;
+			}
+			
+			body {
+				background: url(../images/list_bg.jpg) no-repeat;
+				color: #ffffff;
+				position: relative;
+			}
+			
+			.wrapper,
+			.pagebg {
+				left: 0;
+				position: absolute;
+				top: 0;
+			}
+			
+			.pagebg img {
+				display: block;
+				/* clear some space 对于html5中背景图比原高度多出3PX的问题*/
+			}
+			
+			.item,
+			.link,
+			.txt-wrap,
+			.txt,
+			.btn,
+			.icon,
+			.pic,
+			.pic-shade,
+			.cover,
+			.num {
+				position: absolute;
+			}
+			
+			.txtHidden {
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				overflow: hidden;
+			}
+			/* E= Global */
+			/* S= search ch ----------------------------------------------- */
+			
+			.w-headline {
+				position: absolute;
+				left: 48px;
+				top: 33px;
+				color: #c8c8d5;
+				font-size: 32px;
+				height: 40px;
+				width: 330px;
+			}
+			
+			.w-list04 {
+				position: absolute;
+				left: 59px;
+				top: 93px;
+			}
+			
+			.w-list04 .item {
+				width: 435px;
+				height: 309px;
+				z-index: 2;
+			}
+			
+			.w-list04 .item .pic {
+				left: 40px;
+				top: 37px;
+				z-index: 4;
+			}
+			
+			.w-list04 .item .pic,
+			.w-list04 .item .pic img {
+				width: 354px;
+				height: 235px;
+			}
+			
+			.w-list04 .item .txt-wrap {
+				background: url(../images/w-list04-txt.png) no-repeat;
+				left: 40px;
+				top: 172px;
+				width: 354px;
+				height: 100px;
+				z-index: 5;
+			}
+			
+			.w-list04 .item .txt {
+				left: 10px;
+				top: 60px;
+				color: #d2d2d2;
+				line-height: 30px;
+				width: 334px;
+				height: 30px;
+				overflow: hidden;
+				white-space: nowrap;
+			}
+			
+			.w-list04 .item_focus {
+				background: url(../images/w-list04_focus.png) no-repeat;
+				z-index: 3;
+			}
+			
+			.w-list04 .item_focus .pic {
+				left: 30px;
+				top: 30px;
+			}
+			
+			.w-list04 .item_focus .pic,
+			.w-list04 .item_focus .pic img {
+				width: 375px;
+				height: 249px;
+			}
+			
+			.w-list04 .item_focus .txt-wrap {
+				left: 30px;
+				top: 179px;
+				width: 375px;
+			}
+			
+			.w-list04 .item_focus .txt {
+				color: #e6e6e6;
+				font-size: 25px;
+				width: 355px;
+			}
+			
+			.w-pages {
+				color: #5d5f66;
+				text-align: right;
+				position: absolute;
+				left: 1030px;
+				top: 38px;
+				width: 200px;
+			}
+			
+			.w-pages span {
+				color: #418cc6;
+			}
+			/* E= search ch */
+			
+			.q-scroll {
+				position: absolute;
+				top: 114px;
+				left: 1205px;
+				width: 6px;
+				height: 506px;
+				background: url(../images/q-scrollBg.png) no-repeat;
+			}
+			
+			.q-scroll .point {
+				position: absolute;
+				width: 10px;
+				height: 64px;
+			}
+		</style>
+	</head>
+
+	<body bgcolor="transparent">
+
+		<!-- S content -->
+		<div class="wrapper">
+
+			<!-- S head -->
+			<div class="w-headline">专题</div>
+			<!-- E head -->
+			<!--<div id="test1" style="left: 20px; top: 20px; width: 800px; height: 300px; position: absolute; color: #ff0000; word-break:break-all;"></div>-->
+
+			<!-- S list -->
+			<div class="w-pages" id="page_getnow"></div>
+			<div class="w-list04" id='content_list'>
+				<!-- 焦点为
+        		class="item item_focus" 
+        -->
+				<!-- <div class="item item_focus">
+    	        	<div class="pic"><img src="../images/demo/pic-375X249.jpg"></div>
+    				<div class="txt-wrap">
+    	            	<div class="txt">宫崎骏系列动漫</div>
+    	            </div>
+    			</div>
+    			<div class="item" style="left:364px;">
+    	        	<div class="pic"><img src="../images/demo/pic-375X249.jpg"></div>
+    				<div class="txt-wrap">
+    	            	<div class="txt">宫崎骏系列动宫崎骏系列动漫漫</div>
+    	            </div>
+    			</div>
+    	        <div class="item" style="left:728px;">
+    	        	<div class="pic"><img src="../images/demo/pic-375X249.jpg"></div>
+    				<div class="txt-wrap">
+    	            	<div class="txt">宫崎骏系列动漫</div>
+    	            </div>
+    			</div>
+    	        
+    	        <div class="item" style="top:245px;">
+    	        	<div class="pic"><img src="../images/demo/pic-375X249.jpg"></div>
+    				<div class="txt-wrap">
+    	            	<div class="txt">宫崎骏系列动漫</div>
+    	            </div>
+    			</div>
+    			<div class="item" style="left:364px;top:245px;">
+    	        	<div class="pic"><img src="../images/demo/pic-375X249.jpg"></div>
+    				<div class="txt-wrap">
+    	            	<div class="txt">宫崎骏系列动漫</div>
+    	            </div>
+    			</div>
+    	        <div class="item" style="left:728px;top:245px;">
+    	        	<div class="pic"><img src="../images/demo/pic-375X249.jpg"></div>
+    				<div class="txt-wrap">
+    	            	<div class="txt">宫崎骏系列动漫</div>
+    	            </div>
+    			</div> -->
+			</div>
+			<!-- E list -->
+			<!-- S cs-scroll- -->
+			<div class="q-scroll" id="slide_pointdiv">
+				<!--滚动条最高值为556－51＝505px- -->
+				<div class="point" style="top:0px;" id="slide_point"><img id='slide_pointimg' src="../images/q-scrollBar.png"></div>
+			</div>
+			<!-- E cs-scroll- -->
+		</div>
+		<!-- E content -->
+
+	</body>
+	<script type="text/javascript" src="../js/xepg.min.js"></script>
+	<script type="text/javascript" src="../js/com.min.js"></script>
+	<script type="text/javascript">
+		var g_params = XEpg.My.parseUrl(); //解析地址栏参数
+		var currentId = g_params.currentId || "list_0"; //焦点id获取
+		var categoryCode = g_params.categoryCode || ''; //获取栏目code
+		var isIndex = g_params.currentId || '0';
+
+		var backUrl = g_params.backUrl || '';
+		var firstIndex = g_params.firstIndex || 0; //栏目页
+		var maxResult = g_params.maxResult || 6; //最大数据个数
+
+		var g_nowpageIndex = 1; //当前页
+		var g_allPageIndex = 1; //总页数
+		var g_nowIndexnum = 0; //当前页个数
+		var g_moreNum = g_params.g_moreNum || 0; //多余的个数
+		var g_listTotalNum = 0; //总个数
+
+		var g_listName = 'list_';
+
+		var g_bleft = true; //左翻页
+		var g_bright = true; //右翻页
+		var g_bup = true; //上翻页
+		var g_bdown = true; //下翻页
+
+		var g_typeFowordToID = ['4KHYDY', '4KHYDSJ', '4KHYZY', '4KHYJS', '4KHYZT'];
+		var g_typeFowordToName = ['4K花园电影', '4K花园电视剧', '4K花园综艺', '4K花园纪实', '4K花园专题'];
+		window.onload = function() {
+			XEpg.My.init({
+				"currentId": currentId
+			});
+			XEpg.My.pageLoadShowFocus();
+			if(isIndex == '0') {
+				sendLogArea(4);
+			}
+			g_nowpageIndex = (firstIndex - 0) + 1;
+			getRequset();
+		}
+
+		function $(id) {
+			return document.getElementById(id)
+		}
+
+		function getRequset() {
+			XEpg.Util.ajaxGet('../data/getCategoryList.jsp?categoryCode=' + categoryCode + '&firstIndex=' + (firstIndex * 6) + '&maxResult=' + maxResult, dealRequest);
+		}
+		//处理数据
+		function dealRequest(data) {
+			var obj = XEpg.Util.parseJSON(data);
+			var m_catedata = obj.getCategoryListResp;
+			g_listTotalNum = m_catedata.recordSize;
+			var m_data = m_catedata.categoryInfos || null;
+			g_nowIndexnum = m_data.length;
+			if(maxResult == 6) {
+				g_allPageIndex = Math.ceil(g_listTotalNum / maxResult); //获取页面数
+			} else {
+				g_allPageIndex = Math.ceil(g_listTotalNum / 6); //获取页面数
+			}
+			if(g_nowpageIndex == 1) {
+				g_moreNum = g_listTotalNum % maxResult;
+			}
+
+			var m_CategoryList = '';
+			if(!!m_data) {
+				for(var i = 0; i < g_nowIndexnum; i++) {
+					if(i < 3) {
+						m_CategoryList += '<div class="item"  id="list_' + i + '" style="left:' + (364 * i) + 'px;" title="' + m_data[i].code + '">' +
+							'<div class="pic"><img src="' + m_data[i].poster + '"></div>' +
+							'<div class="txt-wrap">' +
+							'<div class="txt" id="list_' + i + '_move">' +
+							'<span id="list_' + i + '_txt">' + m_data[i].name +
+							'</span><span id="list_' + i + '_copy"></span></div>' +
+							'</div></div>';
+					} else {
+						m_CategoryList += '<div class="item"  id="list_' + i + '" style="left:' + (364 * (i - 3)) + 'px;top:245px;" title="' + m_data[i].code + '">' +
+							'<div class="pic"><img src="' + m_data[i].poster + '"></div>' +
+							'<div class="txt-wrap">' +
+							'<div class="txt" id="list_' + i + '_move">' +
+							'<span id="list_' + i + '_txt">' + m_data[i].name +
+							'</span><span id="list_' + i + '_copy"></span></div>' +
+							'</div></div>';
+					}
+
+				}
+				$('content_list').innerHTML = m_CategoryList;
+				if($(XEpg.My.currentId) == null) {
+					XEpg.My.currentId = g_listName + (g_nowIndexnum - 1);
+				}
+				$(XEpg.My.currentId).className = 'item item_focus';
+				getpageIndex(g_nowpageIndex, g_allPageIndex, g_listTotalNum);
+				movePoint(firstIndex);
+				judecallsuccess();
+				initPage();
+			}
+		}
+
+		function judecallsuccess() {
+			if(g_bleft == false) {
+				g_bleft = true;
+			} else if(g_bright == false) {
+				g_bright = true;
+			} else if(g_bup == false) {
+				g_bup = true;
+			} else if(g_bdown == false) {
+				g_bdown = true;
+			}
+		}
+
+		function initPage() {
+			clearTextStyle();
+			for(var i = 0; i < g_nowIndexnum; i++) {
+				XEpg.$('list_' + i).click({
+					'func': goToDetail
+				}).up({
+					'func': move.upList
+				}).down({
+					'func': move.downList
+				}).left({
+					'func': move.leftList
+				}).right({
+					'func': move.rightList
+				}).focus({
+					"func": textScroll
+				}).blur({
+					"func": clearTextStyle
+				});
+			}
+			textScroll();
+		}
+		//跳转至详情
+		function goToDetail() {
+			var m_categoryCode = $(XEpg.My.currentId).title;
+			var m_backUrl = location.href;
+			m_backUrl = m_backUrl.indexOf("?") != -1 ? m_backUrl.split("?")[0] : m_backUrl;
+			m_backUrl += "?" + "currentId=" + XEpg.My.currentId +
+				"&comeid=1" +
+				"&categoryCode=" + categoryCode +
+				"&firstIndex=" + firstIndex +
+				"&maxResult=" + maxResult +
+				"&g_moreNum=" + g_moreNum;
+			XEpg.Util.addNavigationUrl(m_backUrl);
+			XEpg.Util.gotoPage('q-special-detail.html?categoryCode=' + m_categoryCode)
+		}
+		//移动
+		var move = {
+				upList: function() {
+					clearTextStyle();
+					var m_index = parseInt(XEpg.My.currentId.substring(5), 10);
+					if(g_nowpageIndex > 1) {
+						if(m_index < 3) {
+							if(g_bup == true) {
+								g_bup = false;
+								firstIndex--;
+								g_nowpageIndex--;
+								maxResult = 6;
+								XEpg.My.currentId = g_listName + (m_index + 3);
+								getRequset();
+							}
+						} else {
+							$(XEpg.My.currentId).className = 'item';
+							XEpg.My.currentId = g_listName + (m_index - 3);
+							$(XEpg.My.currentId).className = 'item item_focus';
+							textScroll();
+						}
+					} else {
+						if(m_index > 2) {
+							firstIndex = 0;
+							$(XEpg.My.currentId).className = 'item';
+							XEpg.My.currentId = g_listName + (m_index - 3);
+							$(XEpg.My.currentId).className = 'item item_focus';
+
+						}
+						textScroll();
+					}
+
+				},
+				downList: function() {
+					clearTextStyle();
+					var m_index = parseInt(XEpg.My.currentId.substring(5), 10);
+					if(g_nowpageIndex < g_allPageIndex) {
+						if(m_index > 2) {
+							if(g_bdown == true) {
+								g_bdown = false;
+								firstIndex++;
+								g_nowpageIndex++;
+
+								if(g_moreNum > 0 && g_nowpageIndex == g_allPageIndex) {
+									maxResult = g_moreNum;
+								} else {
+									maxResult = maxResult;
+								}
+								if(maxResult > 2) {
+									XEpg.My.currentId = g_listName + (m_index - 3);
+								} else {
+									if(m_index > maxResult) {
+										XEpg.My.currentId = g_listName + (maxResult - 1);
+									} else {
+										XEpg.My.currentId = g_listName + (m_index - 3);
+									}
+								}
+								getRequset();
+							}
+						} else {
+							$(XEpg.My.currentId).className = 'item';
+							XEpg.My.currentId = g_listName + (m_index + 3);
+							$(XEpg.My.currentId).className = 'item item_focus';
+							textScroll();
+						}
+					} else {
+						if((m_index + 3) < g_nowIndexnum) {
+							$(XEpg.My.currentId).className = 'item';
+							XEpg.My.currentId = g_listName + (m_index + 3);
+							$(XEpg.My.currentId).className = 'item item_focus';
+						} else {
+							$(XEpg.My.currentId).className = 'item';
+							XEpg.My.currentId = g_listName + (g_nowIndexnum - 1);
+							$(XEpg.My.currentId).className = 'item item_focus';
+						}
+						textScroll();
+					}
+
+				},
+				leftList: function() {
+					clearTextStyle();
+					var m_index = parseInt(XEpg.My.currentId.substring(5), 10);
+					if(g_nowpageIndex > 1) {
+						if(m_index > 0) {
+							$(XEpg.My.currentId).className = 'item';
+							XEpg.My.currentId = g_listName + (m_index - 1);
+							$(XEpg.My.currentId).className = 'item item_focus';
+							textScroll();
+						} else {
+							if(g_bleft == true) {
+								g_bleft = false;
+								firstIndex--;
+								g_nowpageIndex--;
+								XEpg.My.currentId = 'list_5';
+								maxResult = 6;
+								getRequset();
+							}
+						}
+					} else {
+						if(m_index > 0) {
+							firstIndex = 0;
+							$(XEpg.My.currentId).className = 'item';
+							XEpg.My.currentId = g_listName + (m_index - 1);
+							$(XEpg.My.currentId).className = 'item item_focus';
+						}
+						textScroll();
+					}
+
+				},
+				rightList: function() {
+					clearTextStyle();
+					var m_index = parseInt(XEpg.My.currentId.substring(5), 10);
+					if(g_nowpageIndex < g_allPageIndex) {
+						if(m_index < (g_nowIndexnum - 1)) {
+							$(XEpg.My.currentId).className = 'item';
+							XEpg.My.currentId = g_listName + (m_index + 1);
+							$(XEpg.My.currentId).className = 'item item_focus';
+							textScroll();
+						} else {
+							if(g_bright == true) {
+								g_bright = false;
+								firstIndex++;
+								g_nowpageIndex++;
+								XEpg.My.currentId = 'list_0';
+								if(g_moreNum > 0 && g_nowpageIndex == g_allPageIndex) {
+									maxResult = g_moreNum;
+								} else {
+									maxResult = maxResult;
+								}
+								getRequset();
+							}
+						}
+					} else {
+						if((m_index + 1) < g_nowIndexnum) {
+							$(XEpg.My.currentId).className = 'item';
+							XEpg.My.currentId = g_listName + (m_index + 1);
+							$(XEpg.My.currentId).className = 'item item_focus';
+						}
+						textScroll();
+					}
+
+				}
+			}
+			//设置滑条
+		function movePoint(index) {
+			if(g_allPageIndex > 1) {
+				$('slide_pointdiv').style.display = 'block';
+				var top = Math.ceil(500 / g_allPageIndex);
+				var mtop = (top * index) >= 500 ? '500' : (top * index);
+				$('slide_point').style.top = mtop + 'px';
+				$('slide_pointimg').style.height = top + 'px';
+				$('slide_pointimg').style.width = '6px';
+			} else {
+				$('slide_pointdiv').style.display = 'none';
+			}
+
+		}
+		//设置数字
+		function getpageIndex(nowindex, allindex, alllist) {
+			$('page_getnow').innerHTML = '<span>' + nowindex + '</span>/' + allindex + '页&nbsp;&nbsp;';
+		}
+		var moveObj = null,
+			scrollTimer = null,
+			txtObj = null;
+
+		function textScroll() {
+			var m_conId = 'list_';
+			document.getElementById(XEpg.My.currentId).className = 'item item_focus';
+			var m_index1 = parseInt(XEpg.My.currentId.substring(5), 10);
+			moveObj = document.getElementById(m_conId + m_index1 + '_move');
+			txtObj = document.getElementById(m_conId + m_index1 + '_txt');
+			if(moveObj.scrollWidth > moveObj.offsetWidth) {
+				document.getElementById(m_conId + m_index1 + '_copy').innerHTML = '　    ' + txtObj.innerHTML;
+				startScroll(); //父元素向左循环移动(设置父元素scrollleft)
+			}
+		}
+
+		function startScroll() {
+			if(moveObj.scrollLeft >= (txtObj.offsetWidth + 23)) {
+				moveObj.scrollLeft = 0;
+			} else {
+				moveObj.scrollLeft += 2;
+			}
+			scrollTimer = setTimeout(startScroll, 50);
+		}
+
+		function clearTextStyle() {
+			var m_conId = 'list_';
+			clearTimeout(scrollTimer); //清除定时器
+			document.getElementById(XEpg.My.currentId).className = 'item';
+			var m_index1 = parseInt(XEpg.My.currentId.substring(5), 10);
+			var copyEle = document.getElementById(m_conId + m_index1 + '_copy');
+			if(copyEle) {
+				//清空复制的滚动文字
+				copyEle.innerHTML = '';
+			}
+			if(moveObj) {
+				//清空scrollLeft
+				moveObj.scrollLeft = 0;
+			}
+		}
+		//发送日志
+		function sendLogArea(index) {
+
+			if(SP.UserID) {
+				var stb = "";
+				try {
+					if(typeof(Authentication) != "undefined") {
+						stb = Authentication.CTCGetConfig("STBType");
+					}
+				} catch(e) {}
+
+				var epgPlatformType = SP.iptv_flag == 'hw' ? '0' : '1';
+				var reportUrl = "../data/addVisitLog.jsp?" +
+					"userID=" + SP.UserID +
+					"&stb=" + stb +
+					"&productCode=" + g_typeFowordToID[index] +
+					"&productName=" + g_typeFowordToName[index] +
+					"&cpID=" + 1007 +
+					"&resolution=1" +
+					"&epgPlatformType=" + epgPlatformType;
+				XEpg.Util.ajaxGet(reportUrl);
+			}
+		}
+		//上页
+		XEpg.Nav.key_pageUp_event = function() {
+			clearTextStyle();
+			if(g_nowpageIndex > 1) {
+				if(g_bup == true) {
+					g_bup = false;
+					firstIndex--;
+					g_nowpageIndex--;
+					maxResult = 6;
+					getRequset();
+				}
+			} else {
+				if(g_bup == true) {
+					g_bup = false;
+					firstIndex = (g_allPageIndex - 1);
+					g_nowpageIndex = g_allPageIndex;
+					getRequset();
+				}
+			}
+			textScroll();
+		};
+		//下页
+		XEpg.Nav.key_pageDown_event = function() {
+			clearTextStyle();
+			if(g_nowpageIndex < g_allPageIndex) {
+				if(g_bdown == true) {
+					g_bdown = false;
+					firstIndex++;
+					g_nowpageIndex++;
+					getRequset();
+				}
+			} else {
+				if(g_bdown == true) {
+					g_bdown = false;
+					firstIndex = 0;
+					g_nowpageIndex = 1;
+					maxResult = 6;
+					getRequset();
+				}
+			}
+			textScroll();
+		};
+		XEpg.Nav.key_back_event = function() {
+			XEpg.Nav.key_back_opt();
+		};
+	</script>
+
+</html>

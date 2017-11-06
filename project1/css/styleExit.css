@@ -1,0 +1,89 @@
+/* S= CSS Reset
+----------------------------------------------- */
+body, table, caption, tbody, tfoot, thead, tr, th, td, ul, li, p, h1 {
+	margin: 0px;
+	padding: 0px;
+	border: 0px;
+}
+body {
+	font-size: 24px;
+	font-family: Microsoft YaHei, sans-serif;
+	line-height: 100%;
+}
+ul, ol {
+	list-style: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+a {
+	text-decoration: none;
+}
+img {
+	border: 0;
+}
+/* E= CSS Reset */
+
+/* S= Global
+----------------------------------------------- */
+body, .wrapper, .pagebg {
+	height: 720px;
+	width: 1280px;
+	overflow: hidden;
+}
+body {
+	color: #ffffff;
+	position: relative;
+}
+.wrapper, .pagebg {
+	left: 0;
+	position: absolute;
+	top: 0px;
+}
+.pagebg img {
+	display: block; /* clear some space 对于html5中背景图比原高度多出3PX的问题*/
+}
+.item, .link, .txt-wrap, .txt, .btn, .icon, .pic, .pic-shade, .cover, .num {
+	position: absolute;
+}
+.txtHidden {
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+}
+.clearfix:after {
+	clear: both;
+	content: '';
+	display: block;
+	height: 0;
+}
+.clearfix {
+	zoom: 1;
+}
+/*
+文字过短需居中时 width < 外部容器单位宽度 时 span class="txtSlideWrap txtNoSlide"
+文字过长需滚动时 width > 外部容器单位宽度 时 span class="txtSlideWrap"
+*/
+span.txtSlideWrap, span.txtSlideWrap div, span.txtNoSlide div {
+	padding: 0!important;
+	margin: 0!important;
+}
+span.txtSlideWrap {
+	display: block;
+	height: 100%;
+	width: 100%!important;
+	overflow: hidden;
+	position: relative;
+}
+span.txtSlideWrap div {
+	position: absolute;
+	top: 0;
+	white-space: nowrap;
+}
+span.txtNoSlide div {
+	width: 100%;
+}
+/* E= Global */
+
+/* S= common ----------------------------------------------- */

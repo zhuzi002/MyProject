@@ -1,0 +1,838 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta name="page-view-size" content="1280*720" />
+<meta charset="UTF-8">
+<title>广东芒果优化改版</title>
+<!--<link rel="stylesheet" href="../css/style.css">-->
+<style type="text/css">
+/* S= CSS Reset
+----------------------------------------------- */
+body, table, caption, tbody, tfoot, thead, tr, th, td, ul, li, p, h1 {
+	margin: 0px;
+	padding: 0px;
+	border: 0px;
+}
+body {
+	font-size: 24px;
+	font-family: Microsoft YaHei, sans-serif;
+	line-height: 100%;
+}
+ul, ol {
+	list-style: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+a {
+	text-decoration: none;
+}
+img {
+	border: 0;
+}
+/* E= CSS Reset */
+
+/* S= Global
+----------------------------------------------- */
+body, .wrapper, .pagebg {
+	height: 720px;
+	width: 1280px;
+	overflow: hidden;
+}
+body {
+	background: url(../images/bg02.jpg) no-repeat;
+	color: #ffffff;
+	position: relative;
+}
+.wrapper, .pagebg {
+	left: 0;
+	position: absolute;
+	top: 0;
+}
+.pagebg img {
+	display: block; /* clear some space 对于html5中背景图比原高度多出3PX的问题*/
+}
+.item, .link, .txt-wrap, .txt, .btn, .icon, .pic, .pic-shade, .cover, .num {
+	position: absolute;
+}
+.txtHidden {
+	white-space: nowrap;
+	overflow: hidden;
+}
+.clearfix:after {
+	clear: both;
+	content: '';
+	display: block;
+	height: 0;
+}
+.clearfix {
+	zoom: 1;
+}
+/*
+文字过短需居中时 width < 外部容器单位宽度 时 span class="txtSlideWrap txtNoSlide"
+文字过长需滚动时 width > 外部容器单位宽度 时 span class="txtSlideWrap"
+*/
+span.txtSlideWrap, span.txtSlideWrap div, span.txtNoSlide div {
+	padding: 0!important;
+	margin: 0!important;
+}
+span.txtSlideWrap {
+	display: block;
+	height: 100%;
+	width: 100%!important;
+	overflow: hidden;
+	position: relative;
+}
+span.txtSlideWrap div {
+	position: absolute;
+	top: 0;
+	white-space: nowrap;
+}
+span.txtNoSlide div {
+	width: 100%;
+}
+.pigbg {
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+/* E= Global */
+
+/* S= nav */
+.yq-title {
+	position: absolute;
+	top: 49px;
+	left: 0;
+	text-align: center;
+	font-size: 44px;
+	color: #a998bd;
+	width: 261px;
+}
+.w-arrow-mini {
+	position: absolute;
+	left:111px; 
+	top:90px;
+}
+.w-arrow-mini .item .icon-arrowUp,
+.w-arrow-mini .item .icon-arrowDown {
+	width: 39px;
+	height: 14px;
+}
+.w-arrow-mini .item .icon-arrowUp {
+	background: url(../images/guangdongv2/w-arrow_up.png) no-repeat;
+}
+.w-arrow-mini .item .icon-arrowDown {
+	background: url(../images/guangdongv2/w-arrow_down.png) no-repeat;
+}
+.w-arrow-mini .item_focus .icon-arrowUp {
+	background: url(../images/guangdongv2/w-arrow_up_focus.png) no-repeat;
+}
+.w-arrow-mini .item_focus .icon-arrowDown {
+	background: url(../images/guangdongv2/w-arrow_down_focus.png) no-repeat;
+}
+.yq-mune {
+	position: absolute;
+	top: 110px;
+	left: 0;
+	width: 261px;
+	height: 620px;
+	overflow: hidden;
+}
+.yq-mune .scrollbox {
+	position: absolute;
+	width: 261px;
+	height: 2800px;
+}
+.yq-mune .item {
+	width: 261px;
+	height: 54px;
+}
+.yq-mune .item .icon {
+	left: 60px;
+	top:15px;
+	background: url(../images/guangdongv2/w-icon-search.png) no-repeat;
+	width: 23px;
+	height: 25px;
+}
+.yq-mune .item .txt {
+	color: #7f728e;
+	font-size: 24px;
+	text-align:left;
+	width: 199px;
+	line-height: 54px;
+	left: 60px;
+}
+.yq-mune .item .txt01 {
+	left: 99px;
+	width: 160px;
+}
+.yq-mune .item_focus {
+	background: url(../images/yq-mune_focus.png) no-repeat;
+}
+.yq-mune .item_focus .txt {
+	color: #f1f1f1;
+}
+.yq-mune .item_select .txt {
+	color: #ffbc46;
+}
+.yq-mune .item_focus .icon {
+	background: url(../images/guangdongv2/w-icon-search_focus.png) no-repeat;
+}
+.yq-mune .item_select .icon {
+	background: url(../images/guangdongv2/w-icon-search_select.png) no-repeat;
+}
+/* E= nav */
+
+/* S= list */
+.yq-listTips{
+	position: absolute;
+	left:920px;
+	top:30px;
+	width:300px;
+	color: #7b6f88;
+	font-size: 24px;
+	text-align: right;
+}
+.yq-listTips span{
+	color: #c88147;
+	font-size: 26px;
+}
+.yq-arrow{
+	position: absolute;
+	left: 738px;
+	top: 38px;
+}
+.yq-arrow .item .icon-arrowUp,.yq-arrow .item .icon-arrowDown{
+	width: 39px;
+	height: 14px;
+}
+.yq-arrow .item .icon-arrowUp{
+	background: url(../images/yq-arrow_up.png) no-repeat;
+}
+.yq-arrow .item .icon-arrowDown{
+	background: url(../images/yq-arrow_down.png) no-repeat;
+}
+.yq-arrow .item_focus .icon-arrowUp{
+	background: url(../images/yq-arrow_up_focus.png) no-repeat;
+}
+.yq-arrow .item_focus .icon-arrowDown{
+	background: url(../images/yq-arrow_down_focus.png) no-repeat;
+}
+
+.w-special-list {
+	position: absolute;
+	left: 301px;
+	top: 78px;
+	width: 945px;
+	height: 582px;
+	overflow: hidden;
+}
+.w-special-list .scrollbox {
+	position: absolute;
+	left:0;
+	top:0;
+}
+.w-special-list .item {
+	width: 303px;
+	height: 138px;
+}
+.w-special-list .item .pic {
+	left:3px;
+	top:3px;
+}
+.w-special-list .item .pic,
+.w-special-list .item .pic img{
+	width: 297px;
+	height: 132px;
+}
+.w-special-list .item .txt{
+	top: 145px;
+	color: #ab9faf;
+	font-size: 20px;
+	text-align:center;
+	left:0;
+	line-height: 30px;
+	width: 303px;
+	height: 30px;
+	overflow: hidden;
+	white-space: nowrap;
+}
+.w-special-list .item_focus {
+	background: url(../images/guangdongv2/w-special-list_focus.png) no-repeat;
+}
+.w-special-list .item_focus .txt {
+	color:#ffffff;
+}
+/* E= list */
+</style>
+</head>
+<body>
+<div class="wrapper"> 
+    <!-- S 标题 -->
+    <div class="yq-title">精彩专题</div>
+    <!-- E 标题 -->
+    <!-- S 左侧导航 -->
+    <!--<div class="w-arrow-mini">-->
+        <!--<div class="item item_focus">-->
+            <!--<div class="icon-arrowUp"></div>-->
+        <!--</div>-->
+        <!--<div class="item item_focus" style=" top:587px;">-->
+            <!--<div class="icon-arrowDown"></div>-->
+        <!--</div>-->
+    <!--</div>-->
+
+    <div class="yq-mune">
+        <div class="scrollbox" style="top:0px" id="scrollBox">  <!--通过top值实现一下翻页, top=560*N-->
+            <!-- 
+                焦点 class="item item_focus"
+                驻留 class="item item_select" 
+            -->
+            <!--<div class="item item_focus" id="lf_list0">-->
+                <!--<div class="icon icon-search"></div>-->
+                <!--<div class="txt txt01">搜索</div>-->
+            <!--</div>-->
+            <!--<div class="item" style="top:56px">-->
+                <!--<div class="txt">全部</div>-->
+            <!--</div>-->
+            <!--<div class="item item_select" style="top:112px" id="lf_list1">-->
+                <!--<div class="txt">电视剧</div>-->
+            <!--</div>-->
+            <!--<div class="item" style="top:168px" id="lf_list2">-->
+                <!--<div class="txt">电影</div>-->
+            <!--</div>-->
+            <!--<div class="item" style="top:224px" id="lf_list3">-->
+                <!--<div class="txt">少儿</div>-->
+            <!--</div>-->
+            <!--<div class="item" style="top:280px" id="lf_list4">-->
+                <!--<div class="txt">王牌综艺</div>-->
+            <!--</div>-->
+            <!--<div class="item" style="top:336px" id="lf_list5">-->
+                <!--<div class="txt">纪录片</div>-->
+            <!--</div>-->
+            <!--<div class="item" style="top:392px" id="lf_list6">-->
+                <!--<div class="txt">综合</div>-->
+            <!--</div>-->
+        </div>
+    </div>
+    <!-- E 左侧导航 -->
+    <!-- S 页码 -->
+    <div class="yq-listTips" style="left: 942px" id="pageMessage"></div>
+    <div class="yq-arrow" style="left:755px"  id="arrow">
+        <div class="item item_focus">
+            <div class="icon-arrowUp"></div>
+        </div>
+        <div class="item item_focus" style="top:628px">
+            <div class="icon-arrowDown"></div>
+        </div>
+    </div>
+    <!-- E 页码 -->
+    <!-- S list --> 
+    <div class="w-special-list">
+		<div class="scrollbox" style="top:0px" id="list_right"> <!--通过top值(初始值为0)实现上下翻页，top=582*N-->
+            <!-- 焦点 
+                    class="item item_focus" 
+            -->
+			<!--<div class="item item_focus">-->
+				<!--<div class="pic"><img src="../images/demopic/pic-297X132.jpg" ></div>-->
+				<!--<div class="txt">芒果直击奥斯卡</div>-->
+			<!--</div>-->
+			<!--<div class="item" style="left: 315px;">-->
+				<!--<div class="pic"><img src="../images/demopic/pic-297X132.jpg" ></div>-->
+				<!--<div class="txt">芒果直击奥斯卡芒果直击奥斯卡</div>-->
+			<!--</div>-->
+			<!--<div class="item" style="left: 630px;">-->
+				<!--<div class="pic"><img src="../images/demopic/pic-297X132.jpg" ></div>-->
+				<!--<div class="txt">芒果直击奥斯卡</div>-->
+			<!--</div>-->
+            
+            <!--<div class="item" style="top:194px;">-->
+				<!--<div class="pic"><img src="../images/demopic/pic-297X132.jpg" ></div>-->
+				<!--<div class="txt">芒果直击奥斯卡</div>-->
+			<!--</div>-->
+			<!--<div class="item" style="left: 315px;top:194px;">-->
+				<!--<div class="pic"><img src="../images/demopic/pic-297X132.jpg" ></div>-->
+				<!--<div class="txt">芒果直击奥斯卡</div>-->
+			<!--</div>-->
+			<!--<div class="item" style="left: 630px;top:194px;">-->
+				<!--<div class="pic"><img src="../images/demopic/pic-297X132.jpg" ></div>-->
+				<!--<div class="txt">芒果直击奥斯卡</div>-->
+			<!--</div>-->
+		</div>
+	</div>    
+    <!-- E list -->
+	<script src="../js/xepg.min.js"></script>
+	<script src="../js/commons.js"></script>
+	<script>
+		var param = XEpg.My.parseUrl();  //解析地址栏参数 接收的变量
+		var currentId = param.currentId || 'nav1_0';//当前焦点ID
+		var currentSelectId = param.currentSelectId || 'nav1_0';//当前选中ID
+		var parentId = param.menuID || "";      //栏目id
+		var rcode = "";
+		var ids = [];
+		var spPro = '';
+		var size = 1;     //总条数
+		var pageTotal = 1;    //总页数
+		var listNum = 0; //左侧列表数量
+		var dataState = false;
+		var isRight = '';
+		var isUpPage = false;    //是否项上 或下翻页
+		var curIndex = 1;  //上下翻页之前焦点位子
+		var pageIndex = param.pageindex || 1;   //当前页
+		var mgPartner = param.mgPartner || ''; //平台信息
+		var mgUserID = param.mgUserID || '';  //用户ID
+		var mgUserToken = param.mgUserToken || '';  //临时身份证明
+		var mg_epginfo = '&mgPartner=' + mgPartner + '&mgUserID=' + mgUserID + '&mgUserToken=' + mgUserToken;
+		window.onload = function(){
+			XEpg.My.init({"currentId":currentId});
+			if(mgPartner == 'ZTE2X'){  //中兴
+				spPro = 'portalcode=2017gszx&sptoken=CF4EAB0D8DF1E71CA84762F6BA009BD4&';
+			}else{  //华为
+				spPro = 'portalcode=2017gshw&sptoken=96630FB882600EC4A3F0B610535FB2A7&';
+			}
+			//获取左侧专题列表
+			getTopicList();
+		};
+		//获取获取左侧专题栏目列表
+		function getTopicList(){
+			XEpg.Util.ajaxGet("../ajax/getInterface.jsp?action=getTagsData&"+ spPro +"type=1&isfilter=1&parentid=" + parentId,function(obj){
+//			XEpg.Util.ajaxGet("../ajax/getInterface.jsp?action=getTagsData&"+ spPro +"type=1&isfilter=1&parentid=" + parentId,function(obj){
+			    var data = XEpg.Util.parseJSON(obj).result;
+				listNum = data.length;
+				var html = '';
+				for(var i = 0;i < data.length;i++){
+					html += '<div class="item" style="top:'+56*i+'px" title="'+data[i].id+'" id="nav1_'+i+'"><div class="txt">'+data[i].name+'</div></div>';
+					ids.push(data[i].id);
+				}
+//				document.getElementById(XEpg.My.currentId).className = "item item_focus";
+				$('scrollBox').innerHTML = html;
+				rcode = param.rcode || ids[0];   //获取当前列表的第一个id
+				for(var i = 0;i <= listNum; i++){//左侧专题栏目焦点移动逻辑
+					XEpg.$("nav1_"+i).click({"func":gotoPageList}).up({"func":move.up}).down({"func":move.down}).right({'func':move.right}).left({'func':move.left});
+				}
+				getAllList(rcode,1);//初始化右测列表页
+			});
+		}
+		//获取相应的专题栏目列表页面
+		function getAllList(id,pageNum){
+			XEpg.Util.ajaxGet("../ajax/getInterface.jsp?action=getTagsData&"+ spPro +"type=2&pageindex="+pageNum+"&pagesize=9&isfilter=1&parentid=" + id,getContentList);
+//			XEpg.Util.ajaxGet("../ajax/getInterface.jsp?action=getIndexData&"+ spPro +"pagesize=9&tmtype=2&orderinfo=1&isfilter=1&pageindex="+pageNum+"&catalogid="+id,getContentList);
+		}
+		//去相应栏目的详情页
+		function goTopicDetail(){
+			var url = $(XEpg.My.currentId).title;
+			//跳转前,保存当前焦点、分页等页面信息放入cookie
+			XEpg.SP.saveCurrentPageInfo('topicList',{
+				'currentId' : XEpg.My.currentId,
+				'currentSelectId' : currentSelectId,
+				'pageindex' : pageIndex,
+				'menuID' : parentId,
+				'rcode':$(currentSelectId).title,
+				'epg_info':mg_epginfo
+			});
+			XEpg.My.gotoPage("topic_detatil.html?menuID=" + url + mg_epginfo);
+		}
+		XEpg.Nav.key_back_opt = function(){
+			setTimeout(function(){
+				XEpg.Navigation.gotoBackNavigationUrl('pageIndex');
+			},150);
+		};
+		function gotoPageList(){
+			$(currentSelectId).className = 'item';
+			currentSelectId = XEpg.My.currentId;
+			$(currentSelectId).className = 'item item_focus';
+			var id=$(XEpg.My.currentId).title;
+			getAllList(id,1);
+		}
+		//获取内容列表
+		function getContentList(obj){
+			var datas = XEpg.Util.parseJSON(obj);
+			pageTotal = datas.pagetotal;   //获取最大页
+			//上下角标焦点显示条件
+			if(pageTotal > 1){
+				document.getElementById("arrow").style.display = "block";
+			}else{
+				document.getElementById("arrow").style.display = "none";
+			}
+			pageIndex = datas.pageindex;  //获取当前页
+			$('pageMessage').innerHTML = '<span>' + pageIndex + '</span>/' + pageTotal ;
+			var data = XEpg.Util.parseJSON(obj).result;
+			size = data.length;
+			var str='';
+			for(var i=0;i<data.length;i++){
+				var _top = Math.floor(i / 3) * 194;
+				var _left= (i % 3) * 315;
+				str+='<div class="item" id="nav2_'+ i+'" title="'+data[i].id+'" style="left: '+_left+'px;top:'+_top+'px"><div class="pic"><img src="'+data[i].icon_pc+'" ></div><div class="txt" id="nav2_'+ i +'_move"><span id="nav2_'+ i +'_txt">'+data[i].name+'</span><span id="nav2_'+ i +'_copy"></span></div></div>';
+			}
+			$("list_right").innerHTML = str;
+			$(currentSelectId).className = 'item item_select';
+			console.log(currentId);
+			for(var i = 0;i <= size; i++){//右侧专题列表页逻辑
+				XEpg.$("nav2_"+i).click({"func":goTopicDetail}).up({"func":move.linkUp}).down({"func":move.linkDown}).right({'func':move.linkRight}).left({'func':move.linkLeft}).focus({"func":textScroll}).blur({'func':clearTextStyle});
+			}
+			isUpPage = false;
+			if(isRight == 'right'){
+				if(curIndex >= size){
+					curIndex = size - 1;
+				}
+				XEpg.My.currentId = 'nav2_' + curIndex;
+				$(XEpg.My.currentId).className = 'item item_focus'; //显示焦点
+				clearTextStyle();
+				textScroll();
+			}
+			if(isRight == 'up'){
+				if(size <= 3){//上一页有一行
+					curIndex = curIndex;
+					if(curIndex >= size){
+						curIndex = size - 1;
+					}
+				}else if(size <= 6){//上一页有两行
+					curIndex +=3;
+					if(curIndex >= size){
+						curIndex = size - 1;
+					}
+				}else{//上一页有三行
+					curIndex +=6;
+					if(curIndex >= size){
+						curIndex = size - 1;
+					}
+				}
+				XEpg.My.currentId = 'nav2_' + curIndex;
+				$(XEpg.My.currentId).className = 'item item_focus'; //显示焦点
+				clearTextStyle();
+				textScroll();
+			}
+			XEpg.My.pageLoadShowFocus();
+		}
+		//焦点逻辑
+		var move = {
+			up:function(){
+				var menuNum = listNum - 1;
+				var index = parseInt(XEpg.My.currentId.substring(5), 10);
+				if(index == 0){
+					document.getElementById(XEpg.My.currentId).className = 'item';
+					XEpg.My.currentId = 'nav1_' + menuNum;
+
+				}else{
+					document.getElementById(XEpg.My.currentId).className = 'item';
+					XEpg.My.currentId = 'nav1_' + (index - 1);
+				}
+				$(currentSelectId).className = 'item item_select';
+				$(XEpg.My.currentId).className = 'item item_focus';
+			},
+			down:function(){
+				var menuNum = listNum - 1;
+				var index = parseInt(XEpg.My.currentId.substring(5), 10);
+				if(index == menuNum){
+					$(XEpg.My.currentId).className = 'item';
+					XEpg.My.currentId = 'nav1_0';
+				}else{
+					$(XEpg.My.currentId).className = 'item';
+					XEpg.My.currentId = 'nav1_' + (index + 1);
+				};
+				$(currentSelectId).className = 'item item_select';
+				$(XEpg.My.currentId).className = 'item item_focus';
+			},
+			left:function(){
+				document.getElementById(XEpg.My.currentId).className = 'item';
+				document.getElementById(currentSelectId).className = 'item item_select';
+				XEpg.My.currentId = "nav2_" + (size - 1);
+				document.getElementById(XEpg.My.currentId).className = 'item item_focus';
+				textScroll();
+			},
+			right:function(){
+				document.getElementById(XEpg.My.currentId).className = 'item';
+				document.getElementById(currentSelectId).className = 'item item_select';
+				XEpg.My.currentId = 'nav2_0';
+				document.getElementById(XEpg.My.currentId).className = 'item item_focus';
+				textScroll();
+			},
+			linkLeft:function(){
+				curIndex = parseInt(XEpg.My.currentId.substring(5),10);
+				clearTextStyle();
+				if(curIndex  == 0 || curIndex  == 3 || curIndex  == 6){
+					curIndex = 0;
+					XEpg.My.currentId = currentSelectId;
+					$(XEpg.My.currentId).className = 'item item_focus';
+				}else{
+					curIndex --;
+					XEpg.My.currentId = 'nav2_' + curIndex;
+					textScroll();
+					$(XEpg.My.currentId).className = 'item item_focus';
+				}
+			},
+			linkRight:function(){
+				if(isUpPage){//当数据未加载完成直接返回
+					return;
+				}
+				curIndex = parseInt(XEpg.My.currentId.substring(5),10);
+				clearTextStyle();
+				if(pageTotal > 1){//有多页的情况
+					if(pageIndex == pageTotal){
+						if(curIndex == size-1){
+							pageIndex = 1;
+							curIndex = 0;
+							isRight = 'right';
+							isUpPage = true;
+							getAllList($(currentSelectId).title,1);
+						}else{
+							curIndex++;
+							XEpg.My.currentId = 'nav2_' + curIndex;
+							textScroll();
+							$(XEpg.My.currentId).className = 'item item_focus';
+						}
+					}else{
+						if(curIndex == 8){
+							pageIndex++;
+							curIndex = 0;
+							isRight = 'right';
+							isUpPage = true;
+							getAllList($(currentSelectId).title,pageIndex);
+						}else{
+							curIndex++;
+							XEpg.My.currentId = 'nav2_' + curIndex;
+							textScroll();
+							$(XEpg.My.currentId).className = 'item item_focus';
+						}
+					}
+				}else{
+					if(curIndex < size - 1){
+						curIndex ++;
+						XEpg.My.currentId = 'nav2_' + curIndex;
+						textScroll();
+						$(XEpg.My.currentId).className = 'item item_focus';
+					}else{
+						curIndex = 0;
+						XEpg.My.currentId = 'nav2_' + curIndex;
+						textScroll();
+						$(XEpg.My.currentId).className = 'item item_focus';
+					}
+				}
+			},
+			linkUp:function(){
+				if(isUpPage){//当数据未加载完成直接返回
+					return;
+				}
+				curIndex = parseInt(XEpg.My.currentId.substring(5),10);
+				if(pageTotal > 1){//有多页的情况
+					if(pageIndex == 1){//当前页在第一页
+						if(curIndex < 3){//焦点在第一行
+							pageIndex = pageTotal;
+							isRight = 'up';
+							isUpPage = true;
+							getAllList($(currentSelectId).title,pageIndex);
+						}else{
+							curIndex -= 3;
+							clearTextStyle();
+							$(XEpg.My.currentId).className = 'item';
+							XEpg.My.currentId = 'nav2_' + curIndex;
+							textScroll();
+							$(XEpg.My.currentId).className = 'item item_focus';
+						}
+					}else{//当前页不在第一页
+						if(curIndex < 3){//焦点在第一行
+							pageIndex --;
+							isRight = 'up';
+							isUpPage = true;
+							getAllList($(currentSelectId).title,pageIndex);
+						}else{//焦点不在第一行
+							curIndex -= 3;
+							clearTextStyle();
+							$(XEpg.My.currentId).className = 'item';
+							XEpg.My.currentId = 'nav2_' + curIndex;
+							textScroll();
+							$(XEpg.My.currentId).className = 'item item_focus';
+						}
+					}
+				}else{//单页情况
+					if(curIndex <= 2){//焦点下标在第一行
+						if(size <= 3){//只有一行数据
+							curIndex = curIndex;
+						}else if(size <= 6){//有两行数据
+							curIndex += 3;
+							if(curIndex >= size){
+								curIndex = size-1;
+							}
+						}else{//有三行数据
+							curIndex += 6;
+							if(curIndex >= size){
+								curIndex = size-1;
+							}
+						}
+					}else{//焦点不在第一行
+						curIndex -= 3;
+					}
+					$(XEpg.My.currentId).className = 'item';
+					clearTextStyle();
+					XEpg.My.currentId = 'nav2_' + curIndex;
+					textScroll();
+					$(XEpg.My.currentId).className = 'item item_focus';
+				}
+			},
+			linkDown:function() {
+				if(isUpPage){//当数据未加载完成直接返回
+					return;
+				}
+				curIndex = parseInt(XEpg.My.currentId.substring(5),10);
+				if(pageTotal > 1){//有多页的情况
+					if(pageIndex == pageTotal){//当前页是最后一页
+						if(size <= 3){//最后一页有小于等于数据
+							curIndex = curIndex;
+							isRight = 'right';
+							isUpPage = true;
+							getAllList($(currentSelectId).title,1);
+							return;
+						}else if(size <= 6){//最后一页有小于等于六条
+							if(curIndex >= 3){//焦点在第二行
+								curIndex -= 3;
+								isRight = 'right';
+								isUpPage = true;
+								getAllList($(currentSelectId).title,1);
+								return;
+							}else{//焦点在第一行
+								curIndex += 3;
+								if(curIndex >= size){
+									curIndex = size-1;
+								}
+								$(XEpg.My.currentId).className = 'item';
+								clearTextStyle();
+								XEpg.My.currentId = 'nav2_' + curIndex;
+								textScroll();
+								$(XEpg.My.currentId).className = 'item item_focus';
+							}
+						}else{//最后一页有大于6条数据
+							if(curIndex >= 6){
+								curIndex -= 6;
+								isRight = 'right';
+								isUpPage = true;
+								getAllList($(currentSelectId).title,1);
+								return;
+							}else{
+								curIndex += 3;
+								if(curIndex >= size){
+									curIndex = size-1;
+								}
+								$(XEpg.My.currentId).className = 'item';
+								clearTextStyle();
+								XEpg.My.currentId = 'nav2_' + curIndex;
+								textScroll();
+								$(XEpg.My.currentId).className = 'item item_focus';
+							}
+						}
+					}else{//当前页不是最后一页
+						if(curIndex >= 6){
+							pageIndex++;
+							curIndex -= 6;
+							isRight = 'right';
+							isUpPage = true;
+							getAllList($(currentSelectId).title,pageIndex);
+							return;
+						}else{
+							curIndex += 3;
+							$(XEpg.My.currentId).className = 'item';
+							clearTextStyle();
+							XEpg.My.currentId = 'nav2_' + curIndex;
+							textScroll();
+							$(XEpg.My.currentId).className = 'item item_focus';
+						}
+					}
+				}else{//有一页的情况
+					if(size <= 3){//一行
+						curIndex = curIndex;
+					}else if(size <= 6){//两行
+						if(curIndex < 3){
+							curIndex += 3;
+							if(curIndex >= size){
+								curIndex = size;
+							}
+						}else{
+							curIndex -= 3;
+						}
+					}else{//三行
+						if(curIndex < 6){
+							curIndex += 3;
+							if(curIndex >= size){
+								curIndex = size-1;
+							}
+						}else{
+							curIndex -= 6;
+						}
+					}
+					$(XEpg.My.currentId).className = 'item';
+					XEpg.My.currentId = 'nav2_' + curIndex;
+					textScroll();
+					$(XEpg.My.currentId).className = 'item item_focus';
+				}
+			}
+		};
+		//上一页
+		XEpg.Nav.key_pageUp_event = function(){
+//        if(isUpPage){
+//            return;
+//        }
+			curIndex = parseInt(XEpg.My.currentId.substring(5),10);
+			pageIndex--;
+			if(pageIndex <= 0){
+				pageIndex = pageTotal;
+			}
+			isRight = 'up';
+			isUpPage = true;
+			getAllList($(currentSelectId).title,pageIndex);
+		}
+		//下一页
+		XEpg.Nav.key_pageDown_event = function(){
+        if(isUpPage){
+            return;
+        }
+			curIndex = parseInt(XEpg.My.currentId.substring(5),10);
+			pageIndex++;
+			if(pageIndex > pageTotal){
+				pageIndex = 1;
+			}
+			isRight = 'right';
+			isUpPage = true;
+			getAllList($(currentSelectId).title,pageIndex);
+		}
+		//id获取Dom
+		function $(id){
+			return document.getElementById(id);
+		}
+		//文字滚动部分
+		var moveObj = null, scrollTimer = null, txtObj = null;
+		function textScroll(){
+			document.getElementById(XEpg.My.currentId).className = 'item item_focus';
+			var index = parseInt(XEpg.My.currentId.substring(5) , 10);
+			moveObj = document.getElementById('nav2_' + index + '_move');
+			txtObj = document.getElementById('nav2_' + index + '_txt');
+			if( moveObj.scrollWidth > moveObj.offsetWidth ){
+				document.getElementById('nav2_' + index + '_copy').innerHTML =  '　    ' + txtObj.innerHTML;
+				startScroll();//父元素向左循环移动(设置父元素scrollleft)
+			}
+		}
+		function startScroll(){
+			if(moveObj.scrollLeft >= (txtObj.offsetWidth + 10) ){
+				moveObj.scrollLeft = 0;
+			}else {
+				moveObj.scrollLeft +=2;
+			}
+
+			scrollTimer = setTimeout(startScroll, 50);
+		}
+		function clearTextStyle(){
+			clearTimeout(scrollTimer);		//清除定时器
+			document.getElementById(XEpg.My.currentId).className = 'item';
+			var index = parseInt(XEpg.My.currentId.substring(5) , 10);
+			var copyEle = document.getElementById('nav2_' + index + '_copy');
+			if(copyEle){
+				//清空复制的滚动文字
+				copyEle.innerHTML = '';
+			}
+			if(moveObj){
+				//清空scrollLeft
+				moveObj.scrollLeft = 0;
+			}
+		}
+	</script>
+</div>
+</body>
+</html>

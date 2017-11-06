@@ -1,0 +1,726 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta name="page-view-size" content="1280*720" />
+<meta charset="UTF-8">
+<title>模板EPG</title>
+<link rel="stylesheet" href="../css/style.css"/>
+<style type="text/css"></style>
+</head>
+<body bgcolor="transparent">
+
+<!-- S pagebg -->
+<div class="pagebg">
+    <div class="pic"><img src="../images/list_bg.jpg" width="1280" height="720" alt=""></div>
+</div>
+<!-- E pagebg --> 
+
+<!-- S content -->
+<div class="he-wrapper"> 
+<!-- S top -->
+<!--<div id="test1" style="left: 20px; top: 20px; width: 800px; height: 300px; position: absolute; color: #ff0000; word-break:break-all;"></div>-->
+    
+<div class="top">
+	<div class="bt" style="top:54px; left:60px;" >
+		<img id="titleimg" src="../images/dylogo.png" alt="">
+		<!-- <img src="../images/q-js.png" alt=""> 纪实--> 
+        <!-- <img src="../images/q-zy.png" alt=""> 综艺--> 
+        <!-- <img src="../images/q-dsj.png" alt=""> 电视剧--> 
+	</div>
+	<div class="sep" style="top:54px; left:160px;"><img src="../images/sep-6x37.png" alt=""></div>
+<div class="bttxt" id="area_catelist">
+
+	<!--<div class="item item_focus">
+		<div class="txt">最新热映</div>
+	</div>
+	
+	<div class="item item_select " style="left:145px;">
+		<div class="txt">动作冒险</div>
+	</div>
+	<div class="item" style="left:290px;">
+		<div class="txt">科幻灾难</div>
+	</div>
+	<div class="item" style="left:434px;">
+		<div class="txt">网络大电影</div>
+	</div>
+	<div class="item" style="left:580px;">
+		<div class="txt">全部电影</div>
+	</div>1<span>/15&nbsp;&nbsp;页</span>-->
+</div>
+<div class="double" style="top: 60px; left:1115px;" id="pageshownum"></div>
+</div>
+
+<!-- E top -->
+
+<!-- S 电影区 -->
+
+<div class="he-big">
+
+<div class="heleft" id="area_contlist_0">
+	<!--<div class="item ">
+		<div class="pic"><img src="../images/demo/pic-372x520.jpg" alt=""></div>
+		<div class="ptxt">
+			<div class="txt">超人：钢铁之躯</div>
+		</div>
+	</div>-->
+</div>
+<div class="hecenter" id="area_contlist_1">
+	<!--<div class="item">
+		<div class="pic"><img src="../images/demo/pic06-182x255.jpg" alt=""></div>
+		<div class="ctxt">
+			<div class="txt">霍比特人</div>
+		</div>
+	</div>
+	<div class="item" style="left: 192px;">
+		<div class="pic"><img src="../images/demo/pic07-182x255.jpg" alt=""></div>
+		<div class="ctxt">
+			<div class="txt">地心历险记</div>
+		</div>
+	</div>
+	<div class="item" style="left: 384px;">
+		<div class="pic"><img src="../images/demo/pic-182x255.jpg" alt=""></div>
+		<div class="ctxt">
+			<div class="txt">钢铁侠2</div>
+		</div>
+	</div>
+	<div class="item" style="left: 576px;">
+		<div class="pic"><img src="../images/demo/pic05-182x255.jpg" alt=""></div>
+		<div class="ctxt">
+			<div class="txt">环太平洋</div>
+		</div>
+	</div>
+	<div class="item" style="top: 265px;">
+		<div class="pic"><img src="../images/demo/pic04-182x255.jpg" alt=""></div>
+		<div class="ctxt">
+			<div class="txt">机械战警</div>
+		</div>
+	</div>
+	<div class="item item_focus" style="top: 265px; left: 192px;">
+		<div class="pic"><img src="../images/demo/pic03-182x255.jpg" alt=""></div>
+		<div class="ctxt">
+			<div class="txt">黑夜传说5：血战</div>
+		</div>
+	</div>
+	<div class="item" style="top: 265px; left: 384px;">
+		<div class="pic"><img src="../images/demo/pic02-182x255.jpg" alt=""></div>
+		<div class="ctxt">
+			<div class="txt">神奇动物在哪里</div>
+		</div>
+	</div>
+	<div class="item" style="top: 265px; left: 576px;">
+		<div class="pic"><img src="../images/demo/pic01-182x255.jpg" alt=""></div>
+		<div class="ctxt">
+			<div class="txt">萨利机长</div>
+		</div>
+	</div>-->
+</div>
+</div>
+</div>
+
+<!-- E 电影区 -->
+<!-- S cs-scroll- -->
+    <div class="q-scroll" style="top: 120px; left: 1225px; display: none;" id="slide_pointdiv"> 
+        
+        <div class="point" style="top:0px;" id="slide_point"><img id='slide_pointimg'  src="../images/q-scrollBar.png" ></div>
+    </div>
+    <!-- E cs-scroll- --> 
+<!-- E content -->
+</body>
+<script type="text/javascript" src="../js/xepg.min.js" ></script>
+<script type="text/javascript" src="../js/com.min.js" ></script>
+<script type="text/javascript">
+	var g_params = XEpg.My.parseUrl();		//解析地址栏参数
+   	var currentId=g_params.currentId||"nav_0";//二级栏目焦点id获取
+   	var isIndex=g_params.currentId||'0';
+   	var categoryCode=g_params.categoryCode||'';//二级栏目获取栏目的code
+   	var g_selectId=g_params.selectId||"";//当前选中的二级栏目
+   	var g_elementType=g_params.getelementType||'4KDY';//4KDY电影4KDSJ电视剧4KZY综艺4KJS纪实
+   	
+   	var g_catefristIndex=0;//二级栏目的pageindex
+   	var g_catemaxResult=6;//二级栏目每次取出个数
+   	var g_cateeveryNum=6;//二级栏目每页个数
+   	var g_cateIndexNum=0;//二级栏目当前的个数
+   	var g_navName='nav_';
+   	var g_bcatedown=true;//
+   	
+   	var contentCode='';//存储当前栏目code
+   	var firstIndex=g_params.firstIndex||0;//
+   	var maxResult=9;//每次取出数目
+   	var g_everyNum=9;//每页内容
+   	var g_indexNum=0;//当前内容列表个数
+   	var g_allNum=0;//内容总条数  	
+   	var g_listName='list_';
+   	
+   	var g_bleft=true;//左翻页
+   	var g_bright=true;//右翻页
+   	var g_bup=true;//上翻页
+   	var g_bdown=true;//下翻页  	
+	var g_typeFowordToID=['4KHYDY','4KHYDSJ','4KHYZY','4KHYJS','4KHYZT'];
+	var g_typeFowordToName=['4K花园电影','4K花园电视剧','4K花园综艺','4K花园纪实','4K花园专题'];
+	
+	//userID	String	用户账号//stb	String	用户盒子型号//productCode	String	产品编号对象编码//productName	String	产品名称对象名称
+	//cpID	String	CP编码//resolution	int	0:标清,1:高清//epgPlatformType	int	0：华为 1：中兴，默认为0
+	//productCode	String	产品编码//productName	String	产品名称
+	
+	
+   	window.onload=function(){
+   		XEpg.My.init({"currentId":currentId});
+        XEpg.My.pageLoadShowFocus();
+        getTitleImg();
+        getListInfo();
+   	}
+   	function $(id){
+   		return document.getElementById(id);
+   	}
+   	function getTitleImg(){
+   		if(g_elementType=='4KDY'){
+   			$('titleimg').src='../images/dylogo.png';
+   			if(isIndex=='0'){
+	        	sendLogArea(0);
+	        }
+   		}else if(g_elementType=='4KDSJ'){
+   			$('titleimg').src='../images/q-dsj.png';
+   			if(isIndex=='0'){
+	        	sendLogArea(1);
+	        }
+   		}else if(g_elementType=='4KZY'){
+   			$('titleimg').src='../images/q-zy.png';
+   			if(isIndex=='0'){
+	        	sendLogArea(2);
+	        }
+   		}else if(g_elementType=='4KJS'){
+   			$('titleimg').src='../images/q-js.png';
+   			if(isIndex=='0'){
+	        	sendLogArea(3);
+	        }
+   		}
+   	}
+   	function getListInfo(){	
+   		XEpg.Util.ajaxGet('../data/getCategoryList.jsp?categoryCode='+categoryCode+'&firstIndex='+g_catefristIndex+'&maxResult='+g_catemaxResult,dealListInfo);
+   	}
+   	function dealListInfo(data){
+   		var obj=XEpg.Util.parseJSON(data);
+   		var m_data=obj.getCategoryListResp.categoryInfos;
+   		var m_cateContent=[];
+   		if(!!m_data){
+   			g_cateIndexNum=m_data.length;
+   			if(g_elementType=='4KDY'){
+	   			for (var i=0;i<g_cateIndexNum;i++) {
+	   				m_cateContent.push('<div class="item" id="nav_'+i+'" title="'+m_data[i].code+
+	   									'" style="left:'+(145*i)+'px;">'+
+	   									'<div class="txt" >'+m_data[i].name+'</div></div>');
+	   			}
+	   		}else{
+	   			for (var i=0;i<g_cateIndexNum;i++) {
+	   				m_cateContent.push('<div class="item" id="nav_'+i+'" title="'+m_data[i].code+'" style="left:'+(145*i)+'px;">'+
+	   									'<div class="txt" >'+m_data[i].name+'</div></div>');
+	   			}
+	   		}
+   			$('area_catelist').innerHTML = m_cateContent.join("");
+   		}
+   		if($(XEpg.My.currentId)){
+   			$(XEpg.My.currentId).className='item item_focus';
+   		}
+   		if(g_selectId){
+   			$(g_selectId).className='item item_select';
+   			getSelectContentList();
+   		}else{
+   			getContentList();
+   		}
+   		initCategory();
+   		judecallsuccess();
+   	}
+   	function initCategory(){
+   		for (var i=0;i<g_cateIndexNum;i++) {
+ 			XEpg.$('nav_'+i).click().up().down({'func':catemove.downCate}).left({'func':catemove.leftCate}).right({'func':catemove.rightCate});
+   		}
+   	}
+	var tabTimer=null;
+   	var catemove={
+   		upCate:function(){
+   			var m_cindex=parseInt(XEpg.My.currentId.substring(4), 10);
+   		},
+   		downCate:function(){
+			var m_cindex=parseInt(XEpg.My.currentId.substring(4), 10);
+   			if($('list_0')){
+   				$(XEpg.My.currentId).className='item item_select';
+   				g_selectId=XEpg.My.currentId;
+   				XEpg.My.currentId='list_0';
+   				$(XEpg.My.currentId).className='item item_focus';
+   				clearTextStyle();
+    			textScroll();
+   			}
+   			
+   			
+   			
+   		},
+   		leftCate:function(){
+   			if(tabTimer){
+   				clearTimeout(tabTimer);	
+   			}
+   			$('area_contlist_0').innerHTML = '';
+   			$('area_contlist_1').innerHTML = '';
+   			var m_cindex=parseInt(XEpg.My.currentId.substring(4), 10);
+   			var m_cindex=parseInt(XEpg.My.currentId.substring(4), 10);
+   			if(m_cindex>0){
+   				$(XEpg.My.currentId).className='item';
+   				XEpg.My.currentId=g_navName+(m_cindex-1);
+   				$(XEpg.My.currentId).className='item item_focus';
+   			}else{
+   				$(XEpg.My.currentId).className='item';
+   				XEpg.My.currentId='nav_'+(g_cateIndexNum-1);
+   				$(XEpg.My.currentId).className='item item_focus';
+   			}
+   			tabTimer=setTimeout(getContentList,500);
+   		},
+   		rightCate:function(){
+   			if(tabTimer){
+   				clearTimeout(tabTimer);	
+   			}
+   			$('area_contlist_0').innerHTML = '';
+   			$('area_contlist_1').innerHTML = '';
+   			var m_cindex=parseInt(XEpg.My.currentId.substring(4), 10);
+   			if(m_cindex<(g_cateIndexNum-1)){
+   				$(XEpg.My.currentId).className='item';
+   				XEpg.My.currentId=g_navName+(m_cindex+1);
+   				$(XEpg.My.currentId).className='item item_focus';
+   			}else{
+   				$(XEpg.My.currentId).className='item';
+   				XEpg.My.currentId='nav_0';
+   				$(XEpg.My.currentId).className='item item_focus';
+   			}
+   			tabTimer=setTimeout(getContentList,500);
+   		}
+   		
+   	}
+   	function getContentList(){
+   		contentCode=$(XEpg.My.currentId).title;//
+   		if(contentCode){
+			XEpg.Util.ajaxGet('../data/getContentList.jsp?categoryCode='+contentCode+'&firstIndex='+(firstIndex*9)+'&maxResult='+maxResult,dealContentList);
+   		}	
+   	}
+	function getSelectContentList(){
+   		contentCode=$(g_selectId).title;//
+   		if(contentCode){
+			XEpg.Util.ajaxGet('../data/getContentList.jsp?categoryCode='+contentCode+'&firstIndex='+(firstIndex*9)+'&maxResult='+maxResult,dealContentList);
+   		}	
+   	}
+   	function dealContentList(data){
+   		var obj=XEpg.Util.parseJSON(data);
+   		var m_data=obj.getContentListResp.contentInfos;
+   		var m_listContent=[];
+   		var m_flistContent=[];
+   		g_allNum=obj.getContentListResp.recordSize;
+   		if(!!m_data){
+   			g_indexNum=m_data.length;
+   			m_flistContent.push('<div class="item" title="'+m_data[0].elementType+'&'+m_data[0].code+'" id="list_0">'+
+									'<div class="pic"><img src="'+m_data[0].poster+'" alt=""></div>'+
+									'<div class="ptxt">'+
+	               					'<div class="txt" id="list_0_move">'+
+	               					'<span id="list_0_txt">' + m_data[0].name +
+	                				'</span><span id="list_0_copy"></span></div>'+
+									'</div></div>');
+   			$('area_contlist_0').innerHTML= m_flistContent.join("");
+   			for (var i=1;i<g_indexNum;i++) {
+   				if(i<5){
+   					m_listContent.push('<div class="item"  title="'+m_data[i].elementType+'&'+m_data[i].code+'" id="list_'+i+'" style="left: '+(192*(i-1))+'px;">'+
+									'<div class="pic"><img src="'+m_data[i].poster+'" alt=""></div>'+
+									'<div class="ctxt">'+
+									'<div class="txt" id="list_'+ i +'_move">'+
+	               					'<span id="list_'+ i +'_txt">' + m_data[i].name +
+	                				'</span><span id="list_'+ i +'_copy"></span></div>'+	
+									'</div></div>');
+   				}else{
+   					m_listContent.push('<div class="item"  title="'+m_data[i].elementType+'&'+m_data[i].code+'" id="list_'+i+'"  style="left: '+(192*(i-5))+'px; top: 265px;">'+
+									'<div class="pic"><img src="'+m_data[i].poster+'" alt=""></div>'+
+									'<div class="ctxt">'+
+									'<div class="txt" id="list_'+ i +'_move">'+
+	               					'<span id="list_'+ i +'_txt">' + m_data[i].name +
+	                				'</span><span id="list_'+ i +'_copy"></span></div>'+
+									'</div></div>');
+   				}
+   				
+   			}
+   			$('area_contlist_1').innerHTML = m_listContent.join("");
+   			if(!$(XEpg.My.currentId)){
+	   			XEpg.My.currentId=g_listName+(g_indexNum-1);
+	   		}
+   			$(XEpg.My.currentId).className='item item_focus';
+   			showNowPage();//设置当前页数
+   			movePoint();//设置滑条
+   			judecallsuccess();
+   			initContent();
+   		}
+   	}
+   	function judecallsuccess(){
+		if(g_bleft==false){
+			g_bleft=true;
+		}else if(g_bright==false){
+			g_bright=true;
+		}else if(g_bup==false){
+			g_bup=true;
+		}else if(g_bdown==false){
+			g_bdown=true;
+		}
+	}
+   	function initContent(){
+   		for(var i=0;i<g_indexNum;i++){
+			XEpg.$("list_"+i).click({'func':click.gotoDetilPage}).up({'func':contmove.upCont}).down({'func':contmove.downCont}).left({'func':contmove.leftCont}).right({'func':contmove.rightCont}).focus({'func':textScroll}).blur({'func':clearTextStyle});
+   		}
+   		textScroll();
+   	}
+	
+   	var contmove={
+   		upCont:function(){
+   			clearTextStyle();
+   			var m_cindex=parseInt(XEpg.My.currentId.substring(5), 10);
+   			var m_allpage=Math.ceil(g_allNum/g_everyNum);
+   			var m_nowpage=(firstIndex-0)+1;
+   			if(m_nowpage>1){
+   				if(m_cindex==0){
+   					if(g_bup==true){
+						g_bup=false;
+	   					firstIndex--;
+		   				XEpg.My.currentId='list_0';
+		   				getSelectContentList();
+	   				}
+   				}else if(m_cindex<5){
+   					if(g_bup==true){
+						g_bup=false;
+	   					firstIndex--;
+		   				XEpg.My.currentId=g_listName+(m_cindex+4);
+		   				getSelectContentList();
+	   				}
+   				}else{
+   					$(XEpg.My.currentId).className='item';
+	   				XEpg.My.currentId=g_listName+(m_cindex-4);
+	   				$(XEpg.My.currentId).className='item item_focus';
+   				}
+   				textScroll();
+   			}else{
+   				if(m_cindex<5){
+					$(XEpg.My.currentId).className='item';
+	   				XEpg.My.currentId=g_selectId;
+	   				$(XEpg.My.currentId).className='item item_focus';
+   				}else{
+   					$(XEpg.My.currentId).className='item';
+	   				XEpg.My.currentId=g_listName+(m_cindex-4);
+	   				$(XEpg.My.currentId).className='item item_focus';
+	   				textScroll();
+   				}
+   			}
+   			
+   		},
+   		downCont:function(){
+   			clearTextStyle();
+   			var m_cindex=parseInt(XEpg.My.currentId.substring(5), 10);
+   			var m_allpage=Math.ceil(g_allNum/g_everyNum);
+   			var m_nowpage=(firstIndex-0)+1;
+   			if(m_nowpage<m_allpage){
+   				
+   				if(m_cindex==0){
+   					if(g_bdown==true){
+						g_bdown=false;
+	   					firstIndex++;
+		   				XEpg.My.currentId='list_0';
+		   				getSelectContentList();
+	   				}
+   				}else if(m_cindex>4){
+   					if(g_bdown==true){
+						g_bdown=false;
+	   					firstIndex++;
+		   				XEpg.My.currentId=g_listName+(m_cindex-4);
+		   				getSelectContentList();
+	   				}
+   				}else{
+   					$(XEpg.My.currentId).className='item';
+	   				XEpg.My.currentId=g_listName+(m_cindex+4);
+	   				$(XEpg.My.currentId).className='item item_focus';
+   				}
+   			}else{
+   				if(m_cindex==0){
+
+   				}else if(m_cindex>4){
+
+   				}else{
+   					$(XEpg.My.currentId).className='item';
+	   				XEpg.My.currentId=g_listName+(m_cindex+4);
+	   				if($(XEpg.My.currentId)){
+	   					$(XEpg.My.currentId).className='item item_focus';
+	   				}else{
+	   					XEpg.My.currentId=g_listName+(g_indexNum-1);
+	   					$(XEpg.My.currentId).className='item item_focus';
+	   				}
+	   				
+   				}
+   			}
+   			textScroll();
+   		},
+   		leftCont:function(){
+   			clearTextStyle();
+   			var m_cindex=parseInt(XEpg.My.currentId.substring(5), 10);
+   			var m_allpage=Math.ceil(g_allNum/g_everyNum);
+   			var m_nowpage=(firstIndex-0)+1;
+   			if(m_nowpage>1){
+   				if(m_cindex>0){
+   					if(m_cindex==5){
+   						$(XEpg.My.currentId).className='item';
+	   					XEpg.My.currentId='list_0';
+	   					$(XEpg.My.currentId).className='item item_focus';
+   					}else{
+   						$(XEpg.My.currentId).className='item';
+	   					XEpg.My.currentId=g_listName+(m_cindex-1);
+	   					$(XEpg.My.currentId).className='item item_focus';
+   					}
+	   				
+	   			}else{
+	   				if(g_bleft==true){
+						g_bleft=false;
+		   				firstIndex--;
+		   				XEpg.My.currentId='list_8';
+		   				getSelectContentList();
+	   				}
+	   			}
+	   			textScroll();
+   			}else{
+   				if(m_cindex>0){
+	   				if(m_cindex==5){
+   						$(XEpg.My.currentId).className='item';
+	   					XEpg.My.currentId='list_0';
+	   					$(XEpg.My.currentId).className='item item_focus';
+   					}else{
+   						$(XEpg.My.currentId).className='item';
+	   					XEpg.My.currentId=g_listName+(m_cindex-1);
+	   					$(XEpg.My.currentId).className='item item_focus';
+   					}
+	   				textScroll();
+	   			}else{
+	   				$(XEpg.My.currentId).className='item';
+	   				if(g_indexNum>5){
+	   					XEpg.My.currentId='list_4';
+	   				}else{
+	   					XEpg.My.currentId=g_listName+(g_indexNum-1);
+	   				}
+	   				
+	   				$(XEpg.My.currentId).className='item item_focus';
+	   			}
+   			}
+   			
+   		},
+   		rightCont:function(){
+   			clearTextStyle();
+   			var m_cindex=parseInt(XEpg.My.currentId.substring(5), 10);
+   			var m_allpage=Math.ceil(g_allNum/g_everyNum);
+   			var m_nowpage=(firstIndex-0)+1;
+   			if(m_nowpage<m_allpage){
+   				if(m_cindex<(g_indexNum-1)){
+   					if(m_cindex==4){
+   						$(XEpg.My.currentId).className='item';
+	   					XEpg.My.currentId='list_0';
+	   					$(XEpg.My.currentId).className='item item_focus';
+   					}else{
+   						$(XEpg.My.currentId).className='item';
+	   					XEpg.My.currentId=g_listName+(m_cindex+1);
+	   					$(XEpg.My.currentId).className='item item_focus';
+   					}
+	   				
+	   			}else{
+	   				if(g_bright==true){
+						g_bright=false;
+		   				firstIndex++;
+		   				XEpg.My.currentId='list_0';
+		   				getSelectContentList();
+		   			}
+	   			}
+   			}else{
+   				if(m_cindex<(g_indexNum-1)){
+	   				if(m_cindex==4){
+   						$(XEpg.My.currentId).className='item';
+	   					XEpg.My.currentId='list_0';
+	   					$(XEpg.My.currentId).className='item item_focus';
+   					}else{
+   						$(XEpg.My.currentId).className='item';
+	   					XEpg.My.currentId=g_listName+(m_cindex+1);
+	   					$(XEpg.My.currentId).className='item item_focus';
+   					}
+	   			}
+   			}
+   			textScroll();
+   		}
+   		
+   	}
+   	var click={
+   		gotoDetilPage:function(){
+			var m_contentCode=$(XEpg.My.currentId).title.split('&')[1];
+			var m_elementType=$(XEpg.My.currentId).title.split('&')[0];
+			var m_backUrl = location.href;
+            m_backUrl = m_backUrl.indexOf("?") != -1 ? m_backUrl.split("?")[0] : m_backUrl;
+            m_backUrl += "?" + "currentId=" + XEpg.My.currentId
+                    + "&categoryCode=" + categoryCode
+                    + "&selectId=" + g_selectId
+                    + "&getelementType=" + g_elementType
+                    + "&firstIndex=" + firstIndex;
+            XEpg.Util.addNavigationUrl(m_backUrl);
+
+   			if(g_elementType=='4KDY'){
+	   			XEpg.Util.gotoPage('he-particulars-list.html?contentCode='+m_contentCode+'&categoryCode='+categoryCode)
+	   		}else if(g_elementType=='4KDSJ'){
+	   			XEpg.Util.gotoPage('he-dsjxq.html?contentCode='+m_contentCode+'&categoryCode='+categoryCode)
+	   		}else if(g_elementType=='4KZY'){
+	   			XEpg.Util.gotoPage('he-zyxq.html?contentCode='+m_contentCode+'&categoryCode='+categoryCode)
+	   		}else if(g_elementType=='4KJS'){
+	   			//elementType
+	   			if(m_elementType=='Series'){
+	   				XEpg.Util.gotoPage('he-zyxq.html?contentCode='+m_contentCode+'&categoryCode='+categoryCode)
+	   			}else if(m_elementType=='Program'){
+	   				XEpg.Util.gotoPage('he-particulars-list.html?contentCode='+m_contentCode+'&categoryCode='+categoryCode)
+	   			}else{
+	   				XEpg.Util.gotoPage('he-particulars-list.html?contentCode='+m_contentCode+'&categoryCode='+categoryCode)
+	   			}
+	   			
+	   		}
+   		}
+   	}
+   	//设置当前页数
+   	function showNowPage(){
+   		var m_allpage=Math.ceil(g_allNum/g_everyNum);
+   		var m_nowpage=(firstIndex-0)+1;
+   		$('pageshownum').innerHTML=m_nowpage+'<span>/'+m_allpage+'&nbsp;&nbsp;页</span>';
+   	}
+   	//设置滑条
+	function movePoint(){
+		var m_allpage=Math.ceil(g_allNum/g_everyNum);
+		var index=firstIndex;
+		if(m_allpage>1){
+			$('slide_pointdiv').style.display='block';
+			var top=Math.ceil(506/m_allpage);
+			var mtop=(top*index)>=506?'506':(top*index);
+			$('slide_point').style.top=mtop+'px';
+			top=top<30?30:top;
+			$('slide_pointimg').style.height=top+'px';
+			$('slide_pointimg').style.width='6px';
+		}else{
+			$('slide_pointdiv').style.display='none';
+		}
+		
+	}
+   	var moveObj = null, scrollTimer = null, txtObj = null;
+
+    function textScroll(){
+        var m_conId = 'list_';
+        document.getElementById(XEpg.My.currentId).className = 'item item_focus';
+        var m_index1 = parseInt(XEpg.My.currentId.substring(5) , 10);
+        moveObj = document.getElementById(m_conId + m_index1 + '_move');
+        txtObj = document.getElementById(m_conId + m_index1 + '_txt');
+        if(moveObj&&moveObj.scrollWidth > moveObj.offsetWidth ){
+            document.getElementById(m_conId + m_index1 + '_copy').innerHTML =  '　    ' + txtObj.innerHTML;
+            startScroll();//父元素向左循环移动(设置父元素scrollleft)
+        }
+    }
+    
+    function startScroll(){
+        if(moveObj.scrollLeft >= (txtObj.offsetWidth + 23) ){
+            moveObj.scrollLeft = 0;
+        }else {
+            moveObj.scrollLeft +=2;
+        }		
+        scrollTimer = setTimeout(startScroll, 50);
+    }
+    function clearTextStyle(){
+        var m_conId = 'list_';
+        clearTimeout(scrollTimer);		//清除定时器
+        document.getElementById(XEpg.My.currentId).className = 'item';
+        var m_index1 = parseInt(XEpg.My.currentId.substring(5) , 10);
+        var copyEle = document.getElementById(m_conId + m_index1 + '_copy');
+        if(copyEle){
+            //清空复制的滚动文字
+            copyEle.innerHTML = '';
+        }
+        if(moveObj){
+            //清空scrollLeft
+            moveObj.scrollLeft = 0;
+        }
+    }
+	//上页
+    XEpg.Nav.key_pageUp_event=function(){
+    	var m_cindex=parseInt(XEpg.My.currentId.substring(5), 10);
+    	if(!!XEpg.My.currentId.substring(5)){
+	    	clearTextStyle();
+	    	var m_allpage=Math.ceil(g_allNum/g_everyNum);
+	   		var m_nowpage=(firstIndex-0)+1;
+	   		if(m_nowpage>1){
+	   			if(g_bup==true){
+					g_bup=false;
+		   			firstIndex--;
+			   		getSelectContentList();
+		   		}
+	   		}else{
+	   			if(g_bup==true){
+					g_bup=false;
+		   			firstIndex=(m_allpage-1);
+			   		getSelectContentList();
+		   		}
+	   		}
+	    	textScroll();
+    	}
+    }
+    //下页
+    XEpg.Nav.key_pageDown_event=function(){
+    	var m_cindex=parseInt(XEpg.My.currentId.substring(5), 10);
+    	if(!!XEpg.My.currentId.substring(5)){
+	    	clearTextStyle();
+	    	var m_allpage=Math.ceil(g_allNum/g_everyNum);
+	   		var m_nowpage=(firstIndex-0)+1;
+	   		var m_cindex=parseInt(XEpg.My.currentId.substring(5), 10);
+	   		if(m_nowpage<m_allpage){
+	   			if(g_bdown==true){
+					g_bdown=false;
+					firstIndex++;
+	   				getSelectContentList();
+				}
+	   		}else{
+	   			if(g_bup==true){
+					g_bup=false;
+		   			firstIndex=0;
+			   		getSelectContentList();
+		   		}
+	   		}
+	    	textScroll();
+    	}
+    }
+     //发送日志
+    function sendLogArea(index){
+    	
+    	if(SP.UserID){
+          var stb = "";
+          try {
+             if (typeof(Authentication) != "undefined") {
+                stb = Authentication.CTCGetConfig("STBType");
+             }
+          } catch (e) {
+          }
+          
+          var epgPlatformType = SP.iptv_flag == 'hw' ? '0' :'1';
+          var reportUrl = "../data/addVisitLog.jsp?" +
+             "userID=" + SP.UserID +
+             "&stb=" + stb +
+             "&productCode=" + g_typeFowordToID[index] +
+             "&productName=" + g_typeFowordToName[index] +
+             "&cpID=" + 1007 +
+             "&resolution=1" +
+             "&epgPlatformType=" + epgPlatformType;
+          XEpg.Util.ajaxGet(reportUrl);
+       }
+    }
+	XEpg.Nav.key_back_event = function(){
+		if(firstIndex>0){
+			firstIndex=0;
+		   	XEpg.My.currentId=g_selectId;
+		   	getSelectContentList();
+		}else{
+			XEpg.Nav.key_back_opt();
+		}
+    	
+    }
+</script>
+</html>

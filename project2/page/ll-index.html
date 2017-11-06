@@ -1,0 +1,696 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta name="page-view-size" content="1280*720" />
+<meta charset="UTF-8">
+<title>模板EPG</title>
+<link rel="stylesheet" href="../css/style.css"/>
+<style type="text/css"></style>
+</head>
+<body bgcolor="transparent">
+
+<!-- S pagebg -->
+<div class="pagebg">
+    <div class="pic"><img src="../images/leftBG.jpg" width="303" height="440" alt=""></div>
+    <div class="pic" style="top:438px;"><img src="../images/bottomBG.jpg" width="881" height="282" alt=""></div>
+    <div class="pic" style="left:303px;"><img src="../images/topBG.jpg" width="578" height="113" alt=""></div>
+    <div class="pic" style="left:881px;"><img src="../images/rightBG.jpg" width="399" height="720" alt=""></div>
+</div>
+<!-- E pagebg --> 
+
+<!-- S content -->
+<div class="wrapper"> 
+    <!-- S top -->
+    <div id="test1" style="left: 20px; top: 20px; width: 800px; height: 300px; position: absolute; color: #ff0000; word-break:break-all;"></div>
+    <div class="logo"><img src="../images/logo.png" alt=""></div>
+    <div class="laba"> <img src="../images/logo_gg.png" alt="">
+        <div class="txt" id="txtBox" style="overflow: hidden;">
+            <div style="position: absolute;top: 0px;" id="scrollTxt"></div>
+        </div>
+    </div>
+    
+    <div class="index-btn type01">
+        <div class="item " id="record" style="left: 725px;">
+            <div class="icon"><img src="../images/logo_history.png" alt=""></div>
+            <div class="txt">历史</div>
+        </div>
+        <div class="item" id="coll" style="left:835px;">
+            <div class="icon"><img src="../images/logo_like.png" alt=""></div>
+            <div class="txt">收藏</div>
+        </div>
+    </div>
+    <div class="index-btn type02">
+        <div class="item" id="order" style="left: 965px;">
+            <div class="icon" style="left: 30px;"><img src="../images/logo_js.png" alt=""></div>
+            <div class="txt" style="left: 62px;">产品介绍</div>
+        </div>
+    </div>
+    <div class="line"> <img src="../images/logo_line.png" alt=""> </div>
+    <div class="time">
+        <div class="txt" id="date"></div>
+    </div>
+    
+    <!-- E top --> 
+    <!-- E nav -->
+    <div class="navBox">
+        <div class="nav nav01">
+            <div class="item" id="menu_0" style="left: 75px;"> </div>
+        </div>
+        <div class="nav nav02">
+            <div class="item" id="menu_1" title="he-list.html?categoryCode=00040000000515038962072003910000&getelementType=4KDY" style="left:265px;"></div>
+        </div>
+        <div class="nav nav03">
+            <div class="item" id="menu_2" title="he-list.html?categoryCode=00040000000515038962164703920000&getelementType=4KDSJ" style="left:455px;"></div>
+        </div>
+        <div class="nav nav04">
+            <div class="item" id="menu_3" title="he-list.html?categoryCode=00040000000515038962273903930000&getelementType=4KZY" style="left:645px;"></div>
+        </div>
+        <div class="nav nav05">
+            <div class="item" id="menu_4" title="he-list.html?categoryCode=00040000000515038962376403940000&getelementType=4KJS" style="left: 835px;"></div>
+        </div>
+        <div class="nav nav06">
+            <div class="item" id="menu_5" title="q-special-list.html?categoryCode=00040000000515038962472903950000" style="left:1025px;"></div>
+        </div>
+    </div>
+    <!-- E nav --> 
+    <!-- S 推荐区 -->
+    <div class="q-indexPoster"> 
+        <!-- S left-->
+        <div class="type-a">
+            <div class="item" id="conA_0">
+             
+                
+                <div class="pic"><img id="conA_0_img" src="" /></div>
+            </div>
+            <div class="item " id="conA_1" style="top:235px;">
+                
+                <div class="pic"><img id="conA_1_img" src="" /></div>
+            </div>
+        </div>
+        <!-- E left--> 
+        
+        <!-- S index-video-->
+        <div class="index-video">
+            <div class="item" id="video">
+                
+                <div class="play-iocn"><img id="videoIcon" src="../images/play-iocn.png" /></div>
+                <div class="pic">
+                	<iframe id="videoPlay" name="videoPlay" style="position: absolute; top: 0px;left: 0px; display: block;"
+                    width="578px" height="270px" frameborder="0" src="" allowtransparency="true"></iframe>
+                </div>
+                
+                <div class="txtbar">
+                <div class="txt" id="video_txt"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- E index-video--> 
+        
+        <!-- S bottom-->
+        <div class="type-b">
+        	<div class="item " id="conB_0">
+        		
+        		<div class="pic"><img id="conB_0_img" src="" /></div>
+        	</div>
+        	<div class="item" id="conB_1" style="left: 291px;">
+                
+                <div class="pic"><img id="conB_1_img" src="" /></div>
+            </div>
+        </div>
+        
+        <!-- E bottom-->
+        
+        <!-- S right-->
+
+        <div class="type-c">
+        	<div class="item" id="conB_2">
+        		
+        		<div class="pic"><img id="conB_2_img" src="" /></div>
+        	</div>
+        </div>
+
+        <!-- E right-->
+
+    </div>
+    <!-- E 推荐区 --> 
+    
+</div>
+<!-- E content -->
+
+</body>
+
+<script type="text/javascript" src="../js/xepg.min.js" ></script>
+<script type="text/javascript" src="../js/com.min.js" ></script>
+<script>
+	var g_param = XEpg.My.parseUrl();		//解析地址栏参数 接收的变量
+	var currentId = g_param.currentId || 'video'; //初始化焦点
+	
+	var isIndex=g_param.currentId||'0';
+	
+	var g_videoCateGoryCode = '00040000000515039089650303370000';//推荐位
+	var g_videoCode = [];  //储存播放code
+	var g_playNum = 0 ;   //当前播放位子
+	var g_videoLength = 0 ; //播放内容总数
+	var mp = null; //播放器对象
+	var con = [];
+	var newContent = [];
+	
+	var nowVolume = 10;
+	var g_nowcode='';
+	
+    window.onload = function(){
+    	XEpg.My.init({'currentId':currentId});
+        XEpg.My.pageLoadShowFocus();  //显示焦点
+        if(isIndex=='0'){
+        	sendLog();
+        }
+	    init();
+        getData.getVAS();
+        txtSlider.init();
+    }
+    function init(){
+    	XEpg.$('record').click({'func':click.record}).left({'id':'conA_0'}).down({'id':'video'}).right({'id':'coll'}).up({'id':'menu_3'});
+		XEpg.$('coll').click({'func':click.coll}).left({'id':'record'}).down({'id':'conB_2'}).right({'id':'order'}).up({'id':'menu_4'});
+		XEpg.$('order').click({'func':click.order}).left({'id':'coll'}).down({'id':'conB_2'}).right({'id':'record'}).up({'id':'menu_5'});
+	
+		XEpg.$('conA_0').click({'func':click.getTitle}).left({'id':'conB_2'}).down({'id':'conA_1'}).right({'id':'video'}).up({'id':'record'});
+		XEpg.$('conA_1').click({'func':click.getTitle}).left({'id':'conB_2'}).down({'id':'menu_0'}).right({'id':'conB_0'}).up({'id':'conA_0'});
+		
+		XEpg.$('video').click({'func':click.video}).left({'id':'conA_0'}).down({'id':'conB_0'}).right({'id':'conB_2'}).up({'id':'record'});
+		
+		XEpg.$('conB_0').click({'func':click.getVOD}).left({'id':'conA_1'}).down({'id':'menu_1'}).right({'id':'conB_1'}).up({'id':'video'});
+		XEpg.$('conB_1').click({'func':click.getVOD}).left({'id':'conB_0'}).down({'id':'menu_3'}).right({'id':'conB_2'}).up({'id':'video'});
+		XEpg.$('conB_2').click({'func':click.getVOD}).left({'id':'video','class': 'item'}).down({'id':'menu_5','class': 'item'}).right({'id':'conA_0','class': 'item'}).up({'id':'order','class': 'item'});
+		
+		XEpg.$('menu_0').left({'id':'menu_5'}).down({'id':'conA_0'}).right({'id':'menu_1'}).up({'id':'conA_1'});
+		XEpg.$('menu_1').click({'func':click.getTitle}).left({'id':'menu_0'}).down({'id':'video'}).right({'id':'menu_2'}).up({'id':'conB_0'});
+		XEpg.$('menu_2').click({'func':click.getTitle}).left({'id':'menu_1'}).down({'id':'video'}).right({'id':'menu_3'}).up({'id':'conB_0'});
+		XEpg.$('menu_3').click({'func':click.getTitle}).left({'id':'menu_2'}).down({'id':'record'}).right({'id':'menu_4'}).up({'id':'conB_1'});
+		XEpg.$('menu_4').click({'func':click.getTitle}).left({'id':'menu_3'}).down({'id':'coll'}).right({'id':'menu_5'}).up({'id':'conB_2'});
+		XEpg.$('menu_5').click({'func':click.getTitle}).left({'id':'menu_4'}).down({'id':'order'}).right({'id':'menu_0'}).up({'id':'conB_2'});
+		
+    }
+    var getData = {
+    	getVAS : function () {  //左侧两个VSA推荐位
+    		XEpg.Util.ajaxGet('../data/getCategoryList.jsp?categoryCode=00040000000515039089168303360000&firstIndex=0&maxResult=2', function(data){
+    			var data = XEpg.Util.parseJSON(data);
+    			var item = data.getCategoryListResp.categoryInfos || null;
+    			if(item){
+    				for(var i = 0 ; i < 2 ; i ++){
+	    				var mImg = item[i].thumbnal;
+	    				var mTitle = item[i].description;
+	    				if(mImg){
+	    					$('conA_' + i + '_img').src = mImg;
+	    				}else{
+	    					$('conA_' + i + '_img').src = '../images/demo/pic-237X231.jpg';
+	    				}
+	    				$('conA_' + i).title = mTitle;
+	    			}
+    			}
+    			getData.getVOD();
+    		});
+    	},
+    	getVOD : function () {  //下、右三个VOD推荐位
+    		XEpg.Util.ajaxGet('../data/getContentList.jsp?categoryCode=00040000000515039090403103380000&firstIndex=0&maxResult=3', function(data){
+    			var data = XEpg.Util.parseJSON(data);
+    			var item = data.getContentListResp.contentInfos || null;
+    			if(item){
+    				for(var i = 0 ; i < 3 ; i ++){
+	    				var mImg = item[i].thumbnail;
+	    				if(mImg){
+	    					$('conB_' + i + '_img').src = mImg;
+	    				}else{
+	    					$('conB_' + i + '_img').src = '../images/demo/pic-287X138.jpg';
+	    				}
+	    				$('conB_' + i).title = item[i].elementType + '/' + item[i].code + '/' + item[i].programType;
+	    			}
+    			}
+    			getData.getVideo();
+    		});
+    	},
+    	getVideo : function () {  //播放推荐位
+    		XEpg.Util.ajaxGet('../data/getContentList.jsp?categoryCode=' + g_videoCateGoryCode + '&firstIndex=0&maxResult=999', function(data){
+    			var data = XEpg.Util.parseJSON(data);
+            	var item = data.getContentListResp.contentInfos || null;
+            	if(item){
+            		g_videoLength = item.length;
+	                for (var i = 0; i < g_videoLength; i++) {
+	                    g_videoCode.push(item[i].code);
+	                }
+	                g_playNum = parseInt(Math.random() * g_videoLength - 1);
+            		var code = g_videoCode[g_playNum];
+            		g_nowcode=code;
+            		XEpg.Util.ajaxGet('../data/getContentDetail.jsp?contentCode=' + code + '&productCode=4KHY',video.getVideo);
+            	}
+    		});
+    	}
+    };
+    
+    var video = {
+    	getVideo : function (data) {
+    		var iptv_flag = XEpg.Util.getCookie('iptv_flag');  //平台判断
+            var epgdomain='';
+            var STBTYPE='';
+            //var stbWidth = 578, stbHeight = 270, stbLeft = 303, stbTop = 85;
+            var stbWidth = 0, stbHeight = 0, stbLeft = 0, stbTop = 0;
+            try {
+            	epgdomain = Authentication.CTCGetConfig('EPGDomain');
+                STBTYPE = Authentication.CTCGetConfig("STBType");
+            } catch (e) {
+
+            }
+    		var data = XEpg.Util.parseJSON(data);
+    		var code = data.getContentDetailResp.programID;
+            var des = data.getContentDetailResp.description || null;
+            var name = data.getContentDetailResp.name;
+            var elementType=data.getContentDetailResp.elementType;
+            var programType=data.getContentDetailResp.programType;
+			if (des == '' || des == undefined) {
+                $('video').title = elementType + '/' + code + '/' + programType;
+            } else {
+                if (isNaN(des)) {
+                    if (des.indexOf('h-url') > -1) {
+                      	$('video').title = elementType + '/' + des + '/' + programType;
+                    } else {
+                        $('video').title = elementType + '/' + code + '/' + programType;
+                    }
+                } else {
+                   $('video').title = elementType + '/' + des + '/' + programType;
+                }
+            }
+			//document.getElementById('test1').innerHTML =$('video').title+g_videoCode+"===="+g_playNum;
+            var mediaName = name.indexOf("预告") > -1 ? name.substring(0, name.indexOf("预告")) : name;
+            
+            $('video_txt').innerHTML = mediaName;   
+            
+            if (STBTYPE.indexOf('EC6108V9') > -1) {//ok
+                stbWidth = 578;
+            	stbHeight = 270;
+            	stbLeft = 303;
+            	stbTop = 114;
+            }else if (STBTYPE == 'B860A') {
+                stbWidth = 581;
+            	stbHeight = 270;
+            	stbLeft = 301;
+            	stbTop = 114;
+            }else if (STBTYPE == 'B860AV1.1-T2') {
+                stbWidth = 582;
+            	stbHeight = 282;
+            	stbLeft = 303;
+            	stbTop = 112;
+            }else if (STBTYPE == 'B860AV1.1') {
+                stbWidth = 578;
+            	stbHeight = 282;
+            	stbLeft = 303;
+            	stbTop = 112;
+            }else if (STBTYPE == 'HG680-JD79H-52') {
+                stbWidth = 578;
+            	stbHeight = 302;
+            	stbLeft = 303;
+            	stbTop = 112;
+            }else{
+            	stbWidth = 578;
+            	stbHeight = 270;
+            	stbLeft = 303;
+            	stbTop = 114;
+            }
+            if (iptv_flag == "zx") {
+                // 中兴的进播控的方式
+                var last = epgdomain.lastIndexOf("/");
+                var host = epgdomain.substr(0, last);
+                $("videoPlay").src = host + "/MediaService/SmallScreen?" +
+                    "Type=ad&ContentID=" + code + "&Left=" + stbLeft + "&Top=" + stbTop +
+                    "&Width=" + stbWidth + "&Height=" + stbHeight + "&CycleFlag=0" +
+                    "&ReturnURL=" + encodeURIComponent(window.location.href);
+                $("videoIcon").style.display = "none";
+                setTimeout(video.getIframeObj, 1000);
+            } else if (iptv_flag == "hw") {
+                $("videoPlay").src = epgdomain.split("/EPG")[0] + "/EPG/MediaService/SmallScreen.jsp" +
+                    "?Type=ad&ContentID=" + code + "&Left=" + stbLeft + "&Top=" + stbTop +
+                    "&Width=" + stbWidth + "&Height=" + stbHeight + "&CycleFlag=0" +
+                    "&ReturnURL=" + encodeURIComponent(window.location.href);
+                setTimeout(video.getIframeObj, 1000);
+                eval("eventJson = " + Utility.getEvent());
+                var typeStr = eventJson.type;
+                if (typeStr == "EVENT_MEDIA_ERROR") {
+                    $("videoIcon").style.display = "block";
+                } else {
+                    $("videoIcon").style.display = "none";
+                }
+            }
+    	},
+    	getIframeObj : function () {
+    		var partner = XEpg.Util.getCookie("iptv_flag");
+            var iframe = document.getElementById("videoPlay");
+            try {
+            	var epgdomain = Authentication.CTCGetConfig('EPGDomain');
+            } catch (e) {
+            }
+            var iframeContent = (iframe.contentWindow || iframe.contentDocument);
+            if (iframe) {
+                if (partner == "hw") {
+                    try {
+                        mp = iframeContent.mp; // 华为获取Mediaplayer 对象
+                    } catch (e) {
+                    }
+                } else {
+                    try {
+                        mp = iframeContent.mymediaplayer; // 中兴获取Mediaplayer 对象sss
+                    } catch (e) {
+                    }
+                }
+            }
+            nowVolume = mp.getVolume();
+            var currentTime = parseInt(mp.getMediaDuration(), 10) * 1000;
+            
+            setTimeout(function () {
+                destoryMP();
+                g_playNum ++;
+                if (g_playNum == g_videoLength) {
+                    g_playNum = 0;
+                }
+                var code = g_videoCode[g_playNum];
+                XEpg.Util.ajaxGet('../data/getContentDetail.jsp?contentCode=' + code + '&productCode=4KHY',video.getVideo);
+            }, currentTime);
+    	}
+    };
+    
+    var click = {
+    	record : function () {
+    		var backUrl = location.href;
+            backUrl = backUrl.indexOf("?") != -1 ? backUrl.split("?")[0] : backUrl;
+            backUrl += "?" + "currentId=" + XEpg.My.currentId
+            XEpg.Util.addNavigationUrl(backUrl);
+            try{
+            	destoryMP();
+            }catch(e){
+            	//TODO handle the exception
+            }
+            XEpg.Util.gotoPage('he-lsjl.html');
+    	},
+    	coll : function () {
+    		var backUrl = location.href;
+            backUrl = backUrl.indexOf("?") != -1 ? backUrl.split("?")[0] : backUrl;
+            backUrl += "?" + "currentId=" + XEpg.My.currentId
+            XEpg.Util.addNavigationUrl(backUrl);
+            try{
+            	destoryMP();
+            }catch(e){
+            	//TODO handle the exception
+            }
+            XEpg.Util.gotoPage('he-wdsc.html');
+    	},
+    	order : function () {
+    		var backUrl = location.href;
+            backUrl = backUrl.indexOf("?") != -1 ? backUrl.split("?")[0] : backUrl;
+            backUrl += "?" + "currentId=" + XEpg.My.currentId
+            XEpg.Util.addNavigationUrl(backUrl);
+            try{
+            	destoryMP();
+            }catch(e){
+            	//TODO handle the exception
+            }
+            XEpg.Util.gotoPage('w-order-month.html');
+    	},
+    	video : function () {
+    		var gotoUrl = '';
+    		var url = $(XEpg.My.currentId).title;
+    		var elementType = url.split('/')[0];
+    		var code = url.split('/')[1];
+    		var programType = url.split('/')[2];
+    		
+    		if(elementType == 'Program'){
+    			gotoUrl = 'he-particulars-list.html?contentCode=' + code;
+    		}else{
+    			if(programType == '综艺'||programType == '纪实'){
+    				gotoUrl = 'he-zyxq.html?contentCode=' + code;
+    			}else{
+    				gotoUrl = 'he-dsjxq.html?contentCode=' + code;
+    			}
+    		}
+    		
+    		var backUrl = location.href;
+            backUrl = backUrl.indexOf("?") != -1 ? backUrl.split("?")[0] : backUrl;
+            backUrl += "?" + "currentId=" + XEpg.My.currentId
+            XEpg.Util.addNavigationUrl(backUrl);
+            try{
+            	destoryMP();
+            }catch(e){
+            	//TODO handle the exception
+            }
+            
+            XEpg.Util.gotoPage(gotoUrl);
+    	},
+    	getVOD : function () {
+    		var gotoUrl = '';
+    		var url = $(XEpg.My.currentId).title;
+    		var elementType = url.split('/')[0];
+    		var code = url.split('/')[1];
+    		var programType = url.split('/')[2];
+    		
+    		if(elementType == 'Program'){
+    			gotoUrl = 'he-particulars-list.html?contentCode=' + code;
+    		}else{
+    			if(programType == '综艺'||programType == '纪实'){
+    				gotoUrl = 'he-zyxq.html?contentCode=' + code;
+    			}else{
+    				gotoUrl = 'he-dsjxq.html?contentCode=' + code;
+    			}
+    		}
+    		var backUrl = location.href;
+            backUrl = backUrl.indexOf("?") != -1 ? backUrl.split("?")[0] : backUrl;
+            backUrl += "?" + "currentId=" + XEpg.My.currentId
+            XEpg.Util.addNavigationUrl(backUrl);
+            try{
+            	destoryMP();
+            }catch(e){
+            	//TODO handle the exception
+            }
+            XEpg.Util.gotoPage(gotoUrl);
+    	},
+    	getTitle : function () {
+    		var url = $(XEpg.My.currentId).title;
+    		var backUrl = location.href;
+            backUrl = backUrl.indexOf("?") != -1 ? backUrl.split("?")[0] : backUrl;
+            backUrl += "?" + "currentId=" + XEpg.My.currentId
+            XEpg.Util.addNavigationUrl(backUrl);
+            try{
+            	destoryMP();
+            }catch(e){
+            	//TODO handle the exception
+            }
+            XEpg.Util.gotoPage(url);
+    	}
+    };
+    
+    /**
+         * @param updateDate 时间迭代更新的方法函数
+         */
+        function updateDate() {
+            var time = new Date();
+            var currentHours = time.getHours();
+            var currentMinutes = time.getMinutes();
+            currentHours = currentHours >= 10 ? currentHours : "0" + currentHours;
+            currentMinutes = currentMinutes >= 10 ? currentMinutes : "0" + currentMinutes;
+
+            var currentTime = currentHours + ":" + currentMinutes;
+            $('date').innerHTML = currentTime;
+
+        }
+        
+            /*
+	     * 释放终端，停止视频播放*/
+	    function destoryMP() {
+	        var instanceId = mp.getNativePlayerInstanceID();
+	        mp.stop();
+	        mp.releaseMediaPlayer(instanceId);
+	    }
+
+        function updateCurrentTime() {
+            setInterval(function () {
+                updateDate();
+            }, 1000 * 60);
+        }
+
+        window.setTimeout(function () {
+            updateDate();
+            updateCurrentTime();
+        }, 300);
+
+
+        /**
+         * 获取跑马灯，设置跑马灯动画
+         */
+
+        var txtSlider = {
+            INITTOP: 38, //初始移动的TOP值
+            DURATION: 400, //动画开始到结束的持续时间
+            STEPS: 30, //动画要移动的总步数
+            moved: 0, //动画已经移动的步数
+            INTERVAL: 0, //每步的时间间隔：DURATION/STEPS
+            WAIT: 2500, //自动轮播之间等待的时间
+            timer: null,//保存正在执行的定时器的序号
+            canAuto: true,//保存是否自动轮播
+            init: function () {
+                var self = this;
+                /*初始化方法，拿到跑马灯数据，拆分开单条存入数组中*/
+                XEpg.Util.ajaxGet('../data/getScrollmsgList.jsp?cpCode=1007&firstIndex=0&maxResult=-1', function (data) {
+                    var data = XEpg.Util.parseJSON(data);
+                    data = data.getScrollmsgListResp.scrollmsgInfos;
+                    if(data){
+                    	for (var l = 0;l < data.length;l++) {
+	                        con.push(data[l].content);
+	                    }
+                    }
+                    var divWidhth = parseInt(getComputedStyle($('txtBox')).width, 10);//外层div的宽度
+                    var size = parseInt(getComputedStyle($('scrollTxt')).fontSize, 10);//字体的大小
+                    var count = divWidhth / size;
+                    for (var j = 0; j < con.length; j++) {//遍历拿到的总跑马灯数据                    	
+                        if (con[j].length > count) {//如果其中的一条数据的字符个数大于容器最大的容量
+                            var content = con[j];//用一个变量存住每一条数据
+                            var len = content.length;//获取每一条数据的总字符个数
+                            var total = Math.ceil(len / count);//将每一条数据拆成total行
+                            for (var i = 0; i < total; i++) {//遍历行数
+                                //将一整条数据截取为多条数据（容器容纳的最大字符），然后将这几条数据push到数组中
+                                newContent.push(content.slice((i * count), (i + 1 ) * count));
+                            }
+                        } else {//否则直接push到newContent数组中
+                            newContent.push(con[j]);
+                        }
+                    }
+                    //console.log(newContent);
+                    self.updateView();
+                    if (newContent.length > 1) {
+                        self.autoMove();
+                    }
+                });
+            },
+            updateView: function () {//渲染数据的通用方法
+                var html = '';
+                for (var l = 0; l < newContent.length; l++) {
+                    html += '<div style="height:38px;line-height:38px;">&nbsp;&nbsp;&nbsp;' + newContent[l] + '</div>';
+                }
+                $('scrollTxt').innerHTML = html;
+            },
+            moveStep: function () {//移动一步的方法
+                var top = parseFloat(getComputedStyle($("scrollTxt")).top);
+                $('scrollTxt').style.top = top - (this.INITTOP / this.STEPS) + 'px';
+                this.moved++;
+                this.INTERVAL = this.DURATION / this.STEPS;
+                if (this.moved <= this.STEPS) {//如果移动的步数小于总步数，就继续执行移动一步的方法
+                    this.timer = setTimeout(
+                            this.moveStep.bind(this),
+                            this.INTERVAL
+                    )
+                } else {//移动完成后，将已经移动步数重置为0，定时器清空，更新数组，更新数据
+                    this.moved = 0;//	moved重置为0;
+                    this.timer = null; //  timer清空为null
+                    //scrollTxt的top至清空为0
+                    $('scrollTxt').style.top = '0px';
+                    newContent = newContent.concat(newContent.splice(0, 1));
+                    this.updateView();
+                    this.autoMove();
+                }
+            },
+            autoMove: function () {//自动轮播
+                if (this.canAuto) {
+                    setTimeout(this.moveStep.bind(this, 1), this.WAIT);
+                }
+            }
+
+        }
+        
+        if (!Function.prototype.bind) {
+            Function.prototype.bind = function (obj) {
+                //this-->当前调用bind方法的函数对象fun
+                //将当前函数对象保存为一个局部变量
+                var fun = this;//calcSal(base,bonus,other)
+                var args =//将类数组对象转为普通数组
+                        Array.prototype.slice.call(arguments, 1);
+                //仅获取除obj参数外的剩余参数：[1:8000]
+                //闭包封装了：fun,obj,args
+                return function (/*后续参数列表*/) {
+                    //每次调用fun时，都用obj
+                    fun.apply(obj, args.concat(
+                            Array.prototype.slice.call(arguments)
+                    ));
+                }
+            }
+        }
+
+    
+    function $(id){
+        return document.getElementById(id);
+    }
+
+  //发送日志
+    function sendLog() {
+    	
+    	if(SP.UserID){
+          var stb = "";
+          try {
+             if (typeof(Authentication) != "undefined") {
+                stb = Authentication.CTCGetConfig("STBType");
+             }
+          } catch (e) {
+          }
+          
+          var epgPlatformType = SP.iptv_flag == 'hw' ? '0' :'1';
+        //  document.getElementById('test1').innerHTML = "epgPlatformType=============="+epgPlatformType+"SP.iptv_flag=============="+SP.iptv_flag;
+          var reportUrl = "../data/addVisitLog.jsp?" +
+             "userID=" + SP.UserID +
+             "&stb=" + stb +
+             "&productCode=" + "4KHY" +
+             "&productName=" + "4K花园" +
+             "&cpID=" + 1007 +
+             "&resolution=1" +
+             "&epgPlatformType=" + epgPlatformType;
+          //document.getElementById('test1').innerHTML = reportUrl;
+          XEpg.Util.ajaxGet(reportUrl);
+       }
+    }
+    XEpg.key_volUp_event = function () {
+        nowVolume += 5;
+        if (nowVolume >= 100) {
+            nowVolume = 100;
+        }
+        mp.setVolume(nowVolume);
+    };
+    XEpg.Key_volDown_event = function () {
+        nowVolume -= 5;
+        if (nowVolume <= 0) {
+            nowVolume = 0;
+        }
+        mp.setVolume(nowVolume);
+    };
+     // 遥控器 返回键 执行的方法
+    XEpg.Nav.key_back_event = function () {
+        pageBack();
+    };
+  
+
+        /**
+         如果SP.backUrl获取值为空，则在用户退出时，使用如下代码返回代码返回:
+         window.location.href=Authentication.CTCGetConfig('EPGDomain');
+         如果backUrl值不为空，必须使用该值返回。
+         */
+        // 真正的返回方法
+    function pageBack() {
+        var url = "";
+        if (g_param.backUrl) {
+            url = g_param.backUrl;
+          
+        } else {
+            url = Authentication.CTCGetConfig('EPGDomain');
+        }
+        try{
+        	destoryMP();
+        }catch(e){
+        	//TODO handle the exception
+        }
+        XEpg.Util.gotoPage(url);
+    }
+
+</script>
+</html>

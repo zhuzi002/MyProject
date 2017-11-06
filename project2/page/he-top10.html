@@ -1,0 +1,340 @@
+<!DOCTYPE HTML>
+<html>
+
+	<head>
+		<meta name="page-view-size" content="1280*720" />
+		<meta charset="UTF-8">
+		<title>Top10</title>
+		<link rel="stylesheet" href="../css/style.css" />
+		<style type="text/css"></style>
+	</head>
+
+	<body bgcolor="transparent">
+
+		<div class="pagebg">
+			<div class="pic"><img id='getbackground' src="../images/lsjlBg.jpg" width="1280" height="720" alt=""></div>
+		</div>
+
+		<div class="he-lsjl">
+			<!-- logo -->
+			<div class="lsjl-logo"><img src="../images/he-top_logo.png"></div>
+
+			<div class="scrollBox" style=" width:1245px; left: 0px;" id="area_boxscroll">
+				<!--
+        	控制内容左右滑屏 则改变left值(left初始值为0)实现;
+                        即  left：-
+        -->
+
+				<!-- lsjl -->
+
+				<div class="he-qh" id="area_box">
+					<!--<div class="item item_focus">
+				<div class="pic"><img src="../images/demo/pic-265x372.jpg"></div>
+				<div class="pic-warp">
+					<div class="txt">神奇动物在哪里</div>
+				</div>
+				<div class="he-top">
+					<div class="pic"><img src="../images/pic-top01.png"></div>
+				</div>
+			</div>
+			<div class="item" style="left: 290px;">
+				<div class="pic"><img src="../images/demo/pic01-265x372.jpg"></div>
+				<div class="pic-warp">
+					<div class="txt">莎利机长</div>
+				</div>
+				<div class="he-top">
+					<div class="pic"><img src="../images/pic-top02.png"></div>
+				</div>
+			</div>
+			<div class="item" style="left: 580px;">
+				<div class="pic"><img src="../images/demo/pic-265x372.jpg"></div>
+				<div class="pic-warp">
+					<div class="txt">血战钢锯岭</div>
+				</div>
+				<div class="he-top">
+					<div class="pic"><img src="../images/pic-top03.png"></div>
+				</div>
+			</div>
+			<div class="item" style="left: 870px;">
+				<div class="pic"><img src="../images/demo/pic01-265x372.jpg"></div>
+				<div class="pic-warp">
+					<div class="txt">疯狂外星人</div>
+				</div>
+				<div class="he-top">
+					<div class="pic"><img src="../images/pic-top04.png"></div>
+				</div>
+			</div>
+			<div class="item" style="left: 1160px;">
+				<div class="pic"><img src="../images/demo/pic-265x372.jpg"></div>
+				<div class="pic-warp">
+					<div class="txt">霍比特人</div>
+				</div>
+				<div class="he-top">
+					<div class="pic"><img src="../images/pic-top05.png"></div>
+				</div>
+			</div>-->
+
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../js/xepg.min.js"></script>
+	<script type="text/javascript" src="../js/com.min.js"></script>
+	<script type="text/javascript">
+		var g_params = XEpg.My.parseUrl(); //解析地址栏参数
+		var currentId = g_params.currentId || "list_0"; //焦点id获取
+		var categoryCode = g_params.categoryCode || '00040000000515042429071203430000'; //获取栏目的code
+
+		var isIndex = g_params.currentId || '0';
+
+		var firstIndex = 0; //取数的页标
+		var maxResult = 10; //取数每页数据
+		var g_everyIndex = 4; //每页显示数据
+		var g_listName = 'list_'; //id前缀
+		var g_indexNum = 0; //当前取出的数据长度
+		var g_leftsize = 0; //左移量
+		var g_name = '';
+		var g_ztCode = '';
+		var g_ztName = '';
+		window.onload = function() {
+			XEpg.My.init({
+				"currentId": currentId
+			});
+			XEpg.My.pageLoadShowFocus();
+			getBackRequset();
+		}
+
+		function $(id) {
+			return document.getElementById(id);
+		}
+
+		function getBackRequset() {
+			XEpg.Util.ajaxGet('../data/getArrowDetail.jsp?categoryCode=' + categoryCode, dealBackRequset);
+			g_ztCode = categoryCode;
+		}
+
+		function dealBackRequset(data) {
+			var obj = XEpg.Util.parseJSON(data);
+			var m_catedata = obj.getCategoryDetailResp;
+			var m_focusPicture = m_catedata.focusPicture;
+			g_name = m_catedata.name;
+			g_ztName = g_name;
+			$('getbackground').src = m_focusPicture;
+			getTopList();
+			if(isIndex == '0') {
+				sendLogDetil();
+			}
+		}
+
+		function getTopList() {
+			XEpg.Util.ajaxGet('../data/getContentList.jsp?categoryCode=' + categoryCode + '&firstIndex=' + firstIndex + '&maxResult=' + maxResult, dealTopList);
+		}
+
+		function dealTopList(data) {
+			var obj = XEpg.Util.parseJSON(data);
+			var m_data = obj.getContentListResp.contentInfos;
+			var m_listContent = [];
+			if(!!m_data) { //area_box
+				g_indexNum = m_data.length;
+				for(var i = 0; i < g_indexNum; i++) {
+
+					if(i < 5) {
+						var m_topimg = '../images/pic-top0' + (i + 1) + '.png';
+						m_listContent.push('<div class="item"  title="' + m_data[i].elementType + '&' + m_data[i].code +
+							'&' + m_data[i].programType + '" id="list_' + i + '" style="left: ' + (290 * i) + 'px;">' +
+							'<div class="pic"><img src="' + m_data[i].poster + '" alt=""></div>' +
+							'<div class="pic-warp">' +
+							'<div class="txt" id="list_' + i + '_move">' +
+							'<span id="list_' + i + '_txt">' + m_data[i].name +
+							'</span><span id="list_' + i + '_copy"></span></div></div>' +
+							'<div class="he-top">' +
+							'<div class="pic"><img src="' + m_topimg + '"></div></div>' +
+							'</div>');
+					} else {
+						m_listContent.push('<div class="item"  title="' + m_data[i].elementType + '&' + m_data[i].code +
+							'&' + m_data[i].programType + '" id="list_' + i + '" style="left: ' + (290 * i) + 'px;">' +
+							'<div class="pic"><img src="' + m_data[i].poster + '" alt=""></div>' +
+							'<div class="pic-warp">' +
+							'<div class="txt" id="list_' + i + '_move">' +
+							'<span id="list_' + i + '_txt">' + m_data[i].name +
+							'</span><span id="list_' + i + '_copy"></span></div></div>' +
+							'</div>');
+					}
+
+				}
+				$('area_box').innerHTML = m_listContent.join("");
+				if(!$(XEpg.My.currentId)) {
+					XEpg.My.currentId = g_listName + (g_indexNum - 1);
+				}
+				$(XEpg.My.currentId).className = 'item item_focus';
+				initTopPage();
+				shitItemNow();
+			}
+		}
+
+		function initTopPage() {
+			for(var i = 0; i < g_indexNum; i++) {
+				XEpg.$('list_' + i).click({
+					'func': click.gotoDetilPage
+				}).left({
+					'func': move.listLeft
+				}).right({
+					'func': move.listRight
+				});
+			}
+			textScroll();
+		}
+
+		function shitItemNow() {
+			var m_index = parseInt(XEpg.My.currentId.substring(5), 10);
+			var m_left = (m_index - (g_everyIndex - 2)) * 290;
+			if(m_left >= 0) {
+				$('area_boxscroll').style.left = (-m_left) + "px";
+				g_leftsize = m_left;
+			}
+		}
+		var click = {
+			gotoDetilPage: function() {
+				var m_elementType = $(XEpg.My.currentId).title.split('&')[0];
+				var m_contentCode = $(XEpg.My.currentId).title.split('&')[1];
+				var m_programType = $(XEpg.My.currentId).title.split('&')[2];
+				var m_backUrl = location.href;
+				m_backUrl = m_backUrl.indexOf("?") != -1 ? m_backUrl.split("?")[0] : m_backUrl;
+				m_backUrl += "?" + "currentId=" + XEpg.My.currentId +
+					"&categoryCode=" + categoryCode
+				XEpg.Util.addNavigationUrl(m_backUrl);
+				if(m_elementType == 'Program') {
+					XEpg.Util.gotoPage('he-particulars-list.html?contentCode=' + m_contentCode)
+				} else {
+					if(m_programType == '综艺' || m_programType == '纪实') {
+						XEpg.Util.gotoPage('he-zyxq.html?contentCode=' + m_contentCode)
+					} else {
+						XEpg.Util.gotoPage('he-dsjxq.html?contentCode=' + m_contentCode)
+					}
+				}
+			}
+		}
+		var move = {
+			listLeft: function() {
+				clearTextStyle();
+				var m_index = parseInt(XEpg.My.currentId.substring(5), 10);
+				if(m_index > 0) {
+					$(XEpg.My.currentId).className = 'item';
+					XEpg.My.currentId = g_listName + (m_index - 1);
+					$(XEpg.My.currentId).className = 'item item_focus';
+					//g_leftsize//area_boxscroll
+					var leftindex = g_leftsize / 290;
+					if(m_index == leftindex) {
+						var m_left = g_leftsize - 290;
+						if(m_left >= 0) {
+							$('area_boxscroll').style.left = (-m_left) + "px";
+							g_leftsize = m_left;
+						}
+
+					}
+				} else {
+					$(XEpg.My.currentId).className = 'item';
+					XEpg.My.currentId = 'list_' + (g_indexNum - 1);
+					$(XEpg.My.currentId).className = 'item item_focus';
+					var m_left = (g_indexNum - g_everyIndex) * 290;
+					if(m_left >= 0) {
+						$('area_boxscroll').style.left = (-m_left) + "px";
+						g_leftsize = m_left;
+					}
+
+				}
+				textScroll();
+			},
+			listRight: function() {
+				clearTextStyle();
+				var m_index = parseInt(XEpg.My.currentId.substring(5), 10);
+				if(m_index < (g_indexNum - 1)) {
+					$(XEpg.My.currentId).className = 'item';
+					XEpg.My.currentId = g_listName + (m_index + 1);
+					$(XEpg.My.currentId).className = 'item item_focus';
+					//g_leftsize//area_boxscroll
+					if(m_index > (g_everyIndex - 2)) {
+						var m_left = (m_index - ((g_everyIndex - 2))) * 290;
+						$('area_boxscroll').style.left = (-m_left) + "px";
+						g_leftsize = m_left;
+					}
+				} else {
+					$(XEpg.My.currentId).className = 'item';
+					XEpg.My.currentId = 'list_0';
+					$(XEpg.My.currentId).className = 'item item_focus';
+					$('area_boxscroll').style.left = "0px";
+					g_leftsize = 0;
+				}
+				textScroll();
+			}
+		}
+		var moveObj = null,
+			scrollTimer = null,
+			txtObj = null;
+
+		function textScroll() {
+			var m_conId = 'list_';
+			document.getElementById(XEpg.My.currentId).className = 'item item_focus';
+			var m_index1 = parseInt(XEpg.My.currentId.substring(5), 10);
+			moveObj = document.getElementById(m_conId + m_index1 + '_move');
+			txtObj = document.getElementById(m_conId + m_index1 + '_txt');
+			if(moveObj && moveObj.scrollWidth > moveObj.offsetWidth) {
+				document.getElementById(m_conId + m_index1 + '_copy').innerHTML = '　    ' + txtObj.innerHTML;
+				startScroll(); //父元素向左循环移动(设置父元素scrollleft)
+			}
+		}
+
+		function startScroll() {
+			if(moveObj.scrollLeft >= (txtObj.offsetWidth + 23)) {
+				moveObj.scrollLeft = 0;
+			} else {
+				moveObj.scrollLeft += 2;
+			}
+			scrollTimer = setTimeout(startScroll, 50);
+		}
+
+		function clearTextStyle() {
+			var m_conId = 'list_';
+			clearTimeout(scrollTimer); //清除定时器
+			document.getElementById(XEpg.My.currentId).className = 'item';
+			var m_index1 = parseInt(XEpg.My.currentId.substring(5), 10);
+			var copyEle = document.getElementById(m_conId + m_index1 + '_copy');
+			if(copyEle) {
+				//清空复制的滚动文字
+				copyEle.innerHTML = '';
+			}
+			if(moveObj) {
+				//清空scrollLeft
+				moveObj.scrollLeft = 0;
+			}
+		}
+		//发送日志
+		function sendLogDetil() {
+
+			if(SP.UserID) {
+				var stb = "";
+				try {
+					if(typeof(Authentication) != "undefined") {
+						stb = Authentication.CTCGetConfig("STBType");
+					}
+				} catch(e) {}
+
+				var epgPlatformType = SP.iptv_flag == 'hw' ? '0' : '1';
+
+				var reportUrl = "../data/addVisitLog.jsp?" +
+					"&userID=" + SP.UserID +
+					"&stb=" + stb +
+					"&productCode=" + g_ztCode +
+					"&productName=" + encodeURIComponent(g_ztName) +
+					"&cpID=1007" +
+					"&type=3" +
+					"&epgPlatformType=" + epgPlatformType;
+				XEpg.Util.ajaxGet(reportUrl);
+			}
+		}
+		XEpg.Nav.key_back_event = function() {
+			XEpg.Nav.key_back_opt();
+		}
+	</script>
+
+</html>

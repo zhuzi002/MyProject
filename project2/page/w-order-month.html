@@ -1,0 +1,294 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta name="page-view-size" content="1280*720" />
+<meta charset="UTF-8">
+<title>专区EPG720P</title>
+<link rel="stylesheet" href="../css/style.css"/>
+<style type="text/css">
+body {
+	background: url(../images/w-bg-order.jpg) no-repeat;
+}
+/* S= CSS Reset
+----------------------------------------------- */
+body, table, caption, tbody, tfoot, thead, tr, th, td, ul, li, p, h1 {
+	margin: 0px;
+	padding: 0px;
+	border: 0px;
+}
+body {
+	font-size: 24px;
+	font-family: Microsoft YaHei, sans-serif;
+	line-height: 100%;
+}
+ul, ol {
+	list-style: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+a {
+	text-decoration: none;
+}
+img {
+	border: 0;
+}
+/* E= CSS Reset */
+
+/* S= Global
+----------------------------------------------- */
+body, .wrapper, .pagebg {
+	height: 720px;
+	width: 1280px;
+	overflow: hidden;
+}
+body {
+	color: #ffffff;
+	position: relative;
+}
+.wrapper, .pagebg {
+	left: 0;
+	position: absolute;
+	top: 0;
+}
+.pagebg img {
+	display: block; /* clear some space 对于html5中背景图比原高度多出3PX的问题*/
+}
+.item, .link, .txt-wrap, .txt, .btn, .icon, .pic, .pic-shade, .cover, .num {
+	position: absolute;
+}
+.txtHidden {
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+}
+.clearfix:after {
+	clear: both;
+	content: '';
+	display: block;
+	height: 0;
+}
+.clearfix {
+	zoom: 1;
+}
+/* S= order */
+.w-order-month01 {
+	position: absolute;
+	left: 255px;
+	top: 326px;
+}
+.w-order-month01 .item {
+	background: url(../images/w-ordermonth01.png) no-repeat;
+	width: 240px;
+	height: 240px;
+}
+.w-order-month01 .item_focus {
+	background: url(../images/w-ordermonth01_focus.png) no-repeat;
+}
+.w-order-month02 {
+	position: absolute;
+	left: 540px;
+	top: 326px;
+}
+.w-order-month02 .item {
+	background: url(../images/w-ordermonth02.png) no-repeat;
+	width: 350px;
+	height: 310px;
+}
+.w-order-month02 .item_focus {
+	background: url(../images/w-ordermonth02_focus.png) no-repeat;
+}
+.w-order-month03 {
+	position: absolute;
+	left: 825px;
+	top: 326px;
+}
+.w-order-month03 .item {
+	background: url(../images/w-ordermonth03.png) no-repeat;
+	width: 350px;
+	height: 310px;
+}
+.w-order-month03 .item_focus {
+	background: url(../images/w-ordermonth03_focus.png) no-repeat;
+}
+/* E= order */
+</style>
+</head>
+<body bgcolor="transparent">
+
+<!-- S content -->
+<div class="wrapper">
+
+	<!-- S order month -->
+    <div class="w-order-month01"> 
+    <!--<div id="test1" style="left: 20px; top: 20px; width: 800px; height: 300px; position: absolute; color: #ff0000; word-break:break-all;"></div>-->
+    
+     <!-- 
+            焦点 =item item_focus 
+        -->
+        <div class="item" id="order_month"></div>
+    </div>
+    <div class="w-order-month02"> 
+        <!-- 
+            焦点 =item item_focus 
+        -->
+        <div class="item" id="order_season"></div>
+    </div>
+    <div class="w-order-month03"> 
+        <!-- 
+            焦点 =item item_focus 
+        -->
+        <div class="item" id="order_year"></div>
+    </div>
+    <!-- E order month -->
+    
+</div>
+<!-- E content -->
+<!-- E content -->
+<div id="orderMask" style="display: none;width:1280px;height:720px;position: absolute;z-index:1000;left:0px;top:0px;font-size: 38px;color: #fff;background:url('../images/cs-maskBg03.png');text-align: center;line-height: 720px;">
+    您已订购，请点击[返回]
+</div>
+</body>
+<script type="text/javascript" src="../js/xepg.min.js" ></script>
+<script type="text/javascript" src="../js/com.min.js" ></script>
+<script type="text/javascript">
+	var g_params = XEpg.My.parseUrl();		//解析地址栏参数
+   	var currentId=g_params.currentId||"order_month";//二级栏目焦点id获取
+   	
+   	var isIndex=g_params.currentId||'0';
+   	
+   	var g_authResult = 1;  //0鉴权通过，1鉴权不通过
+	var UserID = SP.UserID || 'null';
+	var orderUrl='';
+	var prodCodeArray = ["4KHY", "4KHY"]; //产品ID
+
+	var authCodeArray = ["4KHYBJ"]; //包季ID
+	
+	var buCodeArray = ["YKYSBY","YKYSBY"];
+   	//var g_furl='http://36.101.204.156:8090/hainanIPTV/hainanUnifiedIPTV/data';//外链地址
+   	var backUrl = window.location.href.indexOf("?") > -1 ? window.location.href.substring(0, window.location.href.indexOf("?")) : window.location.href;
+   	
+   	window.onload=function(){
+   		XEpg.My.init({"currentId":currentId});
+        XEpg.My.pageLoadShowFocus();
+        authAll.proAuthBJ();
+   	};
+   	function $(id){
+   		return document.getElementById(id);
+   	}
+   	function initOrder(){
+   		XEpg.$('order_month').click({'func':click.ordermonth}).left({'id':'order_year'}).right({'id':'order_season'});
+   		XEpg.$('order_season').click({'func':click.orderseason}).left({'id':'order_month'}).right({'id':'order_year'});
+   		XEpg.$('order_year').click({'func':click.orderyear}).left({'id':'order_season'}).right({'id':'order_month'});
+   	}
+   	var click={
+   		ordermonth:function(){
+   			orderUrl = SP.ORDER_URL;
+			orderUrl = orderUrl + "SP_ORDER_ID=" + SP.getOrderId() + "&USER_ID=" + SP.UserID + "&SP_ID=" + SP.ID;
+			orderUrl = orderUrl + "&SP_PWD=" + MD5(SP.PWD) + "&BUSI_ID=" + buCodeArray[0] + "&PROD_ID=" + prodCodeArray[0];
+			orderUrl = orderUrl + "&PROD_NUM=1" + "&BACK_URL=" + encodeURIComponent(backUrl);
+			if(g_authResult == 1) {
+				XEpg.Util.gotoPage(orderUrl);
+			}else{
+				$('orderMask').style.display='block';
+			}
+			if(isIndex=='0'){
+	        	sendLogOrder(29,15);
+	        }
+   		},
+   		orderseason:function(){
+   			orderUrl = SP.ORDER_URL;
+			orderUrl = orderUrl + "SP_ORDER_ID=" + SP.getOrderId() + "&USER_ID=" + SP.UserID + "&SP_ID=" + SP.ID;
+			orderUrl = orderUrl + "&SP_PWD=" + MD5(SP.PWD) + "&BUSI_ID=" + buCodeArray[0] + "&PROD_ID=" + authCodeArray[0];
+			orderUrl = orderUrl + "&PROD_NUM=1" + "&BACK_URL=" + encodeURIComponent(backUrl);
+			if(g_authResult == 1) {
+				XEpg.Util.gotoPage(orderUrl);
+			}else{
+				$('orderMask').style.display='block';
+			}
+			if(isIndex=='0'){
+	        	sendLogOrder(78,78);
+	        }
+   		},
+   		orderyear:function(){
+   			orderUrl = SP.ORDER_URL;
+			orderUrl = orderUrl + "SP_ORDER_ID=" + SP.getOrderId() + "&USER_ID=" + SP.UserID + "&SP_ID=" + SP.ID;
+			orderUrl = orderUrl + "&SP_PWD=" + MD5(SP.PWD) + "&BUSI_ID=" + buCodeArray[0] + "&PROD_ID=" + prodCodeArray[0];
+			orderUrl = orderUrl + "&PROD_NUM=1" + "&BACK_URL=" + encodeURIComponent(backUrl);
+			if(g_authResult == 1) {
+				XEpg.Util.gotoPage(orderUrl);
+			}else{
+				$('orderMask').style.display='block';
+			}
+			if(isIndex=='0'){
+	        	sendLogOrder(289,289);
+	        }
+   		},
+   	};
+   	var authAll = {
+		proAuthBNY : function(){
+			var m_proID = '4KHY';
+			XEpg.Util.ajaxGet('../data/prodCheck.jsp?USER_ID='+UserID+'&SP_ID=HQHY&SP_PWD=12345678&BUSI_ID=YKYSBY&PROD_ID=' + m_proID ,function(data){
+				eval('var result1=' + data);
+	            var PROD_STATE_PPV = result1.PROD_STATE;
+	            if (PROD_STATE_PPV == 'Y') {
+	            	g_authResult = 0;
+	            	$('orderMask').style.display='block';
+	                return;
+	            } else if (PROD_STATE_PPV == 'N') {
+	                g_authResult = 1;
+	                initOrder();
+	            }
+			});
+		},
+		proAuthBJ : function(){
+			var m_proID = '4KHYBJ';
+			XEpg.Util.ajaxGet('../data/prodCheck.jsp?USER_ID='+UserID+'&SP_ID=HQHY&SP_PWD=12345678&BUSI_ID=YKYSBY&PROD_ID=' + m_proID ,function(data){
+				eval('var result1=' + data);
+	            var PROD_STATE_PPV = result1.PROD_STATE;
+	            if (PROD_STATE_PPV == 'Y') {
+	            	g_authResult = 0;
+	            	$('orderMask').style.display='block';
+	                return;
+	            } else if (PROD_STATE_PPV == 'N') {
+	            	g_authResult = 1;
+	            	authAll.proAuthBNY();
+	            }
+	            
+			});
+			
+		}
+		
+	};
+	//发送日志
+    function sendLogOrder(origPrice,price){
+    	if(SP.UserID){
+          var stb = "";
+          try {
+             if (typeof(Authentication) != "undefined") {
+                stb = Authentication.CTCGetConfig("STBType");
+             }
+          } catch (e) {
+          }
+          
+          var epgPlatformType = SP.iptv_flag == 'hw' ? '0' :'1';
+          var reportUrl = "../data/addOrderLog.jsp?" +
+             "userID=" + SP.UserID +
+             "&stb=" + stb +
+             "&action=1" +
+             "&price=" + price + 
+             "&origPrice=" + origPrice + 
+             "&productCode=" + "4KHY" +
+             "&productName=" + encodeURIComponent("4K花园") +
+             "&cpID=1007"
+             "&resolution=1" +
+             "&epgPlatformType=" + epgPlatformType;
+          XEpg.Util.ajaxGet(reportUrl);
+       }
+    };
+	XEpg.Nav.key_back_event = function(){
+		XEpg.Nav.key_back_opt();
+   	};
+</script>
+</html>

@@ -1,0 +1,1041 @@
+/* S= CSS Reset
+----------------------------------------------- */
+body, table, caption, tbody, tfoot, thead, tr, th, td, ul, li, p, h1 {
+	margin: 0px;
+	padding: 0px;
+	border: 0px;
+}
+body {
+	font-size: 24px;
+	font-family: Microsoft YaHei, sans-serif;
+	line-height: 100%;
+}
+ul, ol {
+	list-style: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+a {
+	text-decoration: none;
+}
+img {
+	border: 0;
+}
+/* E= CSS Reset */
+
+/* S= Global
+----------------------------------------------- */
+body, .wrapper, .pagebg {
+	height: 720px;
+	width: 1280px;
+	overflow: hidden;
+}
+body {
+	color: #ffffff;
+	position: relative;
+}
+.wrapper, .pagebg {
+	left: 0;
+	position: absolute;
+	top: 0px;
+}
+.pagebg img {
+	display: block; /* clear some space 对于html5中背景图比原高度多出3PX的问题*/
+}
+.item, .link, .txt-wrap, .txt, .btn, .icon, .pic, .pic-shade, .cover, .num {
+	position: absolute;
+}
+.txtHidden {
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+}
+.clearfix:after {
+	clear: both;
+	content: '';
+	display: block;
+	height: 0;
+}
+.clearfix {
+	zoom: 1;
+}
+/*
+文字过短需居中时 width < 外部容器单位宽度 时 span class="txtSlideWrap txtNoSlide"
+文字过长需滚动时 width > 外部容器单位宽度 时 span class="txtSlideWrap"
+*/
+span.txtSlideWrap, span.txtSlideWrap div, span.txtNoSlide div {
+	padding: 0!important;
+	margin: 0!important;
+}
+span.txtSlideWrap {
+	display: block;
+	height: 100%;
+	width: 100%!important;
+	overflow: hidden;
+	position: relative;
+}
+span.txtSlideWrap div {
+	position: absolute;
+	top: 0;
+	white-space: nowrap;
+}
+span.txtNoSlide div {
+	width: 100%;
+}
+/* E= Global */
+
+/* S= common ----------------------------------------------- */
+
+/* S= index */
+
+.logo .img{
+	width: 150px;
+	height: 80px;
+}
+.logo{
+	position: absolute;
+	left: 36px;
+	top: 20px;
+}
+.laba,.head .laba .img{
+	width: 472px;
+	height: 39px;
+}
+.laba{
+	position: absolute;
+	left: 245px;
+	top: 43px;
+}
+.laba .txt{
+	position: absolute;
+	top: 0px;
+	left: 40px;
+	width: 400px;
+	height: 38px;
+	font-size: 20px;
+	line-height: 38px;
+	white-space: nowrap;
+	overflow: hidden;
+}
+.index-btn{
+	position: absolute;
+}
+.index-btn .item{
+	top: 20px;
+	width: 180px;
+	height: 80px;
+}
+.index-btn .item .icon{
+	position: absolute;
+	top: 26px;
+	left: 50px;
+	width: 30px;
+	height: 30px;
+}
+.index-btn .item .txt{
+	position: absolute;
+	left: 82px;
+	top: 28px;
+	width: 100px;
+	height:24px;
+	font-size: 22px;
+	white-space: nowrap;
+	overflow: hidden;
+}
+.type01 .item_focus{
+	background: url(../images/head_focus01.png) no-repeat;
+}
+.type02 .item_focus{
+	background: url(../images/head_focus02.png) no-repeat;
+}
+.line{
+	position: absolute;
+	left: 1130px;
+	top: 45px;
+}
+.line,.head .line img{
+	width: 30px;
+	height: 30px;
+}
+.time{
+	position: absolute;
+	left: 1155px;
+	top: 45px;
+	width: 75px;
+	height: 30px;
+}
+.time .txt{
+	width: 75px;
+	height: 30px;
+	font-size: 28px;
+}
+.navBox{
+	position: absolute;
+	bottom: 0px;
+	width: 1280px;
+	height: 141px;
+	background: url(../images/navBg.png) no-repeat;
+}
+.navBox .nav {
+	position: absolute;
+}
+.navBox .nav .item{
+	top: 10px;
+	width:195px;
+	height: 117px;
+	z-index:2;
+}
+.navBox .nav01 .item{
+	background: url(../images/nav01.png) no-repeat;
+}
+.navBox .nav01 .item_focus{
+	background: url(../images/nav01_focus.png) no-repeat;
+}
+.navBox .nav02 .item{
+	background: url(../images/nav02.png) no-repeat;
+}
+.navBox .nav02 .item_focus{
+	background: url(../images/nav02_focus.png) no-repeat;
+}
+.navBox .nav03 .item{
+	background: url(../images/nav03.png) no-repeat;
+}
+.navBox .nav03 .item_focus{
+	background: url(../images/nav03_focus.png) no-repeat;
+}
+.navBox .nav04 .item{
+	background: url(../images/nav04.png) no-repeat;
+}
+.navBox .nav04 .item_focus{
+	background: url(../images/nav04_focus.png) no-repeat;
+}
+.navBox .nav05 .item{
+	background: url(../images/nav05.png) no-repeat;
+}
+.navBox .nav05 .item_focus{
+	background: url(../images/nav05_focus.png) no-repeat;
+}
+.navBox .nav06 .item{
+	background: url(../images/nav06.png) no-repeat;
+}
+.navBox .nav06 .item_focus{
+	background: url(../images/nav06_focus.png) no-repeat;
+}
+
+.q-indexPoster {
+	position:absolute;
+	left:0;
+	top: 0;
+}
+
+
+.q-indexPoster .type-a{
+	position:absolute;
+	left:43px;
+	top:94px;
+}
+.q-indexPoster .type-a .item{
+	width:274px;
+	height:269px;
+}
+.q-indexPoster .type-a .item_focus {
+	
+	background: url(../images/type-a_focus.png) no-repeat;
+}
+
+.q-indexPoster .type-a .item .pic{
+	width:237px;
+	height:231px;
+	top:19px;
+	left:19px;
+}
+.q-indexPoster .type-a .item .pic img{
+	width:237px;
+	height:231px;
+}
+
+
+.index-video{
+	position:absolute;
+	left:276px;
+	top:85px;
+	
+}
+.index-video .item{
+	width:634px;
+	height:381px;
+	z-index:2;
+}
+
+.index-video .item .pic {
+	width:578px;
+	height:325px;
+	left:27px;
+	top:28px;
+}
+
+.index-video .item .play-iocn {
+	position:absolute;
+	width:153px;
+	height:153px;
+	top:117px;
+	left:240px;
+	z-index:8;
+}
+
+.index-video .item_focus{
+	width:634px;
+	height:381px;
+	background: url(../images/vedio_focus.png) no-repeat;
+	
+}
+
+.index-video .item .txtbar{
+	height:56px;
+	width:578px;
+	z-index:5;
+	top:297px;
+	left:27px;
+	background: url(../images/video-txtbarbg.jpg) no-repeat;
+	position:absolute;
+}
+.index-video .item .txt{
+	font-size:22px;
+	color:#fff;
+	text-align:left;
+	height:35px;
+	width:540px;
+	top:18px;
+	left:20px;
+	font-style:italic;
+	overflow:hidden;
+	position:absolute;
+}
+.q-indexPoster .type-b {
+	position: absolute;
+	left: 284px;
+	top: 422px;
+
+}
+.q-indexPoster .type-b .item{
+	width:325px;
+	height:176px;
+}
+.q-indexPoster .type-b .item_focus{
+	
+	background: url(../images/type-b_focus.png) no-repeat;
+		z-index:3;
+	
+}
+
+.q-indexPoster .type-b .item .pic{
+	width:287px;
+	height:138px;
+	left:19px;
+	top:19px;
+}
+
+.q-indexPoster .type-b .item .pic img{
+	width:287px;
+	height:138px;
+}
+
+
+.q-indexPoster .type-c {
+	/*position: absolute;
+	left: 842px;
+	top:55px;*/
+}
+.q-indexPoster .type-c .item{
+	width:370px;
+	height:505px;
+	left:866px;
+	top:94px;
+}
+.q-indexPoster .type-c .item .pic{
+	width:332px;
+	height:467px;
+	top:19px;
+	left:19px;
+}
+
+.q-indexPoster .type-c .item .pic img{
+	width:332px;
+	height:467px;
+}
+
+.q-indexPoster .type-c .item_focus{
+	background: url(../images/type-c_focus.png) no-repeat;
+	z-index:3;
+}
+
+
+/* S list */
+
+.bt, .sep, .double, .nav, .ctxt, .hecenter, .heleft, .bttxt, .he-nav, .he-banner, .chaoren{position: absolute;}
+ .he-wrapper .bttxt {
+ 	top:30px;
+ 	left:160px;
+ }
+.he-wrapper .bttxt .item {
+	width: 188px;
+	height: 88px;
+}
+.he-wrapper .bttxt .item .txt {
+	width: 180px;
+	height: 88px;
+	font-size: 26px;
+	line-height: 86px;
+	text-align:center;
+	left:4px;
+}
+
+.he-wrapper .double {
+	color: #00ccff;
+	font-size: 22px;
+}
+.he-wrapper .double  span {
+	color: #e2e3e4;
+}
+.he-wrapper .bttxt .item_select {
+	color: #00d3ff;
+}
+.he-wrapper .bttxt .item_focus {
+	width: 188px;
+	height: 88px;
+	background: url(../images/list_focus02.png) no-repeat;
+	background-size: 188px 88px;
+	z-index: 5;
+}
+.heleft {
+	top:77px;
+	left:10px;
+}
+.heleft .item{
+	width:468px;
+	height:625px;
+}
+.heleft .item .ptxt {
+	width: 372px;
+	height: 82px;
+	position: absolute;
+	left:48px;
+	top: 480px;
+	background: url(../images/list-mask-372x82.png) no-repeat;
+	background-size: 372px 82px;
+	z-index: 5;
+}
+.heleft .item .ptxt .txt{
+	position: absolute;
+	width: 372px;
+	height: 82px;
+	left: 6px;
+	line-height: 82px;
+	font-size: 30px;
+	overflow:hidden;
+}
+
+.heleft .item .pic,
+.heleft .item .pic img {
+	width: 372px;
+	height: 520px;
+	left:48px;
+	top:42px;
+}
+.heleft .item_focus {
+   background: url(../images/he-list_focus.png) no-repeat;
+}
+
+
+
+.hecenter {
+	 top:77px;
+	 left:395px;
+}
+.hecenter .item {
+	 width: 288px;
+	height: 372px;
+}
+.hecenter .item .ctxt {
+	position: absolute;
+	width: 182px;
+	height: 54px;
+	background: url(../images/list-mask-182x54.png) no-repeat;
+	top: 243px;
+	left:48px;
+}
+.hecenter .item .ctxt .txt{
+	position: absolute;
+	width: 170px;
+	height: 30px;
+	left: 6px;
+	top:20px;
+	font-size: 22px;
+	white-space:nowrap;
+	overflow:hidden;
+}
+.hecenter .item .pic,
+.hecenter .item .pic img {
+	width: 182px;
+	height: 255px;
+	left:48px;
+	top:42px;
+}
+.hecenter .item_focus {
+
+	background: url(../images/tyoe-h_focus.png) no-repeat;
+
+}
+
+
+/* E list */
+
+
+/* S 详情 */
+
+.he-xiang .left {
+	position: absolute;
+	top: 76px;
+	left: 28px;
+}
+
+.he-xiang .right .chaoren {
+	position: absolute;
+	width: 772px;
+	height: 164px;
+	left: 460px;
+	top: 82px;
+}
+.he-xiang .right .chaoren .man {
+	font-size: 33px;
+	font-weight: bold;
+	line-height: 2em;
+}
+.he-xiang .right .chaoren .daoyan {
+	font-weight: 22px;
+	line-height: 1.5em;
+}
+.he-xiang .right .listicon {
+	position: absolute;
+	width:380px;
+	height: 60px;
+	left: 439px;
+	top: 268px;
+}
+.he-xiang .right .listicon .item {
+	width:160px;
+	height: 88px;
+	background: url(../images/ico01.png) no-repeat;
+}
+.he-xiang .right .listicon .item .icon {
+	position: absolute;
+	width: 33px;
+	height: 30px;
+	left: 31px;
+	top: 28px;
+}
+.he-xiang .right .listicon .item .icon02 {
+	position: absolute;
+	width: 33px;
+	height: 30px;
+	left: 31px;
+	top: 28px;
+	background: url(../images/list-icon_focus.png) no-repeat;
+}
+.he-xiang .right .listicon .item .txt {
+	width:80px;
+	height: 31px;
+	font-size: 24px;
+	left: 69px;
+	line-height: 42px;
+	letter-spacing: .3em;
+	top: 22px;
+}
+.he-xiang .right .listicon .item .txt01 {
+	position: absolute;
+	font-size: 22px;
+	top: 32px;
+	left:65px;
+}
+.he-xiang .right .listicon .item_focus {
+	background: url(../images/ico_focus01.png) no-repeat;
+	z-index: 5;
+}
+
+
+.he-xiang .jianjie {
+	position: absolute;
+	width: 772px;
+	height: 150px;
+	left: 460px;
+	top: 360px;
+	font-size: 22px;
+	line-height: 1.5em;
+}
+
+
+/* E 详情 */
+
+.q-scroll {
+	position: absolute;
+	top: 114px;
+	left: 1205px;
+	width:6px;
+	height:506px;
+	background: url(../images/q-scrollBg.png) no-repeat;
+}
+.q-scroll .point {
+	position: absolute;
+	width: 10px;
+	height:64px;
+}
+
+
+
+/* S= 电视剧 */
+
+.he-dsj .left {
+	position: absolute;
+	width: 438px;
+	height: 586px;
+	left: 28px;
+	top: 79px;
+}
+.he-dsj .left .he-banner {
+	position: absolute;
+	left: 34px;
+	top: 23px;
+}
+.he-dsj .left .he-wrptxt {
+	position: absolute;
+	width: 372px;
+	height: 128px;
+	left: 34px;
+	top: 416px;
+	background: url(../images/he-dsj_zz.png) no-repeat;
+}
+.he-dsj .left .he-wrptxt .txt {
+	position: absolute;
+	width: 350px;
+	left: 14px;
+	top:90px;
+	font-size: 26px;
+	color: #f6f6f6;
+}
+.he-dsj .left .he-wrptxt .txt span {
+	color: #00c6ff;
+}
+
+.he-dsj .right {
+	position: absolute;
+	width: 770px;
+	height: 540px;
+	left: 460px;
+	top: 102px;
+}
+.he-dsj .right .wwyx {
+	width: 770px;
+	height: 230px;
+
+}
+.he-dsj .right .wwyx .ww {
+	width: 400px;
+	height: 42px;
+	font-size: 33px;
+	color: #f6f6f6;
+	font-weight: bold;
+
+}
+.he-dsj .right .wwyx .ww span {
+	font-size: 28px;
+	font-weight: normal;
+}
+.he-dsj .right .wwyx .dy {
+	font-size: 20px;
+	line-height: 1.8em;
+}
+.he-dsj .he-dsj_icon {
+	position: absolute;
+	width: 368px;
+	height: 52px;
+	left: 439px;
+	top: 318px;
+}
+.he-dsj .he-dsj_icon .item .link{
+	position: absolute;
+	width: 160px;
+	height: 88px;
+	background: url(../images/ico01.png) no-repeat;
+}
+.he-dsj .he-dsj_icon .item .icon{
+	position: absolute;
+	left: 30px;
+	top: 32px;
+	z-index: 3;
+}
+.he-dsj .he-dsj_icon .item .txt{
+	position: absolute;
+	font-size: 22px;
+	left: 68px;
+	top: 32px;
+	width: 160px;
+}
+.he-dsj .he-dsj_icon .item_focus .link{
+	position: absolute;
+	width: 160px;
+	height: 88px;
+	background: url(../images/ico_focus01.png) no-repeat;
+}
+.he-dsj .he-dsj_icon .item .link01 {
+	position: absolute;
+	width: 260px;
+	height: 88px;
+	background: url(../images/ico01FB.png) no-repeat;
+	z-index: 3;
+
+}
+.he-dsj .he-dsj_icon .item .icon02 {
+	position: absolute;
+	width: 33px;
+	height: 30px;
+	left: 33px;
+	top: 31px;
+	background: url(../images/list-icon_focus.png) no-repeat;
+}
+.he-dsj .he-dsj_icon .item .txt01 {
+	position: absolute;
+	width: 260px;
+	font-size: 22px;
+	left:70px;
+	top:32px; 
+	z-index: 3;
+}
+
+
+.he-dsj .he-dsj_icon .item_focus .link01 {
+	position: absolute;
+	width: 260px;
+	height: 88px;
+	background: url(../images/xb_focus01.png) no-repeat;
+}
+.he-dsj .he-xj {
+	position: absolute;
+	width: 212px;
+	height: 48px;
+	left: 439px;
+	top: 380px;
+}
+
+.he-dsj .he-xj .he-fg {
+	position: absolute;
+	left: 145px;
+	top:34px;
+}
+.he-dsj .he-xj .item {
+	width: 160px;
+	height:88px;
+}
+.he-dsj .he-xj .item .txt {
+	font-size: 28px;
+	width:100px;
+	top:32px;
+	left:30px;
+	text-align:center;
+
+}
+.he-dsj .he-xj .item_select {
+	color: #00d3ff;
+}
+.he-dsj .he-xj .item_focus {
+	background: url(../images/ico_focus01.png) no-repeat;
+
+}
+
+
+
+.he-dsj .he-lb {
+	position: absolute;
+	width: 770px;
+	height: 174px;
+	left: 436px;
+	top: 432px;
+
+}
+
+.he-dsj .he-lb .dyp .item {
+	width: 69px;
+	height: 50px;
+}
+.he-dsj .he-lb .item .txt {
+	font-size: 26px;
+	color: #c0c0c0;
+	text-align:center;
+	width:65px;
+	left:26px;
+	top:37px;
+
+}
+.he-dsj .he-lb .item .link {
+	width: 69px;
+	height: 50px;
+	background: url(../images/he-dsj_xj.png) no-repeat;
+	left: 24px;
+	top: 24px;
+}
+.he-dsj .he-lb .item_focus {
+	width: 117px;
+	height: 98px;
+	background: url(../images/he-dsj_zz01.png) no-repeat;
+}
+.he-dsj .he-lb .item_focus .link {
+	left: 24px;
+	top: 24px;
+}
+.he-dsj .he-lb .item_focus .txt {
+	left: 26px;
+	top: 36px;
+	color: #fff;
+}
+/* E= 电视剧 */
+
+/* S= 综艺详 */
+.he-zyxq .left {
+	position: absolute;
+	width: 438px;
+	height: 586px;
+	left: 28px;
+	top: 79px;
+}
+.he-zyxq .left .he-banner {
+	position: absolute;
+	left: 34px;
+	top: 23px;
+}
+.he-zyxq .right {
+	position: absolute;
+	width: 800px;
+	height: 540px;
+	top: 102px;
+}
+.he-zyxq .right .he-hq {
+	position: absolute;
+	width: 800px;
+	height: 160px;
+	left: 460px;
+}
+.he-zyxq .right .he-hq .hx {
+	width: 800px;
+	height: 46px;
+	font-size: 33px;
+}
+.he-zyxq .right .he-hq .hx span {
+	position: absolute;
+	left: 180px;
+}
+.he-zyxq .right .he-hq .zcr {
+	position: absolute;
+	width: 800px;
+	height: 120px;
+	top: 60px;
+	line-height: 1.5em;
+	font-size: 22px;
+}
+.he-zyxq .right .he-xua {
+	position: absolute;
+	height: 356px;
+	width: 846px;
+	top: 170px;
+	left: 436px;
+	overflow: hidden;
+}
+.he-zyxq .scrollBox {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 846px;
+	height: 356px;
+}
+.he-zyxq .right .he-xua .item {
+	width: 800px;
+	height: 100px;
+	background: url(../images/he-zyxq.png) no-repeat;
+}
+
+.he-zyxq .right .he-xua .item .txt {
+	width: 690px;
+	height: 100px;
+	font-size: 24px;
+	top: 34px;
+	left: 54px;
+	white-space: nowrap;
+	overflow: hidden;
+}
+.he-zyxq .right .he-xua .item_focus {
+
+	background: url(../images/he-zyxq_focus.png) no-repeat;
+	z-index: 5;
+}
+
+.he-zyxq .right .he-xua .item_focus .txt {
+	width: 690px;
+	height: 100px;
+	font-size: 24px;
+	top: 34px;
+	left: 54px;
+}
+.he-zyxq .right .he-f {
+	position: absolute;
+	width: 28px;
+	height: 13px;
+	left: 790px;
+	top: 526px;
+}
+/* E= 综艺详 */
+
+/* S= 历史记录*/
+
+
+.he-lsjl {
+	position: absolute;
+	left: 15px;
+	width: 1265px;
+	height: 720px;
+	overflow: hidden;
+}
+.he-lsjl .scrollBox {
+	position: absolute;
+	left: 0;
+	top: 146px;
+	height: 490px;
+}
+
+.he-lsjl .lsjl-logo {
+	position: absolute;
+	top: 42px;
+	left: 36px;
+}
+.he-lsjl .item {
+	width: 359px;
+	height: 476px;
+}
+.he-lsjl .item .pic,
+.he-lsjl .item .pic img {
+	width: 264px;
+	height: 372px;
+	left: 47px;
+	top: 42px;
+}
+.he-lsjl .item .pic-warp {
+	position: absolute;
+	width:264px;
+	height: 67px;
+	background: url(../images/he-dsj_zz.png) no-repeat;
+	z-index: 4;
+	top: 350px;
+	left: 47px;
+}
+.he-lsjl .item .pic-warp .txt {
+	position: absolute;
+	width:244px;
+	height: 67px;
+	font-size: 26px;
+	top: 26px;
+	left: 10px;
+	white-space: nowrap;
+	overflow: hidden;
+}
+.he-lsjl .item .he-jd {
+	position: absolute;
+	width: 264px;
+	height: 8px;
+	top: 395px;
+	z-index: 4;
+	left: 47px;
+}
+.he-lsjl .item .he-jd .link {
+	position: absolute;
+	width: 264px;
+	height: 8px;
+	background: url(../images/he-ls_jd.jpg) no-repeat;
+	background-size: 264px 8px;
+	top: 13px;
+	z-index: 3;
+}
+.he-lsjl .item .he-jd .jdt {
+	position: absolute;
+	z-index: 4;
+}
+.he-lsjl .item_focus {
+	width: 359px;
+	height: 476px;
+	background: url(../images/he-ls_focus.png) no-repeat;
+	z-index: 5;
+}
+.he-lsjl .item_focus .pic,
+.he-lsjl .item_focus .pic img {
+	left: 47px;
+	top: 42px;
+	z-index: 3;
+}
+.he-lsjl .item_focus .pic-warp {
+	position: absolute;
+	width:264px;
+	height: 67px;
+	background: url(../images/he-dsj_zz.png) no-repeat;
+	z-index: 4;
+	top: 347px;
+	left: 47px;
+}
+.he-lsjl .item_focus .he-jd {
+	position: absolute;
+	width: 264px;
+	height: 8px;
+	top: 392px;
+	z-index: 4;
+	left: 47px;
+}
+.he-lsjl .he-delBtn {
+	position: absolute;
+	left: 119px;
+	top: 420px;
+}
+.he-lsjl .he-delBtn .box {
+	position: absolute;
+	display: none;
+}
+.he-lsjl .he-delBtn .box .item {
+	width: 106px;
+	height: 106px;
+}
+.he-lsjl .he-delBtn .box .item .icon,
+.he-lsjl .he-delBtn .box .item .icon img {
+	position: absolute;
+	width: 64px;
+	height: 64px;
+	left: 10px;
+	top: 11px;
+
+}
+.he-lsjl .he-delBtn .box .item_focus {
+	width: 106px;
+	height: 106px;
+	background: url(../images/lsjl_focus.png) no-repeat;
+}
+.he-lsjl .he-delBtn .box .item_focus .icon,
+.he-lsjl .he-delBtn .box .item_focus .icon img {
+	position: absolute;
+	left: 10px;
+	top: 11px;
+}
+
+/* S= TOP */
+.he-lsjl .item .he-top,
+ .he-lsjl .item .he-top img{
+	width:107px;
+	height: 108px;
+	z-index: 4;
+}
+
+/* E= index */

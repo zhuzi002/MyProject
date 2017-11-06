@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta name="page-view-size" content="1280*720" />
+<meta charset="UTF-8">
+<title>广东芒果优化改版</title>
+<!--<link rel="stylesheet" href="../css/style.css">-->
+<style type="text/css">
+/* S= CSS Reset
+----------------------------------------------- */
+body, table, caption, tbody, tfoot, thead, tr, th, td, ul, li, p, h1 {
+	margin: 0px;
+	padding: 0px;
+	border: 0px;
+}
+body {
+	font-size: 24px;
+	font-family: Microsoft YaHei, sans-serif;
+	line-height: 100%;
+}
+ul, ol {
+	list-style: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+a {
+	text-decoration: none;
+}
+img {
+	border: 0;
+}
+/* E= CSS Reset */
+
+/* S= Global
+----------------------------------------------- */
+body, .wrapper, .pagebg {
+	height: 720px;
+	width: 1280px;
+	overflow: hidden;
+}
+body {
+	color: #ffffff;
+	position: relative;
+}
+.wrapper, .pagebg {
+	left: 0;
+	position: absolute;
+	top: 0;
+}
+.pagebg img {
+	display: block; /* clear some space 对于html5中背景图比原高度多出3PX的问题*/
+}
+.item, .link, .txt-wrap, .txt, .btn, .icon, .pic, .pic-shade, .cover, .num {
+	position: absolute;
+}
+.txtHidden {
+	white-space: nowrap;
+	overflow: hidden;
+}
+.clearfix:after {
+	clear: both;
+	content: '';
+	display: block;
+	height: 0;
+}
+.clearfix {
+	zoom: 1;
+}
+/*
+文字过短需居中时 width < 外部容器单位宽度 时 span class="txtSlideWrap txtNoSlide"
+文字过长需滚动时 width > 外部容器单位宽度 时 span class="txtSlideWrap"
+*/
+span.txtSlideWrap, span.txtSlideWrap div, span.txtNoSlide div {
+	padding: 0!important;
+	margin: 0!important;
+}
+span.txtSlideWrap {
+	display: block;
+	height: 100%;
+	width: 100%!important;
+	overflow: hidden;
+	position: relative;
+}
+span.txtSlideWrap div {
+	position: absolute;
+	top: 0;
+	white-space: nowrap;
+}
+span.txtNoSlide div {
+	width: 100%;
+}
+.pigbg {
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+/* E= Global */
+
+/* S= list */
+.w-stencil-title {
+	position: absolute;
+	top: 89px;
+	left: 70px;
+	color: #ffffff;
+	font-size: 46px;
+	font-weight:bold;
+	text-shadow: 0px 3px 3px rgba(0,0,0,0.75);
+	width: 600px;
+}
+.w-btn-more {
+	position: absolute;
+	left: 1093px;
+	top: 38px;
+	background: url(../images/guangdongv2/w-btn-more.png) no-repeat;
+	width: 187px;
+	height: 42px;
+}
+.w-btn-more .item {
+	left:7px;
+	width: 172px;
+	height: 38px;
+}
+.w-btn-more .item_focus {
+	background: url(../images/guangdongv2/w-btn-more_focus.png) no-repeat;
+}
+.w-stencil-list {
+	position: absolute;
+	left: 55px;
+	top: 273px;
+	width: 1225px;
+	height: 423px;
+	overflow: hidden;
+}
+.w-stencil-list .scrollbox {
+	position: absolute;
+	left:0;
+	top:0;
+}
+.w-stencil-list .item {
+	background: url(../images/guangdongv2/w-stencil-list.png) no-repeat;
+	width: 309px;
+	height: 423px;
+	z-index:3;
+}
+.w-stencil-list .item .icon {
+	left:76px;
+	top:104px;
+	background: url(../images/guangdongv2/w-icon-hd.png) no-repeat;
+	width: 44px;
+	height: 28px;
+	z-index:5;
+}
+.w-stencil-list .item .pic {
+	left:76px;
+	top:92px;
+	z-index:3;
+}
+.w-stencil-list .item .pic,
+.w-stencil-list .item .pic img{
+	width: 158px;
+	height: 239px;
+}
+.w-stencil-list .item .txt-wrap {
+	left:76px;
+	top:241px;
+	background: url(../images/guangdongv2/w-stencil-list-txt.png) no-repeat;
+	width: 158px;
+	height: 90px;
+	z-index:4;
+}
+.w-stencil-list .item .txt {
+	left:5px;
+	top: 47px;
+	color: #dfdee0;
+	font-size: 21px;
+	line-height: 40px;
+	width: 148px;
+	height: 40px;
+	overflow: hidden;
+}
+.w-stencil-list .item_focus {
+	background: url(../images/guangdongv2/w-stencil-list_focus.png) no-repeat;
+	z-index:5;
+}
+.w-stencil-list .item_focus .icon {
+	left:43px;
+	top:67px;
+	background: url(../images/guangdongv2/w-icon-hd_focus.png) no-repeat;
+	width: 63px;
+	height: 40px;
+}
+.w-stencil-list .item_focus .pic {
+	left:43px;
+	top:43px;
+}
+.w-stencil-list .item_focus .pic,
+.w-stencil-list .item_focus .pic img{
+	width: 223px;
+	height: 337px;
+}
+.w-stencil-list .item_focus .txt-wrap {
+	left:43px;
+	top:290px;
+	width: 223px;
+}
+.w-stencil-list .item_focus .txt {
+	top: 40px;
+	color:#fefeff;
+	font-size:32px;
+	width: 213px;
+}
+/* E= list */
+</style>
+</head>
+<body>
+<!-- S pagebg -->
+<div class="pagebg">
+	<div class="pic"><img src="../images/guangdongv2/bg-1280X720.jpg" width="1280" height="720" /></div>
+</div>
+<!-- E pagebg --> 
+
+<!-- S content -->
+<div class="wrapper"> 
+    <!-- S 标题 -->
+    <!--<div class="w-stencil-title">冲出康普顿</div>-->
+    <!-- E 标题 --> 
+    
+    <!-- S 更多精彩 芒果专区 -->
+	<div class="w-btn-more">
+    	<!-- 焦点 
+                    class="item item_focus" 
+            -->
+    	<div class="item item_focus"></div>
+    </div>
+    <!-- E 更多精彩 芒果专区 -->
+    
+    <!-- S list --> 
+    <div class="w-stencil-list">
+		<div class="scrollbox" style="left:0px"> <!--通过left值(初始值为0)实现上下翻页，left=1225*N-->
+            <!-- 焦点 
+                    class="item item_focus" 
+            -->
+			<div class="item item_focus">
+            	<div class="icon"><!--高清--></div>
+				<div class="pic"><img src="../images/demopic/pic-223X337.jpg" ></div>
+                <div class="txt-wrap">
+                    <div class="txt">火星救援</div>
+                </div>
+			</div>
+			<div class="item" style="left: 173px;">
+            	<div class="icon"><!--高清--></div>
+				<div class="pic"><img src="../images/demopic/pic-223X337.jpg" ></div>
+				<div class="txt-wrap">
+                	<div class="txt">乐高蝙蝠侠大电</div>
+				</div>
+            </div>
+			<div class="item" style="left: 346px;">
+            	<div class="icon"><!--高清--></div>
+				<div class="pic"><img src="../images/demopic/pic-223X337.jpg" ></div>
+				<div class="txt-wrap">
+                	<div class="txt">火星救援</div>
+				</div>
+            </div>
+            <div class="item" style="left: 519px;">
+            	<div class="icon"><!--高清--></div>
+				<div class="pic"><img src="../images/demopic/pic-223X337.jpg" ></div>
+				<div class="txt-wrap">
+                	<div class="txt">火星救援</div>
+				</div>
+            </div>
+            <div class="item" style="left: 692px;">
+            	<div class="icon"><!--高清--></div>
+				<div class="pic"><img src="../images/demopic/pic-223X337.jpg" ></div>
+				<div class="txt-wrap">
+                	<div class="txt">火星救援</div>
+				</div>
+            </div>
+            <div class="item" style="left: 865px;">
+            	<div class="icon"><!--高清--></div>
+				<div class="pic"><img src="../images/demopic/pic-223X337.jpg" ></div>
+				<div class="txt-wrap">
+                	<div class="txt">火星救援</div>
+				</div>
+            </div>
+            <div class="item" style="left: 1038px;">
+            	<div class="icon"><!--高清--></div>
+				<div class="pic"><img src="../images/demopic/pic-223X337.jpg" ></div>
+				<div class="txt-wrap">
+                	<div class="txt">火星救援</div>
+				</div>
+            </div>
+		</div>
+	</div>    
+    <!-- E list --> 
+</div>
+<!-- E content -->
+</body>
+</html>

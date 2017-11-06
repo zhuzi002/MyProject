@@ -1,0 +1,438 @@
+<!DOCTYPE HTML>
+<html>
+
+	<head>
+		<meta name="page-view-size" content="1280*720" />
+		<meta charset="UTF-8">
+		<title>综艺详情</title>
+		<link rel="stylesheet" href="../css/style.css" />
+		<style type="text/css"></style>
+	</head>
+
+	<body bgcolor="transparent">
+
+		<div class="pagebg">
+			<div class="pic"><img src="../images/list_bg.jpg" width="1280" height="720" alt=""></div>
+		</div>
+		<!--<div id="test1" style="left: 20px; top: 20px; width: 800px; height: 300px; position: absolute; color: #ff0000; word-break:break-all;"></div>-->
+		<div class="he-zyxq">
+
+			<!-- S left -->
+			<div class="left">
+				<!--../images/demo/pic-372x520_zy.jpg-->
+				<div class="he-banner"><img id="content_img" src="" width="372" height="520" alt=""></div>
+				<div class="he-banner01"><img src="../images/proje.png" width="438" height="586" alt=""></div>
+			</div>
+
+			<!-- E left -->
+
+			<!-- S right -->
+
+			<div class="right">
+				<div class="he-hq">
+					<div class="hx" id="content_name">
+						<!--火星情报局<span>第二季</span>-->
+					</div>
+					<div class="zcr" id="content_detial">
+						<!--主持人：汪涵
+		<br>简介：《火星情报局》旨在纵容一切新奇有趣的发现，以特工为单位，守护提案，
+		<br>舌战群儒。激活全民洞察潜能，用火星方式弄喜你。-->
+					</div>
+				</div>
+				<div class="he-xua">
+					<div class="scrollBox" style="top: 0px;" id="area_serieslist">
+						<!--
+	        	控制内容上下滑屏 则改变top值(top初始值为0)实现;
+	                        即  top：-
+	        -->
+
+						<!-- lsjl -->
+						<!--<div class="item">
+					<div class="link"></div>
+					<div class="txt">第13期：希望你记得火星人来过</div>
+				</div>
+				<div class="item item_focus"  style="top:70px;">
+					<div class="link"></div>
+					<div class="txt">第12期：别让你女朋友看这一期</div>
+				</div>
+				<div class="item" style="top:140px;">
+					<div class="link"></div>
+					<div class="txt">第11期：如你们所愿费玉清来了</div>
+				</div>
+				<div class="item" style="top:210px;">
+					<div class="link"></div>
+					<div class="txt">第10期：薛之谦演技遭导演爆粗</div>
+				</div>
+				<div class="item" style="top:280px;">
+					<div class="link"></div>
+					<div class="txt">第09期：十年后你还看火星情报局吗</div>
+				</div>
+-->
+					</div>
+				</div>
+				<div class="he-f" id="arrow_down" style="display: none;"><img src="../images/he-arrow-t.png"></div>
+			</div>
+
+			<!-- E right -->
+
+		</div>
+	</body>
+	<script type="text/javascript" src="../js/xepg.min.js"></script>
+	<script type="text/javascript" src="../js/com.min.js"></script>
+	<script type="text/javascript">
+		var g_params = XEpg.My.parseUrl(); //解析地址栏参数
+		var currentId = g_params.currentId || "list_0"; //焦点id获取
+		var g_zoneCode = '8FB4A57B0DC043BC89D859A9C1CF6BDF'; //专区编码
+		var isIndex = g_params.currentId || '0';
+
+		var contentCode = g_params.contentCode || ''; //获取栏目的code
+		var g_aSubList = []; //子集集合
+		var g_playIndex = 0; //续播第几集
+		var g_evetyIndex = 5; //每页的条目数
+		var g_allIndex = 0; //总条目数
+		var g_listName = 'list_'; //
+		var g_topsize = 0; //top的滑动距离
+		var g_price = 0; //影片价格
+		var g_actor = 0; //演员
+		var g_authResult = 0; //0鉴权通过，1鉴权不通过
+		var UserID = SP.UserID || 'null';
+		var g_pic = '';
+		var g_name = '';
+		var g_orderType = 3;
+		var g_playTime = 0;
+		window.onload = function() {
+			XEpg.My.init({
+				"currentId": currentId
+			});
+			XEpg.My.pageLoadShowFocus();
+			getDetilContInfo();
+		};
+
+		function $(id) {
+			return document.getElementById(id);
+		}
+
+		function getDetilContInfo() {
+			XEpg.Util.ajaxGet('../data/getContentDetail.jsp?contentCode=' + contentCode, dealDetilContInfo);
+		}
+
+		function dealDetilContInfo(data) {
+			var obj = XEpg.Util.parseJSON(data);
+			var m_data = obj.getContentDetailResp;
+			var m_detialContent = '';
+			if(!!m_data) {
+				$('content_name').innerHTML = m_data.name; //director//description//poster
+				g_name = m_data.name;
+				m_detialContent += "主持人：" + m_data.actor + '<br>';
+				g_actor = m_data.actor;
+				g_price = parseInt(m_data.price) || 0;
+				g_pic = m_data.poster || '';
+				var m_description = m_data.description.length > 60 ? m_data.description.substring(0, 60) + '...' : m_data.description;
+				m_detialContent += "简介：" + insert_flg(m_description, '<br>', 32);
+				$('content_detial').innerHTML = m_detialContent;
+				$('content_img').src = m_data.poster;
+				if(isIndex == '0') {
+					sendLogDetil();
+				}
+			}
+			//鉴权
+			if(g_price != 0) {
+				authAll.proAuthDD();
+			}
+			getRecord();
+			getSeriesList();
+		}
+
+		function getSeriesList() {
+			XEpg.Util.ajaxGet('../data/getSeriesSubsetList.jsp?seriesCode=' + contentCode + '&firstIndex=0&maxResult=999', dealSeriesList);
+		}
+
+		function dealSeriesList(data) {
+			var obj = XEpg.Util.parseJSON(data);
+			var m_data = obj.getContentListResp.contentInfos;
+			var m_seriesContent = [];
+			if(!!m_data) {
+				g_allIndex = m_data.length;
+				for(var i = (g_allIndex - 1); i >= 0; i--) {
+					g_aSubList.push(m_data[i]);
+					m_seriesContent.push('<div class="item" sindex="' + ((g_allIndex - 1) - i) + '" programid="' + m_data[i].parentCode + '" medianame="' + m_data[i].name + '"  title="' + m_data[i].code + '" id="list_' + ((g_allIndex - 1) - i) + '" style="top:' + (70 * ((g_allIndex - 1) - i)) + 'px;">' +
+						'<div class="link"></div>' +
+						'<div class="txt" id="list_' + ((g_allIndex - 1) - i) + '_move">' +
+						'<span id="list_' + ((g_allIndex - 1) - i) + '_txt">第' + (i + 1) + '期&nbsp;&nbsp;' + m_data[i].name +
+						'</span><span id="list_' + ((g_allIndex - 1) - i) + '_copy"></span></div>' +
+						'</div>');
+				}
+				$('area_serieslist').innerHTML = m_seriesContent.join("");
+				if($(XEpg.My.currentId)) {
+					$(XEpg.My.currentId).className = 'item item_focus';
+				} else {
+					$('list_0').className = 'item item_focus';
+				}
+				if(g_allIndex > g_evetyIndex) {
+					$('arrow_down').style.display = 'block';
+				}
+				initSeriesList();
+				shitItemNow();
+			}
+		}
+
+		function shitItemNow() {
+			var m_index = parseInt(XEpg.My.currentId.substring(5), 10);
+			var m_top = (m_index - (g_evetyIndex - 2)) * 70;
+			if(m_top > 0) {
+				$('area_serieslist').style.top = (-m_top) + 'px';
+				g_topsize = m_top;
+			}
+		}
+
+		function initSeriesList() {
+			for(var i = 0; i < g_allIndex; i++) {
+				XEpg.$('list_' + i).click({
+					'func': click.gotoPlayPage
+				}).up({
+					'func': move.listUp
+				}).down({
+					'func': move.listDown
+				});
+			}
+			textScroll();
+		}
+
+		function getRecord() { //是否有播放记录
+
+			XEpg.Util.ajaxGet('../data/getPlayRecord.jsp?zoneCode=' + g_zoneCode + '&userID=' + UserID + '&programCode=' + contentCode, function(data) {
+
+				var data = XEpg.Util.parseJSON(data);
+				var item = data.getZonePlayRecordResp;
+				var mResultCode = item.resultCode;
+				if(mResultCode == 0) {
+					g_playTime = item.playTime;
+				}
+				var len = g_aSubList.length;
+				var recordCode = item.seriesCode;
+
+				for(var i = 0; i < len; i++) {
+					var mCode = g_aSubList[i].code;
+					if(mCode == recordCode) {
+						g_playIndex = i;
+					}
+				}
+			});
+			//getData.showListicon();
+		}
+		var click = {
+			gotoPlayPage: function() {
+				var m_contentCode = $(XEpg.My.currentId).title;
+				var isOrder = 'N';
+				var m_price = g_price > 15 ? (g_price / 10) : g_price;
+				var orderType = g_orderType;
+				var programID = XEpg.$(XEpg.My.currentId).attr('programid');
+				var meidaName = XEpg.$(XEpg.My.currentId).attr('medianame');
+				var sindex = XEpg.$(XEpg.My.currentId).attr('sindex');
+				var isMovie = 1;
+				isMovie = isMovie == 0 ? 'movie' : 'series';
+				var playTime = 0;
+				if(g_playIndex == sindex) {
+					playTime = g_playTime;
+				}
+				var backUrl = location.href;
+				backUrl = backUrl.indexOf("?") != -1 ? backUrl.split("?")[0] : backUrl;
+				backUrl += "?" + "currentId=" + XEpg.My.currentId + "&contentCode=" + contentCode;
+				var r = parseInt(((Math.random() * (4 - 1 + 1)) + 1), 10);
+				if(g_authResult == 0) {
+					isOrder = 'Y';
+				} else {
+					isOrder = 'N';
+				}
+				XEpg.Util.gotoPage('4kgarden_play.html?programID=' + m_contentCode + //节目集编码;
+					'&contentCode=' + contentCode + //节目编码
+					'&actor=' + encodeURIComponent(g_actor) +
+					'&mediaName=' + encodeURIComponent(meidaName) +
+					'&isMovie=' + isMovie +
+					'&playTime=' + playTime +
+					'&categoryCode=' + SP.indexParentCodeArray['grid' + r].code +
+					'&isOrder=' + isOrder +
+					'&orderType=' + orderType +
+					'&ppvOrderMoney=' + m_price +
+					'&poster=' + encodeURIComponent(g_pic) +
+					'&backUrl=' + encodeURIComponent(backUrl));
+			}
+		};
+		var authAll = {
+			proAuthDD: function() {
+				g_orderType = g_price > 15 ? 4 : 3;
+				if(g_price > 15) {
+					g_price = Math.ceil(g_price / 10);
+					authAll.proAuthBJ();
+				} else {
+					authAll.proAuthBJ();
+				}
+			},
+			proAuthBNY: function() {
+				var m_proID = '4KHY';
+				XEpg.Util.ajaxGet('../data/prodCheck.jsp?USER_ID=' + UserID + '&SP_ID=HQHY&SP_PWD=12345678&BUSI_ID=YKYSBY&PROD_ID=' + m_proID, function(data) {
+					eval('var result1=' + data);
+					var PROD_STATE_PPV = result1.PROD_STATE;
+					if(PROD_STATE_PPV == 'Y') {
+						g_authResult = 0;
+						return;
+					} else if(PROD_STATE_PPV == 'N') {
+						g_authResult = 1;
+						authAll.proAuthDDonce();
+					}
+				});
+			},
+			proAuthBJ: function() {
+				var m_proID = '4KHYBJ';
+				XEpg.Util.ajaxGet('../data/prodCheck.jsp?USER_ID=' + UserID + '&SP_ID=HQHY&SP_PWD=12345678&BUSI_ID=YKYSBY&PROD_ID=' + m_proID, function(data) {
+					eval('var result1=' + data);
+					var PROD_STATE_PPV = result1.PROD_STATE;
+					if(PROD_STATE_PPV == 'Y') {
+						g_authResult = 0;
+						return;
+					} else if(PROD_STATE_PPV == 'N') {
+						g_authResult = 1;
+						authAll.proAuthBNY();
+					}
+
+				});
+			},
+			proAuthDDonce: function() {
+				var m_proID = '4KHYPPV3';
+				if(g_price == 3) {
+					m_proID = '4KHYPPV3';
+				} else if(g_price == 5) {
+					m_proID = '4KHYPPV5';
+				} else {
+					m_proID = '4KHYPPV8';
+				}
+				XEpg.Util.ajaxGet('../data/PPVprodCheck.jsp?USER_ID=' + UserID + '&SP_ID=HQHY&SP_PWD=12345678&BUSI_ID=YKYSBY&PROD_ID=' + m_proID + '&PPV_CODE=' + contentCode, function(data) {
+					eval('var result1=' + data);
+					var PROD_STATE_PPV = result1.PROD_STATE;
+					if(PROD_STATE_PPV == 'Y') {
+						g_authResult = 0;
+						return;
+					} else if(PROD_STATE_PPV == 'N') {
+						g_authResult = 1;
+					}
+				});
+			}
+
+		};
+
+		var move = {
+			listDown: function() {
+				clearTextStyle();
+				var m_index = parseInt(XEpg.My.currentId.substring(5), 10);
+				if(m_index < (g_allIndex - 1)) {
+					$(XEpg.My.currentId).className = 'item';
+					XEpg.My.currentId = g_listName + (m_index + 1);
+					$(XEpg.My.currentId).className = 'item item_focus';
+					if(m_index > (g_evetyIndex - 2)) {
+						var m_top = (m_index - (g_evetyIndex - 2)) * 70;
+						$('area_serieslist').style.top = (-m_top) + 'px';
+						g_topsize = m_top;
+					}
+				}
+				textScroll();
+			},
+			listUp: function() {
+				clearTextStyle();
+				var m_index = parseInt(XEpg.My.currentId.substring(5), 10);
+				if(m_index > 0) {
+					$(XEpg.My.currentId).className = 'item';
+					XEpg.My.currentId = g_listName + (m_index - 1);
+					$(XEpg.My.currentId).className = 'item item_focus';
+					var top_index = g_topsize / 70;
+					if(m_index == top_index) {
+						var m_top = g_topsize - 70;
+						$('area_serieslist').style.top = (-m_top) + 'px';
+						g_topsize = m_top;
+					}
+				}
+				textScroll();
+			}
+		};
+		var moveObj = null,
+			scrollTimer = null,
+			txtObj = null;
+
+		function textScroll() {
+			var m_conId = 'list_';
+			document.getElementById(XEpg.My.currentId).className = 'item item_focus';
+			var m_index1 = parseInt(XEpg.My.currentId.substring(5), 10);
+			moveObj = document.getElementById(m_conId + m_index1 + '_move');
+			txtObj = document.getElementById(m_conId + m_index1 + '_txt');
+			if(moveObj && moveObj.scrollWidth > moveObj.offsetWidth) {
+				document.getElementById(m_conId + m_index1 + '_copy').innerHTML = '　    ' + txtObj.innerHTML;
+				startScroll(); //父元素向左循环移动(设置父元素scrollleft)
+			}
+		}
+
+		function startScroll() {
+			if(moveObj.scrollLeft >= (txtObj.offsetWidth + 23)) {
+				moveObj.scrollLeft = 0;
+			} else {
+				moveObj.scrollLeft += 2;
+			}
+			scrollTimer = setTimeout(startScroll, 50);
+		}
+
+		function clearTextStyle() {
+			var m_conId = 'list_';
+			clearTimeout(scrollTimer); //清除定时器
+			document.getElementById(XEpg.My.currentId).className = 'item';
+			var m_index1 = parseInt(XEpg.My.currentId.substring(5), 10);
+			var copyEle = document.getElementById(m_conId + m_index1 + '_copy');
+			if(copyEle) {
+				//清空复制的滚动文字
+				copyEle.innerHTML = '';
+			}
+			if(moveObj) {
+				//清空scrollLeft
+				moveObj.scrollLeft = 0;
+			}
+		}
+		//参数说明：str表示原字符串变量，flg表示要插入的字符串，sn表示要插入的位置
+		function insert_flg(str, flg, sn) {
+			var newstr = "";
+			for(var i = 0; i < str.length; i += sn) {
+				var tmp = str.substring(i, i + sn);
+				newstr += tmp + flg;
+			}
+			return newstr;
+		}
+		//发送日志
+		function sendLogDetil() {
+
+			if(SP.UserID) {
+				var stb = "";
+				try {
+					if(typeof(Authentication) != "undefined") {
+						stb = Authentication.CTCGetConfig("STBType");
+					}
+				} catch(e) {}
+				var m_contentCode = $(XEpg.My.currentId).title;
+				var epgPlatformType = SP.iptv_flag == 'hw' ? '0' : '1';
+				var reportUrl = "../data/addVodLog.jsp?" +
+					"contentCode=" + contentCode +
+					"&contentName=" + encodeURIComponent(g_name) +
+					"&userID=" + SP.UserID +
+					"&type=1" +
+					"&stb=" + stb +
+					"&productCode=" + "4KHYZY" +
+					"&productName=" + encodeURIComponent("4K花园综艺") +
+					"&cpID=" + 1007 +
+					"&resolution=1" +
+					"&seriesCode=" + m_contentCode +
+					"&seriesName=" + encodeURIComponent(g_name) +
+					"&epgPlatformType=" + epgPlatformType;
+				XEpg.Util.ajaxGet(reportUrl);
+			}
+		}
+		XEpg.Nav.key_back_event = function() {
+			XEpg.Nav.key_back_opt();
+		};
+	</script>
+
+</html>
